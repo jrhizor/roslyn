@@ -12,13 +12,7 @@
         <remap from="/image" to="/camera/depth/image_raw" />
   </node>
 
-        <!-- run p2os to control the pioneer -->
-        <!-- map server expects /odom, p2os broadcasts /pose -->
-        <remap from="/pose" to="/odom" />
-        <node pkg="p2os_driver" type="p2os_driver" name="p2os_driver" >
-                <param name="port" type="string" value="/dev/ttyUSB0" />
-                <param name="baud" type="int" value="38400" />
-        </node>
+ 	<include file="p2os_roslyn.launch" />
 
         <!-- run the teleop node to send movement velocities to the pioneer -->
         <param name="axis_vx" type="int" value="1" /> <!--linear motion on the pioneer-->
