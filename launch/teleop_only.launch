@@ -1,0 +1,17 @@
+<launch>
+  <!-- start joystick -->
+  <node pkg="joy" type="joy_node" name="joy_on_robot">
+    <param name="dev" value="/dev/input/js0" />
+  </node>
+
+        <!-- run the teleop node to send movement velocities to the pioneer -->
+        <param name="axis_vx" type="int" value="1" /> <!--linear motion on the pioneer-->
+        <param name="axis_vw" type="int" value="0" />
+        <param name="axis_vy" type="int" value="2" /> <!--rotational motion on pioneer-->
+        <param name="deadman_button" type="int" value="0" /> <!--the trigger button-->
+        <param name="run_button" type="int" value="0" /> <!--also the trigger button-->
+        <node pkg="p2os_teleop" type="p2os_teleop" name="p2os_teleop" >
+                <remap from="/des_vel" to="/base_controller/command" />
+        </node>
+</launch>
+
