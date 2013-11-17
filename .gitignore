@@ -13,4 +13,4 @@
 *.a
 
 # Ignore gedit temp filse
-*~
+#*~
