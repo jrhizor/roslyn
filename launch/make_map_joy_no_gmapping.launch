@@ -3,6 +3,16 @@
   <node pkg="joy" type="joy_node" name="joy_on_robot">
     <param name="dev" value="/dev/input/js0" />
   </node>
+  <!-- start camera -->
+        <include file="$(find openni2_launch)launch/openni2.launch" />
+
+
+  <!-- start depthtolaserscan -->
+  <node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan" >
+        <remap from="/image" to="/camera/depth/image_raw" />
+  </node>
+
+ 	<include file="p2os_roslyn.launch" />
 
         <!-- run the teleop node to send movement velocities to the pioneer -->
         <param name="axis_vx" type="int" value="1" /> <!--linear motion on the pioneer-->
@@ -14,6 +24,8 @@
                 <remap from="/des_vel" to="/base_controller/command" />
         </node>
 
-  <node pkg="p2os_driver_tim" type="p2os_driver" name="p2os_driver" />
+        <!-- publish a transform from the camera's tf frame to the robot's base frame -->
+        <!-- this camera is mounted on the pioneer's gripper -->
+        <node pkg="tf" type="static_transform_publisher" name="static_link_pub" args="0.1 0 0.2 0 0 0 1 base_link camera_depth_frame 12.5" />
 </launch>
 

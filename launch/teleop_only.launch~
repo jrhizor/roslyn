@@ -14,6 +14,6 @@
                 <remap from="/des_vel" to="/base_controller/command" />
         </node>
 
-  <node pkg="p2os_driver_tim" type="p2os_driver" name="p2os_driver" />
+  <node pkg="p2os_driver_tim" type="p2os_driver" />
 </launch>
 

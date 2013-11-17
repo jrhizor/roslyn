@@ -1,7 +1,14 @@
 <launch>
 
-  <!-- Run the map server -->
-    <node name="map_server" pkg="map_server" type="map_server" args="/home/tim/Dropbox/Workspaces/roslyn/navigation/launch/test_map.yaml"/>
+  <!-- Run gmapping to build a map -->
+  <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen" >
+        <param name="scan" type="string" value="/scan" />
+        <param name="_particles" type="int" value="100" />
+        <param name="_linearUpdate" type="double" value="0.1"/>
+        <param name="_angularUpdate" type="double" value="0.03"/>
+        <param name="odom_frame" value="odom" />
+</node>
+
 
   <!--- Run AMCL -->
   <include file="amcl_diff.launch" />
