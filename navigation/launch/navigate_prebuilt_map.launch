@@ -1,0 +1,10 @@
+<launch>
+
+  <!-- Run the map server -->
+    <node name="map_server" pkg="map_server" type="map_server" args="/home/tim/Dropbox/Workspaces/roslyn/navigation/launch/navigation_params/map.yaml"/>
+
+  <!--- Run AMCL -->
+  <include file="include/amcl_diff.launch" />
+
+  <include file="include/move_base.launch" />
+</launch>
