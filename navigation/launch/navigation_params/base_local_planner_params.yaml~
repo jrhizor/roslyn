@@ -11,7 +11,6 @@ TrajectoryPlannerROS:
   #local navigation settings
   oscillation_reset_dist: 0.05
   publish_cost_grid_pc: true
-  global_frame_id: /odom
 
   #robot description
   holonomic_robot: false
