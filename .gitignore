@@ -16,5 +16,5 @@
 *~
 
 #ignore ros build directories
-#/build
-#/devel
+/build
+/devel
