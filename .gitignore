@@ -18,3 +18,4 @@
 #ignore ros build directories
 /build
 /devel
+.DS_Store
