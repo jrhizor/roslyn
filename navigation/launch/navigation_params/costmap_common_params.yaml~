@@ -1,9 +1,0 @@
-obstacle_range: 8.0
-raytrace_range: 16.0
-footprint: [[-0.265, -0.225], [-0.265, 0.225], [0.185, 0.225], [0.26, 0.0], [0.185, -0.225]]
-footprint_padding: 0.01
-inflation_radius: 0.55
-
-observation_sources: laser_scan_sensor
-
-laser_scan_sensor: {sensor_frame: camera_depth_frame, data_type: LaserScan, topic: scan, marking: true, clearing: true,, expected_update_rate: 0.4}

@@ -1,0 +1,8 @@
+prefix=/home/rrl/roslyn/install
+
+Name: roslyn_navigation
+Description: Description of roslyn_navigation
+Version: 0.0.1
+Cflags: 
+Libs: -L/home/rrl/roslyn/install/lib 
+Requires: 

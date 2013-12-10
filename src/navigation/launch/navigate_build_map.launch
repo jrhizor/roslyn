@@ -1,0 +1,11 @@
+<launch>
+
+  <!-- Run gmapping to build a map -->
+  <include file="$(find roslyn_navigation)/launch/gmapping.launch" />
+
+  <!--- Run AMCL -->
+  <include file="$(find roslyn_navigation)/launch/include/amcl_diff.launch" />
+
+  <!-- start autonomous navigation with move_base -->
+  <include file="$(find roslyn_navigation)/launch/include/move_base.launch" />
+</launch>

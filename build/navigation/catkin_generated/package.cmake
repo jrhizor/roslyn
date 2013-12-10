@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "roslyn_navigation")
+set(roslyn_navigation_MAINTAINER "Tim Sweet <timothy.l.sweet@gmail.com>")
+set(roslyn_navigation_DEPRECATED "")
+set(roslyn_navigation_VERSION "0.0.1")
+set(roslyn_navigation_BUILD_DEPENDS )
+set(roslyn_navigation_RUN_DEPENDS )
+set(roslyn_navigation_BUILDTOOL_DEPENDS "catkin")
