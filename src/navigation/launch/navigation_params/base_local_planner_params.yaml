@@ -2,8 +2,8 @@ TrajectoryPlannerROS:
   #movement control
   max_vel_x: 0.3
   min_vel_x: 0.01
-  max_rotational_vel: .05
-  min_in_place_rotational_vel: 0.02
+  max_rotational_vel: .5
+  min_in_place_rotational_vel: 0.1
   acc_lim_th: 3.2
   acc_lim_x: 2.5
   acc_lim_y: 2.5

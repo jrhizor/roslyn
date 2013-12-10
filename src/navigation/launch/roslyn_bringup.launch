@@ -17,6 +17,6 @@
   <!-- setup tf link(s) -->
   <!-- publish a transform from the camera's tf frame to the robot's base frame -->
   <!-- this camera is mounted on the pioneer's gripper -->
-  <node pkg="tf" type="static_transform_publisher" name="baselink_to_cam" args="0.1 0 0.2 0 0 0 1 base_link camera_depth_frame 12.5" />
+  <node pkg="tf" type="static_transform_publisher" name="baselink_to_cam" args="0.1 0 0.2 0 0 0 1 base_link camera_depth_frame 100" />
   <!-- tf links setup -->
 </launch>
