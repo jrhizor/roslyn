@@ -13,4 +13,8 @@
 *.a
 
 # Ignore gedit temp filse
-#*~
+*~
+
+#ignore ros build directories
+#/build
+#/devel
