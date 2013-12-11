@@ -1,7 +1,7 @@
 <launch>
 
   <!-- Run gmapping to build a map -->
-  <include file="$(find roslyn_navigation)/launch/gmapping.launch" />
+  <include file="$(find roslyn_navigation)/launch/include/gmapping.launch" />
 
   <!--- Run AMCL -->
   <include file="$(find roslyn_navigation)/launch/include/amcl_diff.launch" />
