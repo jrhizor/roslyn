@@ -11,12 +11,13 @@
   <!-- setup robot odometry and driver-->
   <node pkg="p2os_driver_tim" type="p2os_driver" name="p2os_driver" output="screen">
     <param name="port" type="string" value="/dev/ttyUSB0" />
+    <remap from="pose" to="odom"/>
   </node>
   <!--robot is now setup -->
   
   <!-- setup tf link(s) -->
   <!-- publish a transform from the camera's tf frame to the robot's base frame -->
   <!-- this camera is mounted on the pioneer's gripper -->
-  <node pkg="tf" type="static_transform_publisher" name="baselink_to_cam" args="0.1 0 0.2 0 0 0 1 base_link camera_depth_frame 100" />
+  <node pkg="tf" type="static_transform_publisher" name="baselink_to_cam" args="0.1 0 0.2 0 0 0 1 base_link camera_link 10" />
   <!-- tf links setup -->
 </launch>
