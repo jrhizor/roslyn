@@ -1,6 +1,0 @@
-<launch>
-  <!--- Run AMCL -->
-  <include file="include/amcl_diff.launch" />
-
-  <include file="include/move_base.launch" />
-</launch>
