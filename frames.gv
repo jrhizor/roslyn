@@ -1,8 +1,0 @@
-digraph G {
-"camera_link" -> "camera_depth_frame"[label="Broadcaster: /baselink_to_cam\nAverage rate: 106.832 Hz\nMost recent transform: 1386739363.373 \nBuffer length: 4.999 sec\n"];
-"odom" -> "base_link"[label="Broadcaster: /p2os_driver\nAverage rate: 10.303 Hz\nMost recent transform: 1386739363.258 \nBuffer length: 4.853 sec\n"];
-"camera_depth_frame" -> "camera_depth_optical_frame"[label="Broadcaster: /camera_base_link2\nAverage rate: 10.184 Hz\nMost recent transform: 1386739363.386 \nBuffer length: 4.909 sec\n"];
-"camera_rgb_frame" -> "camera_rgb_optical_frame"[label="Broadcaster: /camera_base_link3\nAverage rate: 10.185 Hz\nMost recent transform: 1386739363.402 \nBuffer length: 4.909 sec\n"];
-"camera_link" -> "camera_rgb_frame"[label="Broadcaster: /camera_base_link1\nAverage rate: 10.189 Hz\nMost recent transform: 1386739363.332 \nBuffer length: 4.809 sec\n"];
-"map" -> "odom"[label="Broadcaster: /amcl\nAverage rate: 27.523 Hz\nMost recent transform: 1386739363.312 \nBuffer length: 4.905 sec\n"];
-}
