@@ -1,10 +1,11 @@
 <launch>
-  <machine name="roslyn" address="10.8.2.10" env-loader="/home/rrl/roslyn_environment.sh" default="never" user="rrl"/>
-  <machine name="pioneer_server" address="10.8.2.1" default="never" />
+  <machine name="skywarp" address="10.8.2.10" env-loader="/home/pi/env.sh" default="never" user="pi"/>
+  <machine name="ratchet" address="10.8.2.1" default="never" user="rrl"/>
+  <machine name="optimus" address="10.8.2.6" default="never" user="tim"/>
 
-  <node name="map_server" pkg="map_server" type="map_server" machine="roslyn" args="$(find roslyn_navigation)/launch/maps/map_fixed.yaml"/>
+  <node name="map_server" pkg="map_server" type="map_server" machine="optimus" args="$(find roslyn_navigation)/launch/maps/map_fixed.yaml"/>
 
-  <node pkg="amcl" type="amcl" name="amcl" machine="roslyn">
+  <node pkg="amcl" type="amcl" name="amcl" machine="optimus">
 	<!-- Publish scans from best pose at a max of 10 Hz -->
 	<param name="odom_model_type" value="diff"/>
 	<param name="odom_alpha5" value="0.1"/>
@@ -39,11 +40,15 @@
 	<param name="recovery_alpha_fast" value="0.0"/>
   </node>
 
-  <node pkg="move_base" type="move_base" name="move_base" machine="roslyn">
+  <node pkg="move_base" type="move_base" name="move_base" machine="optimus">
 	<rosparam file="$(find roslyn_navigation)/launch/navigation_params/costmap_common_params.yaml" command="load" ns="global_costmap" />
 	<rosparam file="$(find roslyn_navigation)/launch/navigation_params/costmap_common_params.yaml" command="load" ns="local_costmap" />
 	<rosparam file="$(find roslyn_navigation)/launch/navigation_params/local_costmap_params.yaml" command="load" />
 	<rosparam file="$(find roslyn_navigation)/launch/navigation_params/global_costmap_params.yaml" command="load" />
 	<rosparam file="$(find roslyn_navigation)/launch/navigation_params/base_local_planner_params.yaml" command="load" />
+  </node>
+
+  <node pkg="p2os_driver_tim" type="p2os_driver" name="p2os_driver_skywarp" machine="skywarp" output="screen">
+    <remap from="pose" to="odom"/>
   </node>
 </launch>
