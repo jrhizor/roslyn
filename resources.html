@@ -27,7 +27,38 @@
   <p><hr></p>
 
 <p id="sources">
-This is where we will put our outside sources and sites with other products similar to ours.
+<h1>Reference Journals:</h1>
+<ul>
+<li>K. Cho, B. Lee, “Intelligent lead: a novel HRI sensor for guide robots”, Sensors, 2012.
+This paper’s navigation goal is the same as this project, however it uses a physical arm to connect the robot to the user. The paper provides interesting insights into some of the human interaction elements associated with robotic tour guides, which may be applicable to a tour guide robot not led by a mechanical arm.
+The authors found that the users were able to understand the robot’s intentions and the robot was also able to understand the users intentions, and their insight on this topic will be useful in the Attention Detection node.
+</li>
+<li>D. Feil-Seifer, M. J Matari ́, ”Benchmarks for evaluating socially assistive robotics”, Interaction Studies, 2007.
+This paper provides benchmarks which can be used to determine if the robot is performing in a socially aware way. This is important because it sets the Tour Guide Robot apart from other tour guide robots, and provides tangible and comparable measurements of social interaction.
+The paper will be beneficial in the Social Navigation node. It takes the evaluator from qualitatively evaluating how social the robot is to quantitative measures of the robot’s effectiveness.
+</li>
+<li>
+H. Avilés, M. Alvarado-González, E. Venegas, C. Rascón, I. V. Meza, L. Pineda, “Development of a Tour–Guide Robot Using Dialogue Models and a Cognitive Architecture”, Advances in Artificial Intelligence, 2010.
+This paper provides theoretical models for determining what direction a user is directing their attention, which is useful for implementing attention detection. The authors did not completely specify their results, thus it is believed that the system described was never fully implemented.
+The methods provided by the authors seem to be reasonable and could prove useful in the Attention Detection node. Methods described in this paper can be used to augment what is already implemented in the WATSON framework.
+</li></ul>
+<h1>Reference Book:</h1>
+<ul>
+<li>Russell, S. Artificial Intelligence: A Modern Approach.  Upper Saddle River: Prentice Hall, 2009.
+Artificial Intelligence: A Modern Approach is the standard AI book used in college courses and basic AI research. It provides models and evaluation tools for heuristic path planning algorithms, sensory/perception challenges, etc. and mathematical solutions to those various problems. 
+The Social Navigation component will use methods described in this book, especially those related to graph weighting and heuristically predicting a user’s actions and responding appropriately.
+Methods from the book will also be used in the Attention Detection node for high level image processing, a form of signal processing described in the book.
+</li></ul>
+<h1>Extra Related Websites:</h1>
+<ul><li>www.ros.org
+The Robot Operating System homepage, providing access to ROS packages, references, and development information.
+</li>
+<li>www.docs.opencv.org
+The Open Computer Vision resource homepage, providing references to the OpenCV library.
+</li>
+<li>groups.csail.mit.edu/vision/vip/context/
+The WATSON: Real time head pose tracking and gesture recognition library provides a framework for automatic attention detection, which can be used to infer what things a user would be interested in.
+</li></ul>
 <hr></p>
 
 </div>
