@@ -1,14 +1,14 @@
 <launch>
-<node pkg="tf" type="static_transform_publisher" name="baselink_to_laser" args="0.1 0 0.2 0.5 0 0 base_link base_laser 100" />
+<node pkg="tf" type="static_transform_publisher" name="baselink_to_laser" args="0.1 0 0 0 0 0 base_link base_laser 100" />
 
-  <node pkg="move_base" type="move_base" name="move_base" launch-prefix="xterm -e gdb --args">
+  <node pkg="move_base" type="move_base" name="move_base">
         <rosparam file="$(find roslyn_navigation)/launch/navigation_params/costmap_common_params.yaml" command="load" ns="global_costmap" />
         <rosparam file="$(find roslyn_navigation)/launch/navigation_params/costmap_common_params.yaml" command="load" ns="local_costmap" />
         <rosparam file="$(find roslyn_navigation)/launch/navigation_params/local_costmap_params.yaml" command="load" />
         <rosparam file="$(find roslyn_navigation)/launch/navigation_params/global_costmap_params.yaml" command="load" />
         <rosparam file="$(find roslyn_navigation)/launch/navigation_params/base_local_planner_params.yaml" command="load" />
   </node>
-  <node name="map_server" pkg="map_server" type="map_server" args="/home/tim/roslyn/src/navigation/launch/maps/map.yaml" output="screen"/>
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find roslyn_navigation)/launch/maps/map.yaml" output="screen"/>
 
   <node pkg="amcl" type="amcl" name="amcl" output="screen">
 	<!-- Publish scans from best pose at a max of 10 Hz -->

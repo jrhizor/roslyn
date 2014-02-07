@@ -1,3 +1,4 @@
 digraph G {
-"base_link" -> "laser_link"[label="Broadcaster: /baselink_to_laser\nAverage rate: 9.924 Hz\nMost recent transform: 1391795855.917 \nBuffer length: 4.837 sec\n"];
+"map" -> "odom"[label="Broadcaster: /gmapping\nAverage rate: 20.208 Hz\nMost recent transform: 1391798962.218 \nBuffer length: 4.800 sec\n"];
+"base_link" -> "base_laser"[label="Broadcaster: /baselink_to_laser\nAverage rate: 10.195 Hz\nMost recent transform: 1391798962.250 \nBuffer length: 4.708 sec\n"];
 }
