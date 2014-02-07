@@ -1,5 +1,5 @@
 <launch>
-  <node pkg="move_base" type="move_base" name="move_base">
+  <node pkg="move_base" type="move_base" name="move_base" launch-prefix="xterm -e gdb --args">
         <rosparam file="$(find roslyn_navigation)/launch/navigation_params/costmap_common_params.yaml" command="load" ns="global_costmap" />
         <rosparam file="$(find roslyn_navigation)/launch/navigation_params/costmap_common_params.yaml" command="load" ns="local_costmap" />
         <rosparam file="$(find roslyn_navigation)/launch/navigation_params/local_costmap_params.yaml" command="load" />
