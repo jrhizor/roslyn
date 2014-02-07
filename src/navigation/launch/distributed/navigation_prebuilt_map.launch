@@ -1,11 +1,10 @@
 <launch>
-  <machine name="robot1" address="10.8.2.18" env-loader="/home/tim/env.sh" default="never" user="tim"/>
-  <machine name="robot2" address="10.8.2.18" env-loader="/home/tim/env.sh" default="never" user="tim"/>
-  <machine name="mastr" address="10.8.2.1" default="never" user="rrl"/>
-  <machine name="worker1" address="10.8.2.6"  env-loader="/home/tim/env.sh" default="never" user="tim"/>
-  <machine name="worker2" address="10.8.2.22" env-loader="/home/rrl/env.sh" default="never" user="rrl"/>
+  <machine name="robot1" address="$(env robot1_ip)" env-loader="$(env robot1_path)env.sh" default="never" user="$(env robot1_user)"/>
+  <machine name="robot2" address="$(env robot2_ip)" env-loader="$(env robot2_path)env.sh" default="never" user="$(env robot2_user)"/>
+  <machine name="worker1" address="$(env worker1_ip)" env-loader="$(env worker1_path)env.sh" default="never" user="$(env worker2_user)"/>
+  <machine name="worker2" address="$(env worker2_ip)" env-loader="$(env worker2_path)env.sh" default="never" user="$(env worker2_user)"/>
 
-  <node name="map_server" pkg="map_server" type="map_server" machine="worker1" args="/home/tim/roslyn/src/navigation/launch/maps/map_fixed.yaml"/>
+  <node name="map_server" pkg="map_server" type="map_server" machine="worker1" args="/home/tim/roslyn/src/navigation/launch/maps/map.yaml"/>
 
   <node pkg="amcl" type="amcl" name="amcl" machine="worker1">
 	<!-- Publish scans from best pose at a max of 10 Hz -->
@@ -50,16 +49,11 @@
 	<rosparam file="$(find roslyn_navigation)/launch/navigation_params/base_local_planner_params.yaml" command="load" />
   </node>
     <node pkg="p2os_driver" type="p2os_driver" name="p2os_driver_1" machine="robot1" output="screen">
-      <remap from="aio" to="robot1/aio"/>
-      <remap from="pose" to="robot1/odom"/>
-      <remap from="battery_state" to="robot1/battery_state"/>
-      <remap from="cmd_motor_state" to="robot1/cmd_motor_state"/>
-      <remap from="cmd_vel" to="robot1/cmd_vel"/>
-      <remap from="diagnostics" to="robot1/diagnostics"/>
-      <remap from="dio" to="robot1/dio"/>
-      <remap from="motor_state" to="robot1/motor_state"/>
-      <remap from="ptz_state" to="robot1/ptz_state"/>
-      <remap from="tf" to="robot1/tf"/>
+      <remap from="pose" to="odom"/>
+      <remap from="port" to="/dev/ttyUSB0"/>
     </node>
-    <node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan_1" machine="robot1"/>
+   <node pkg="sicktoolbox_wrapper" type="sicklms" name="sicklsm_1" machine="robot1" output="screen">
+     <param name="port" value="/dev/ttyUSB1"/>
+     <param name="frame_id" value="base_link"/>
+   </node>
 </launch>
