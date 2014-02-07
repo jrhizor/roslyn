@@ -3,7 +3,7 @@
   <machine name="robot2" address="$(env robot2_ip)" env-loader="$(env robot2_path)env.sh" default="never" user="$(env robot2_user)"/>
   <machine name="worker1" address="$(env worker1_ip)" env-loader="$(env worker1_path)env.sh" default="never" user="$(env worker2_user)"/>
   <machine name="worker2" address="$(env worker2_ip)" env-loader="$(env worker2_path)env.sh" default="never" user="$(env worker2_user)"/>
-
+<!--
   <node name="map_server" pkg="map_server" type="map_server" machine="worker1" args="/home/tim/roslyn/src/navigation/launch/maps/map.yaml"/>
 
   <node pkg="amcl" type="amcl" name="amcl" machine="worker1">
@@ -48,7 +48,7 @@
 	<rosparam file="$(find roslyn_navigation)/launch/navigation_params/global_costmap_params.yaml" command="load" />
 	<rosparam file="$(find roslyn_navigation)/launch/navigation_params/base_local_planner_params.yaml" command="load" />
   </node>
-
+-->
     <node pkg="p2os_driver" type="p2os_driver" name="p2os_driver_1" machine="robot1" output="screen">
       <remap from="pose" to="odom"/>
       <remap from="port" to="/dev/ttyUSB0"/>
