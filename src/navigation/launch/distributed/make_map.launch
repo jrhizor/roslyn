@@ -1,5 +1,5 @@
 <launch>
-<node pkg="tf" type="static_transform_publisher" name="baselink_to_laser" args="0.1 0 0 0 0 0 base_link base_laser 100" />
+<node pkg="tf" type="static_transform_publisher" name="baselink_to_laser" args="0.1 0 0 0 0 0 1 base_link base_laser 1000" />
 
   <node pkg="move_base" type="move_base" name="move_base">
         <rosparam file="$(find roslyn_navigation)/launch/navigation_params/costmap_common_params.yaml" command="load" ns="global_costmap" />
