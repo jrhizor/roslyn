@@ -1,0 +1,61 @@
+<launch>
+  <machine name="robot1" address="$(env robot1_ip)" env-loader="$(env robot1_path)env.sh" default="never" user="$(env robot1_user)"/>
+  <machine name="robot2" address="$(env robot2_ip)" env-loader="$(env robot2_path)env.sh" default="never" user="$(env robot2_user)"/>
+  <machine name="worker1" address="$(env worker1_ip)" env-loader="$(env worker1_path)env.sh" default="never" user="$(env worker2_user)"/>
+  <machine name="worker2" address="$(env worker2_ip)" env-loader="$(env worker2_path)env.sh" default="never" user="$(env worker2_user)"/>
+<!--
+  <node name="map_server" pkg="map_server" type="map_server" machine="worker1" args="/home/tim/roslyn/src/navigation/launch/maps/map.yaml"/>
+
+  <node pkg="amcl" type="amcl" name="amcl" machine="worker1">
+	<!-- Publish scans from best pose at a max of 10 Hz -->
+	<param name="odom_model_type" value="diff"/>
+	<param name="odom_alpha5" value="0.1"/>
+	<param name="transform_tolerance" value="0.2" />
+	<param name="gui_publish_rate" value="10.0"/>
+	<param name="laser_max_beams" value="30"/>
+	<param name="min_particles" value="500"/>
+	<param name="max_particles" value="5000"/>
+	<param name="kld_err" value="0.05"/>
+	<param name="kld_z" value="0.99"/>
+	<param name="odom_alpha1" value="0.2"/>
+	<param name="odom_alpha2" value="0.2"/>
+	<!-- translation std dev, m -->
+	<param name="odom_alpha3" value="0.8"/>
+	<param name="odom_alpha4" value="0.2"/>
+	<param name="laser_z_hit" value="0.5"/>
+	<param name="laser_z_short" value="0.05"/>
+	<param name="laser_z_max" value="0.05"/>
+	<param name="laser_z_rand" value="0.5"/>
+	<param name="laser_sigma_hit" value="0.2"/>
+	<param name="laser_lambda_short" value="0.1"/>
+	<param name="laser_lambda_short" value="0.1"/>
+	<param name="laser_model_type" value="likelihood_field"/>
+	<!-- <param name="laser_model_type" value="beam"/> -->
+	<param name="laser_likelihood_max_dist" value="2.0"/>
+	<param name="update_min_d" value="0.2"/>
+	<param name="update_min_a" value="0.5"/>
+	<param name="odom_frame_id" value="odom"/>
+	<param name="resample_interval" value="1"/>
+	<param name="transform_tolerance" value="0.1"/>
+	<param name="recovery_alpha_slow" value="0.0"/>
+	<param name="recovery_alpha_fast" value="0.0"/>
+  </node>
+
+  <node pkg="move_base" type="move_base" name="move_base" machine="worker1">
+	<rosparam file="$(find roslyn_navigation)/launch/navigation_params/costmap_common_params.yaml" command="load" ns="global_costmap" />
+	<rosparam file="$(find roslyn_navigation)/launch/navigation_params/costmap_common_params.yaml" command="load" ns="local_costmap" />
+	<rosparam file="$(find roslyn_navigation)/launch/navigation_params/local_costmap_params.yaml" command="load" />
+	<rosparam file="$(find roslyn_navigation)/launch/navigation_params/global_costmap_params.yaml" command="load" />
+	<rosparam file="$(find roslyn_navigation)/launch/navigation_params/base_local_planner_params.yaml" command="load" />
+  </node>
+-->
+    <node pkg="p2os_driver" type="p2os_driver" name="p2os_driver_1" machine="robot1" output="screen">
+      <remap from="pose" to="odom"/>
+      <remap from="port" to="/dev/ttyUSB0"/>
+    </node>
+    <node pkg="tf" type="static_transform_publisher" name="baselink_to_laser" args="0.1 0 0.2 0.5 0 0 base_link laser_link 100" />
+   <node pkg="sicktoolbox_wrapper" type="sicklms" name="sicklsm_1" machine="robot1" output="screen">
+     <param name="port" value="/dev/ttyUSB1"/>
+     <param name="frame_id" value="laser_link"/>
+   </node>
+</launch>

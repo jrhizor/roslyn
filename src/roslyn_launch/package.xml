@@ -1,0 +1,19 @@
+<package>
+  <name>roslyn_launch</name>
+  <version>1.0.0</version>
+  <description>This package contains launch files designed for the roslyn tour  guide</description>
+
+  <license>BSD</license>
+
+  <!--<url type="website"></url>-->
+  <!-- <url type="bugtracker"></url> -->
+
+  <maintainer email="timothy.l.sweet@gmail.com">Tim Sweet</maintainer>
+
+  <author email="timothy.l.sweet@gmail.com">Tim Sweet</author>
+  <author>Jared Rhizor</author>
+  <author>Nishok Yadav</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  
+</package>
