@@ -1,0 +1,8 @@
+<launch>
+
+  <!--- Run AMCL -->
+  <include file="$(find roslyn_launch)/launch/navigate.launch" />
+
+  <include file="$(find roslyn_launch)/launch/serve_map.launch" />
+
+</launch>

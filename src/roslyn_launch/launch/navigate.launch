@@ -1,7 +1,7 @@
 <launch>
 
   <!--- Run AMCL -->
-  <include file="include/amcl_diff.launch" />
+  <include file="$(find roslyn_launch)/launch/include/amcl_diff.launch" />
 
-  <include file="include/move_base.launch" />
+  <include file="$(find roslyn_launch)/launch/include/move_base.launch" />
 </launch>
