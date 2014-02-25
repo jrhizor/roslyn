@@ -1,6 +1,6 @@
 TrajectoryPlannerROS:
   #movement control
-  max_vel_x: 0.3
+  max_vel_x: 0.5
   min_vel_x: 0.1
   max_rotational_vel: .5
   min_in_place_rotational_vel: 0.1
@@ -15,10 +15,9 @@ TrajectoryPlannerROS:
 
   #robot description
   holonomic_robot: false
-  y_vels: 0
 
   #Tolerance values for goal reaching
-  xy_goal_tolerance: 0.25
-  yaw_goal_tolerance: 0.25
+  xy_goal_tolerance: 0.5
+  yaw_goal_tolerance: 0.5
 
   meter_scoring: true
