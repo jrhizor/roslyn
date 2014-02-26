@@ -1,5 +1,10 @@
 * { margin:0; padding:0; }
 
+body
+{
+	background-image: url(../img/binding_light.png)
+}
+
 div.button
 {
 	cursor:pointer
@@ -11,8 +16,9 @@ h1#header
 	font-family: Georgia;
 	font-size:32px;
 	font-weight:bold;
-	background: #444;
+	background: #000;
 	height:50px;
+	width: 1280px;
 	line-height: 50px;
 	color:#fff;
 }
@@ -23,8 +29,8 @@ div#footer
 	bottom:0;
 	left:0;
 	width:1280px;
-	height:150px;
-	background:#222;
+	height:100px;
+	background:;
 	text-align: center;
 }
 
@@ -33,12 +39,17 @@ div#footer div.button
 	color:#eee;
 	font-weight: bold;
 	font-size:32px;
-	height:150px;
+	height:100px;
 	width:350px;
 	float:left;
 	text-align:center;
-	background:#444;
-	line-height: 150px;
+	background: #000;
+	line-height: 100px;
+}
+
+div#footer div.button:hover
+{
+	background-color: #000099
 }
 
 div#footer div#interactive_mode_button
@@ -55,10 +66,19 @@ div#begin_tour_button
 	font-weight: bold;
 	font-size:32px;
 	text-align: center;
-	background:#444;
+	background: #000;
 	height:150px;
 	width:350px;
 	line-height: 150px;
+	border-top-left-radius: 16px;
+	border-top-right-radius: 16px;
+	border-bottom-left-radius: 16px;
+	border-bottom-right-radius: 16px;		
+}
+
+div#begin_tour_button:hover
+{
+	background-color: #000099;
 }
 
 div#message
@@ -90,4 +110,20 @@ div#map_pane, div#interactive_mode_pane, div#end_tour_pane
 	background:red;
 	width:20px;
 	height:20px;
+}
+
+div#map_button 
+{
+	border-top-right-radius: 16px;
+}
+
+div#interactive_mode_button 
+{
+	border-top-left-radius: 16px;
+	border-top-right-radius: 16px;
+}
+
+div#welcome_button, div#end_tour_button 
+{
+	border-top-left-radius: 16px;
 }
