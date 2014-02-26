@@ -1769,4 +1769,3 @@ ROSLIB.UrdfVisual = function(options) {
   // Pass it to the XML parser
   initXml(xml);
 };
-
