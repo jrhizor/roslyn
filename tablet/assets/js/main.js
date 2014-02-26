@@ -76,6 +76,25 @@ ros.on('connection', function() {
 });
 
 // Create a connection to the rosbridge WebSocket server.
-ros.connect('ws://localhost:9090');
+ros.connect('ws://172.27.48.32:9090');
+// ros.connect('ws://localhost:9090');
 
 
+// LISTENER
+var listener = new ROSLIB.Topic({
+  ros : ros,
+  name : '/amcl_pose',
+  messageType : 'geometry_msgs/PoseWithCovarianceStamped'
+});
+
+
+
+// Then we add a callback to be called every time a message is published on this topic.
+listener.subscribe(function(message) {
+  // for (var key in message.pose) {
+  // // do something with key
+  //   console.log(key + ' ' + message.pose[key]);
+  // } 
+
+  console.log(message.pose.pose.position);
+});
