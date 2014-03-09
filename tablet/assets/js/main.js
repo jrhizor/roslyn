@@ -64,3 +64,39 @@ $(document).ready(function(){
   $("#end_tour_button").click(end_tour);
 
 });
+
+var ros = new ROSLIB.Ros();
+
+// If there is an error on the backend, an 'error' emit will be emitted.
+ros.on('error', function(error) {
+  console.log(error);
+});
+
+// Find out exactly when we made a connection.
+ros.on('connection', function() {
+  console.log('Connection made!');
+});
+
+// Create a connection to the rosbridge WebSocket server.
+ros.connect('ws://172.27.48.32:9090');
+// ros.connect('ws://localhost:9090');
+
+
+// LISTENER
+var listener = new ROSLIB.Topic({
+  ros : ros,
+  name : '/amcl_pose',
+  messageType : 'geometry_msgs/PoseWithCovarianceStamped'
+});
+
+
+
+// Then we add a callback to be called every time a message is published on this topic.
+listener.subscribe(function(message) {
+  // for (var key in message.pose) {
+  // // do something with key
+  //   console.log(key + ' ' + message.pose[key]);
+  // } 
+
+  console.log(message.pose.pose.position);
+});
