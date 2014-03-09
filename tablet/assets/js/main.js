@@ -14,6 +14,7 @@ $(document).ready(function(){
   };
   var enter_map_pane = function() {
     $("#welcome_pane").fadeTo(400,0);
+    $("#begin_tour_button").hide();
     $("#interactive_mode_pane").hide();
     $("#map_pane").fadeTo(400,1);
 
@@ -43,6 +44,7 @@ $(document).ready(function(){
 
   var end_tour = function() {
     $("#welcome_pane").fadeTo(200,1);
+    $("#begin_tour_button").show();
     $("#map_pane").hide();
     $("#interactive_mode_pane").hide();
 

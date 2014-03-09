@@ -26,7 +26,7 @@ h1#header
 div#footer
 {
 	position:absolute;
-	bottom:0;
+	top: 610px;
 	left:0;
 	width:1280px;
 	height:100px;
@@ -40,7 +40,7 @@ div#footer div.button
 	font-weight: bold;
 	font-size:32px;
 	height:100px;
-	width:350px;
+	width:300px;
 	float:left;
 	text-align:center;
 	background: #000;
@@ -54,14 +54,14 @@ div#footer div.button:hover
 
 div#footer div#interactive_mode_button
 {
-	margin:0 115px;
+	margin:0 190px;
 }
 
 div#begin_tour_button
 {
 	position:absolute;
 	left:465px;
-	top:420px;
+	top:400px;
 	color:#eee;
 	font-weight: bold;
 	font-size:32px;
