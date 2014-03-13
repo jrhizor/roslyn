@@ -99,6 +99,7 @@ div#message
 	text-decoration: underline;
 }
 
+
 div#map_pane, div#interactive_mode_pane, div#end_tour_pane
 {
 	opacity: 0;
