@@ -1,0 +1,22 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+ <link rel="stylesheet" href="assets/js/leaflet-0.7.2/leaflet.css" />
+
+</head>
+<body>
+	 <div id="map" style="height: 800px; width: 1280px"></div>
+	   <script src="assets/js/leaflet-0.7.2/leaflet.js"></script>
+		<script>
+		var map = L.map('map').setView([51.5, -0.09], 13);
+
+		L.tileLayer('assets/img/map2.png', {
+    	maxZoom: 15
+		}).addTo(map);
+
+		var marker = L.marker([51.5, -0.09]).addTo(map);
+		marker.bindPopup("Engineering Computing Center (ECC). ").openPopup();
+		</script>
+</body>
+</html>
