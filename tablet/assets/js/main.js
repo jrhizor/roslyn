@@ -17,13 +17,12 @@ $(document).ready(function(){
     $("#begin_tour_button").hide();
     $("#interactive_mode_pane").hide();
     $("#map_pane").fadeTo(400,1);
-$("#map").fadeTo(400,1);
+
     hide_welcome();
 
     $("div").removeClass("current");
     $("#map_button").addClass("current");
-$("#map").fadeTo(400,1);
-    //$("body").css("background", "url('assets/img/map2.png')");
+    $("body").css("background", "url('assets/img/map2.png')");
 
 
   };

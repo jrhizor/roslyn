@@ -7,7 +7,7 @@ body
 
 div.button
 {
-	cursor:pointer
+	cursor:pointer;
 }
 
 h1#header
@@ -96,7 +96,8 @@ div#message
 
 .current 
 {
-	text-decoration: underline;
+	text-decoration: overline;
+
 }
 
 

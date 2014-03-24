@@ -2,21 +2,51 @@
 <!DOCTYPE html>
 <html>
 <head>
- <link rel="stylesheet" href="assets/js/leaflet-0.7.2/leaflet.css" />
-
+ <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+ <link rel="stylesheet" href="test.css">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 </head>
 <body>
-	 <div id="map" style="height: 800px; width: 1280px"></div>
-	   <script src="assets/js/leaflet-0.7.2/leaflet.js"></script>
+	 <div id="map" style="height: 400px; width: 1280px"></div>
+	   <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
 		<script>
-		var map = L.map('map').setView([51.5, -0.09], 13);
+		var map = L.map('map').setView([0, 0], 1);
 
+		//create an array to hold all the markers
+   		var markers = [
+   			["The Engineering Computing Center is for the use of Engineering and Computer Science majors/minors, and for anyone currently taking an engineering or computer science class. All users must abide by the Engineering Computing Center Extended Usage Agreement. The ECC has dual booted (Microsoft Windows 7 & Linux Ubuntu) computers located in rooms A, B, C, D, E and the north side of F. Some labs are used as Teaching Laboratories and are open for general use only when classes are not being held in the rooms.  A schedule for these labs can be found by following the Lab links on the right of the screen.  Rooms A and F are open for general use during all ECC business hours.", 51.5, -0.09],
+   			["Marker 2", 52.0, -20.15],
+   			["Marker 3", 51.0, -40.04]
+   		];
+
+   		//set map background image and other settings 
 		L.tileLayer('assets/img/map2.png', {
-    	maxZoom: 15
+    	maxZoom: 1.5,
+    	minZoom: 1,
 		}).addTo(map);
 
-		var marker = L.marker([51.5, -0.09]).addTo(map);
-		marker.bindPopup("Engineering Computing Center (ECC). ").openPopup();
+		//TODO --- trying to get bounds to work
+		var southWest = L.latLng(51.45775,0.04343),
+   		 	northEast = L.latLng(51.4801,0.00103, -74.125),
+   		 	bounds = L.latLngBounds(southWest, northEast);
+
+   		map.fitBounds(bounds);
+
+   		//Place all markers on the map
+		for (var i = 0; i < markers.length; i++) 
+		{
+				marker = new L.marker([markers[i][1],markers[i][2]])
+					.bindPopup(markers[i][0])
+					.addTo(map);
+   		}
+
+   		// (just for testing) create a popup whereever the user clicks the map
+		var popup = L.popup();
+		function onMapClick(e) {
+    		popup.setLatLng(e.latlng).setContent("You clicked the map at " + e.latlng.toString()).openOn(map);
+		}
+
+		map.on('click', onMapClick);
 		</script>
 </body>
 </html>
