@@ -32,7 +32,7 @@
 	    	northEast = L.latLng(400/360.0, 640/360.0),
 	    	bounds = L.latLngBounds(southWest, northEast);
 
-		L.imageOverlay('assets/img/map2.png', bounds).addTo(map);
+		L.imageOverlay('assets/img/scaleMap.png', bounds).addTo(map);
 
 		var marker = L.marker([0, 0]).addTo(map);
 		marker.bindPopup("Engineering Computing Center (ECC). ").openPopup();
