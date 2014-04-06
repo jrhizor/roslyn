@@ -4,6 +4,7 @@
   [ ] add all destinations for locations
   [ ] add descriptions for locations
   [ ] make groupings
+  [ ] make multiple colored icons for markers
   [ ] send destination to ROS
   [ ] get current location from ROS and display it
   [ ] get video feed and display it
