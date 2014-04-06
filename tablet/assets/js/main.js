@@ -1,5 +1,9 @@
-$(document).ready(function(){
+var destinations = 
+{
+  "ecc": [0.00275, 0.12634]
+}
 
+$(document).ready(function(){
   // initialize
   $("#end_tour_button").hide();
 
@@ -61,6 +65,14 @@ $(document).ready(function(){
 
   $("#end_tour_button").click(end_tour);
 
+  $(window).bind( 'hashchange', function(e) { 
+    if(window.location.hash)
+    {
+      // TODO: put roslibjs logic here
+      alert('go to ' + window.location.hash + ' ' + destinations[window.location.hash.substring(1)])
+      window.location.hash = '#';
+    }
+  });
 });
 
 var ros = new ROSLIB.Ros();
