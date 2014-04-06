@@ -104,7 +104,11 @@ div#message
 div#map_pane
 {
 	opacity: 0;
-	height: 200px;
+	margin:0;
+	padding:0;
+	position:absolute;
+	top:50px;
+	left:0;
 }
 
 div#interactive_mode_pane, div#end_tour_pane
@@ -133,4 +137,19 @@ div#interactive_mode_button
 div#welcome_button, div#end_tour_button 
 {
 	border-top-left-radius: 16px;
+}
+
+div#map_pane 
+{
+    height: 100%;
+}
+
+.leaflet-control-attribution 
+{ 
+	display: none; 
+}
+
+.leaflet-container 
+{
+    background: #fff;
 }

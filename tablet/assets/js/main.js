@@ -22,7 +22,6 @@ $(document).ready(function(){
 
     $("div").removeClass("current");
     $("#map_button").addClass("current");
-    $("body").css("background", "url('assets/img/map2.png')");
 
 
   };
