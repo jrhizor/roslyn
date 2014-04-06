@@ -7,21 +7,26 @@
 <meta charset="utf-8" />
 
 
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
+<link rel="stylesheet" href="assets/js/leaflet-0.7.2/leaflet.css" />
 <link rel="stylesheet" href="assets/css/style.css">
- <link rel="stylesheet" href="assets/js/leaflet-0.7.2/leaflet.css" />
+
+<script src="assets/js/leaflet-0.7.2/leaflet.js"></script>
 
 <script src="assets/js/jquery2.js"></script>
 <script src="assets/js/eventemitter2.js"></script>
 <script src="assets/js/roslib.js"></script>
 <script src="assets/js/main.js"></script>
-
 <script>
   // Connecting to ROS
   // -----------------
 
 </script>
+
+
+
+
 </head>
 
 <body>
@@ -38,15 +43,10 @@
 </div>
 
 
-<div id="map_pane">
 
-</div>
+<div id="map_pane" style="height:660px; width:1280px;"></div>
+<script src="assets/js/map.js"></script>
 
-<div id="map" style="width: 600px; height: 400px"></div>
-	<script src="assets/js/leaflet-0.7.2/leaflet.js"></script>
-<script>
-var map = L.map('map',center: [51.505, -0.09],zoom: 13);
-</script>
 
 <div id="interactive_mode_pane">
 	<!-- dots -->
