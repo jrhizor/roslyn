@@ -1,3 +1,20 @@
+/*
+  TODO:
+  [ ] add all locations  
+  [ ] add all destinations for locations
+  [ ] add descriptions for locations
+  [ ] make groupings
+  [ ] send destination to ROS
+  [ ] get current location from ROS and display it
+  [ ] get video feed and display it
+        http://www.html5rocks.com/en/tutorials/getusermedia/intro/
+  [ ] display points of interest in interactive mode
+  [ ] send terminate tour with end tour in ROS
+  [ ] package with Adobe Cordova
+  [ ] test on actual tour
+  [ ] add appropriate distance from human
+*/
+
 var destinations = 
 {
   "ecc": [0.00275, 0.12634]
