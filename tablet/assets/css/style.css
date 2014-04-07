@@ -85,14 +85,14 @@ div#begin_tour_button:hover
 div#message
 {
 	margin-top:60px;
-	margin-left:340px;
+	margin-left:240px;
 	font-size:32px;
 	font-family:georgia;
 	font-style: italic;
 	font-weight: bold;
 	line-height:50px;
 	text-align: center;
-	width:600px;
+	width:800px;
 }
 
 .current 

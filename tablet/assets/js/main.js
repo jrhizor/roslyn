@@ -18,7 +18,34 @@
 
 var destinations = 
 {
-  "ecc": [0.00275, 0.12634]
+  "ECC": [0.00275, 0.12634],
+  "CSEClaytonOffice": [0.28839, 1.35132],
+  "ITOffice": [0.49301, 1.35132],
+  "RoboticsLab": [0.71272, 1.35132],
+  "RoboticsWorkroom": [0.75254, 1.230],
+  "MenRR1": [0.00549, 1.230],
+  "WomenRR1": [0.00824, 0.550],
+  "HarrisNancyOffice": [0.00824, 1.44196],
+  "MonicaOffice": [0.00824, 1.350],
+  "GunesOffice": [0.00824, 1.210],
+  "YukselOffice": [0.00824, 1.080],
+  "DascaluOffice": [0.00824, 0.950],
+  "SushilOfficeClass": [0.00824, 0.675],
+  "MirceaOffice": [0.00824, 0.440],
+  "MichaelOffice": [0.00824, 0.315],
+  "CyberLab": [0.75254, -0.457],
+  "GradOffices": [0.75254, -0.26],
+  "Class1": [0.56853, -0.56442],
+  "Class2": [0.21423, -0.56442],
+  "MenRR2": [0.00824, -0.443],
+  "DaveOffice": [0.00824, -0.925],
+  "VarolOffice": [0.00824,-1.050],
+  "NetworkLab": [0.08377, -1.58066],
+  "EelkeOffice": [-0.280, -1.58752],
+  "BryantOffice": [-0.400, -1.5889],
+  "ShamikOffice": [-0.520, -1.59439],
+  "GridNode": [-0.820, -1.59851]
+
 }
 
 $(document).ready(function(){
