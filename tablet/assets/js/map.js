@@ -167,10 +167,10 @@ for (var i = 0; i < amenities.length; i++)
       .addTo(map);
 }
 
-// (just for testing) create a popup whereever the user clicks the map
-var popup = L.popup();
-function onMapClick(e) {
-popup.setLatLng(e.latlng).setContent("You clicked the map at " + e.latlng.toString()).openOn(map);
-}
+// //(just for testing) create a popup whereever the user clicks the map
+// var popup = L.popup();
+// function onMapClick(e) {
+// popup.setLatLng(e.latlng).setContent("You clicked the map at " + e.latlng.toString()).openOn(map);
+// }
 
-map.on('click', onMapClick);
+// map.on('click', onMapClick);

@@ -253,7 +253,7 @@ tf_listener.subscribe('base_link', function(tf) {
 
 
 
-      alert('go to ' + window.location.hash + ' ' + destinations[window.location.hash.substring(1)])
+      //alert('go to ' + window.location.hash + ' ' + destinations[window.location.hash.substring(1)])
       window.location.hash = '#';
     }
   });
