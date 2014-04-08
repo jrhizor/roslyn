@@ -145,6 +145,16 @@ div#map_pane
     height: 100%;
 }
 
+div#map_robot_marker
+{
+	position:absolute;
+	top:130px;
+	left:140px;
+	background:red;
+	height:10px;
+	width:10px;
+}
+
 .leaflet-control-attribution 
 { 
 	display: none; 
