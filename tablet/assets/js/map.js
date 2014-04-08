@@ -34,7 +34,7 @@ var labs = [
 
 var classrooms = [
    			//Classrooms
-   			["<center>Classroom Big <br> <a href='#SushilOfficeClass'>GO HERE</a> </center>", 0.178, 0.909],
+   			["<center>Classroom <br> <a href='#SushilOfficeClass'>GO HERE</a> </center>", 0.178, 0.909],
    			["<center>Engineering Grid Node <br> <a href='#GridNode'>GO HERE</a> </center>", -0.820, -1.700],
             ["<center>Classroom <br> <a href='#Class2'>GO HERE</a> </center>",  0.250, -0.740],
             ["<center>Classroom <br> <a href='#Class1'>GO HERE</a> </center>",  0.570, -0.740],
