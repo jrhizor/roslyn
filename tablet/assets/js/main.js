@@ -134,7 +134,7 @@ ros.on('connection', function() {
 });
 
 // Create a connection to the rosbridge WebSocket server.
-ros.connect('ws://172.27.48.32:9090');
+ros.connect('ws://10.8.4.1:9090');
 // ros.connect('ws://localhost:9090');
 
 
@@ -154,5 +154,13 @@ listener.subscribe(function(message) {
   //   console.log(key + ' ' + message.pose[key]);
   // } 
 
-  console.log(message.pose.pose.position);
+  var x = message.pose.pose.position.x;
+  var y = message.pose.pose.position.y;
+  console.log(x);
+  $("#map_robot_marker").css({'top': Math.floor(y*100+300).toString()+'px',
+                              'left': Math.floor(x*100+300).toString()+'px'
+                            });
+  // $("#map_robot_marker").set('left', floor(message.pose.position.x*1000+300).toString()+'px');
+
+
 });
