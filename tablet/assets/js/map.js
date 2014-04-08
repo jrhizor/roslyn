@@ -108,6 +108,7 @@ var yellowIcon = L.icon({
     shadowAnchor: [12.5, 41]
 });
 
+
 //Place all office markers on the map
 for (var i = 0; i < offices.length; i++) 
 {

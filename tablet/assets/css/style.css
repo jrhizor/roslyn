@@ -153,6 +153,7 @@ div#map_robot_marker
 	background:red;
 	height:10px;
 	width:10px;
+	display: none;
 }
 
 .leaflet-control-attribution 
