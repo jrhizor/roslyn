@@ -56,13 +56,9 @@ var labs = [
 ];
 
 var classrooms = [
-   			//Classrooms
-<<<<<<< HEAD
-   			["<center>Classroom Big <br> <a href='#SushilOfficeClass'>GO HERE</a> </center>", 0.178, 0.909],
-   			
-=======
+   			//Classrooms  			
    			["<center>Classroom <br> <a href='#SushilOfficeClass'>GO HERE</a> </center>", 0.178, 0.909],
->>>>>>> fde1a7f0493c2c3a26864ad6bde483fb0417f5d3
+
    			["<center>Engineering Grid Node <br> <a href='#GridNode'>GO HERE</a> </center>", -0.820, -1.700],
             
             ["<center>Classroom <br> <a href='#Class2'>GO HERE</a> </center>",  0.250, -0.740],
