@@ -1,35 +1,35 @@
 //create an array to hold all the markers
 var offices = [
    			//CSE Offices
-   			["<center>ECC <br> <a href='#ECC'>GO HERE</a> </center>", 0.268, 0.134],
-   			["<center>Computer Science and Engineering Department Office <br> <a href='#CSEClaytonOffice'>GO HERE</a> </center>", 0.252, 1.496],
-   			["<center>IT Offices <br> <a href='#ITOffice'>GO HERE</a> </center>", 0.486, 1.570],
-            ["<center>Steve Clayton's Office <br> <a href='#CSEClaytonOffice'>GO HERE</a> </center>",  0.280,  1.230],
-   			["<center>Dr. George Bebis's Office <br> <a href='#CSEClaytonOffice'>GO HERE</a> </center>", 0.120, 1.650],
-   			["<center>Graduate Student Offices <br> <a href='#GradOffices'>GO HERE</a> </center>", 0.909, -0.260],
-   			["<center>Dr. Fred Harris's Office <br> <a href='#HarrisNancyOffice'>GO HERE</a> </center>", -0.140, 1.650],
-   			["<center>Nancy Latourette's Office <br> <a href='#HarrisNancyOffice'>GO HERE</a> </center>", -0.140,  1.488],
-            ["<center>Dr. Monica Nicolescu's Office <br> <a href='#MonicaOffice'>GO HERE</a> </center>", -0.140,  1.350],
-            ["<center>Dr. Mehmet Gunes's Office <br> <a href='#GunesOffice'>GO HERE</a> </center>", -0.140,  1.210],
-            ["<center>Dr. Murat Yuksel's Office <br> <a href='#YukselOffice'>GO HERE</a> </center>", -0.140,  1.080],
-            ["<center>Dr. Bobby Bryant's Office <br> <a href='#BryantOffice'>GO HERE</a> </center>", -0.400, -1.451],
-            ["<center>Dr. Eelke Folmer's Office <br> <a href='#EelkeOffice'>GO HERE</a> </center>", -0.280, -1.448],
-            ["<center>Dr. Yaakov Varol's Office <br> <a href='#VarolOffice'>GO HERE</a> </center>", -0.140, -1.050],
-            ["<center>Dr. Dave Feil-Seifer's Office <br> <a href='#DaveOffice'>GO HERE</a> </center>", -0.140, -0.925],
-            ["<center>Dr. Michael Leverington's Office <br> <a href='#MichaelOffice'>GO HERE</a> </center>", -0.140,  0.315],
-            ["<center>Dr. Mircea Nicolescu's Office <br> <a href='#MirceaOffice'>GO HERE</a> </center>", -0.140,  0.440],
-            ["<center>Dr. Sushil Louis's Office <br> <a href='#SushilOfficeClass'>GO HERE</a> </center>", -0.140,  0.675],
-            ["<center>Dr. Sergiu Dascalu's Office <br> <a href='#DascaluOffice'>GO HERE</a> </center>", -0.140,  0.950],
-            ["<center>Dr. Shamik Sengupta's Office <br> <a href='#ShamikOffice'>GO HERE</a> </center>", -0.520, -1.454],
+   			["<center><u>ECC</u> <br> <a href='#ECC'>GO HERE</a> </center>", 0.268, 0.134],
+   			["<center><u>Computer Science and Engineering Department Office</u> <br> The Department of Computer Science and Engineering offers undergraduate and graduate degrees that provide a well-rounded education in computing. Our students gain experience with both hardware and software and learn how to blend technical expertise with creative problem-solving skills to push technological boundaries, create automated solutions to human problems and build better computing systems. <br> <a href='#CSEClaytonOffice'>GO HERE</a> </center>", 0.252, 1.496],
+   			["<center><u>IT Offices</u> <br> <a href='#ITOffice'>GO HERE</a> </center>", 0.486, 1.570],
+            ["<center><u>Steve Clayton's Office</u> <br> <a href='#CSEClaytonOffice'>GO HERE</a> </center>",  0.280,  1.230],
+   			["<center><u>Dr. George Bebis's Office</u> <br> <a href='#CSEClaytonOffice'>GO HERE</a> </center>", 0.120, 1.650],
+   			["<center><u>Graduate Student Offices</u> <br> <a href='#GradOffices'>GO HERE</a> </center>", 0.909, -0.260],
+   			["<center><u>Dr. Fred Harris's Office</u> <br> <a href='#HarrisNancyOffice'>GO HERE</a> </center>", -0.140, 1.650],
+   			["<center><u>Nancy Latourette's Office</u> <br> <a href='#HarrisNancyOffice'>GO HERE</a> </center>", -0.140,  1.488],
+            ["<center><u>Dr. Monica Nicolescu's Office</u> <br> <a href='#MonicaOffice'>GO HERE</a> </center>", -0.140,  1.350],
+            ["<center><u>Dr. Mehmet Gunes's Office</u> <br> <a href='#GunesOffice'>GO HERE</a> </center>", -0.140,  1.210],
+            ["<center><u>Dr. Murat Yuksel's Office</u> <br> <a href='#YukselOffice'>GO HERE</a> </center>", -0.140,  1.080],
+            ["<center><u>Dr. Bobby Bryant's Office</u> <br> <a href='#BryantOffice'>GO HERE</a> </center>", -0.400, -1.451],
+            ["<center><u>Dr. Eelke Folmer's Office </u> <br> <a href='#EelkeOffice'>GO HERE</a> </center>", -0.280, -1.448],
+            ["<center><u>Dr. Yaakov Varol's Office</u> <br> <a href='#VarolOffice'>GO HERE</a> </center>", -0.140, -1.050],
+            ["<center><u>Dr. Dave Feil-Seifer's Office</u> <br> <a href='#DaveOffice'>GO HERE</a> </center>", -0.140, -0.925],
+            ["<center><u>Dr. Michael Leverington's Office</u> <br> <a href='#MichaelOffice'>GO HERE</a> </center>", -0.140,  0.315],
+            ["<center><u>Dr. Mircea Nicolescu's Office</u> <br> <a href='#MirceaOffice'>GO HERE</a> </center>", -0.140,  0.440],
+            ["<center><u>Dr. Sushil Louis's Office</u> <br> <a href='#SushilOfficeClass'>GO HERE</a> </center>", -0.140,  0.675],
+            ["<center><u>Dr. Sergiu Dascalu's Office</u> <br> <a href='#DascaluOffice'>GO HERE</a> </center>", -0.140,  0.950],
+            ["<center><u>Dr. Shamik Sengupta's Office</u> <br> <a href='#ShamikOffice'>GO HERE</a> </center>", -0.520, -1.454],
 ];
 
 var labs = [
    			//Labs
-   			["<center>ECSL Lab <br> <a href='#ECSL'>GO HERE</a> </center>", -0.570, -1.697],
-   			["<center>Computer Networking Lab <br> <a href='#NetworkLab'>GO HERE</a> </center>", 0.000, -1.690],
-   			["<center>Robotics Lab  <br> <a href='#RoboticsLab'>GO HERE</a> </center>", 0.679, 1.570],
-   			["<center>Robotics Lab Workroom <br> <a href='#RoboticsWorkroom'>GO HERE</a> </center>", 0.570, 1.230],
-            ["<center>Cyber Infrastructure Lab <br> <a href='#CyberLab'>GO HERE</a> </center>", 0.867, -0.457],
+   			["<center><u>ECSL Lab</u> <br> <a href='#ECSL'>GO HERE</a> </center>", -0.570, -1.697],
+   			["<center><u>Computer Networking Lab</u> <br> <a href='#NetworkLab'>GO HERE</a> </center>", 0.000, -1.690],
+   			["<center><u>Robotics Lab</u> <br> <a href='#RoboticsLab'>GO HERE</a> </center>", 0.679, 1.570],
+   			["<center><u>Robotics Lab Workroom</u> <br> <a href='#RoboticsWorkroom'>GO HERE</a> </center>", 0.570, 1.230],
+            ["<center><u>Cyber Infrastructure Lab</u> <br> <a href='#CyberLab'>GO HERE</a> </center>", 0.867, -0.457],
 ];
 
 var classrooms = [
@@ -111,7 +111,7 @@ var yellowIcon = L.icon({
 //Place all office markers on the map
 for (var i = 0; i < offices.length; i++) 
 {
-	marker = new L.marker([offices[i][1],offices[i][2]], {icon: greenIcon})
+	marker = new L.marker([offices[i][1],offices[i][2]], {icon: blueIcon})
 		.bindPopup(offices[i][0])
 		.addTo(map);
 }
@@ -119,7 +119,7 @@ for (var i = 0; i < offices.length; i++)
 //Place all lab markers on the map
 for (var i = 0; i < labs.length; i++) 
 {
-   marker = new L.marker([labs[i][1],labs[i][2]], {icon: blueIcon})
+   marker = new L.marker([labs[i][1],labs[i][2]], {icon: redIcon})
       .bindPopup(labs[i][0])
       .addTo(map);
 }
@@ -127,7 +127,7 @@ for (var i = 0; i < labs.length; i++)
 //Place all classroom markers on the map
 for (var i = 0; i < classrooms.length; i++) 
 {
-   marker = new L.marker([classrooms[i][1],classrooms[i][2]], {icon: redIcon})
+   marker = new L.marker([classrooms[i][1],classrooms[i][2]], {icon: greenIcon})
       .bindPopup(classrooms[i][0])
       .addTo(map);
 }

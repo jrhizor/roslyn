@@ -44,7 +44,8 @@ var destinations =
   "EelkeOffice": [-0.280, -1.58752],
   "BryantOffice": [-0.400, -1.5889],
   "ShamikOffice": [-0.520, -1.59439],
-  "GridNode": [-0.820, -1.59851]
+  "GridNode": [-0.820, -1.59851],
+  "ECSL": [-0.570,-1.59439]
 
 }
 
