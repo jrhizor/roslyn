@@ -13,14 +13,16 @@ var offices = [
 
    			["<center><u>IT Offices</u> <br> <a href='#ITOffice'>GO HERE</a> </center>", 0.486, 1.570],
             
-        ["<center><u>Steve Clayton's Office</u> <br> <a href='#CSEClaytonOffice'>GO HERE</a> </center>",  0.280,  1.230],
+        ["<center><u>Steve Clayton's Office</u> <br> IT Technician <br> <a href='#CSEClaytonOffice'>GO HERE</a> </center>",  0.280,  1.230],
    			
    			["<center><u>Dr. George Bebis's Office</u> <br> Dr. Bebis is the chair of the CSE department as well as a professor. " +
         "His research interests include: computer vision, image processing, machine learning, and pattern recognition. " +
         "His research has been funded by the NSF and NASA, among others. " +
         "<br> <a href='#CSEClaytonOffice'>GO HERE</a> </center>", 0.120, 1.650],
    			
-   			["<center><u>Graduate Student Offices</u> <br> <a href='#GradOffices'>GO HERE</a> </center>", 0.909, -0.260],
+   			["<center><u>Graduate Student Offices</u> <br> Graduate students have their offices in this area. " +
+        "Graduate students assist professors with the research they are working on. They may also act as teaching assistants (TAs) for classes. " +
+        "<br> <a href='#GradOffices'>GO HERE</a> </center>", 0.909, -0.260],
    			
    			["<center><u>Dr. Fred Harris's Office</u> <br> Dr. Harris is the professor in charge of the High Performance Computation and Visualization (HPCVIS) Lab. " +
         "His research interests include: computer graphics, parallel computing, cortical simulation, and virtual reality. " +
@@ -59,7 +61,7 @@ var offices = [
         "parallel computing, algorithm design and analysis, data fusion, and discrete simulation and modeling. " +
         "<br> <a href='#VarolOffice'>GO HERE</a> </center>", -0.140, -1.050],
             
-        ["<center><u>Dr. Dave Feil-Seifer's Office</u> <br> Dr. Feil-Seifer is an assistant professor that works in the Robotics Lab. " +
+        ["<center><u>Dr. David Feil-Seifer's Office</u> <br> Dr. Feil-Seifer is an assistant professor that works in the Robotics Lab. " +
         "His research interests includes: socially assistive robotics, human-robot interaction, machine learning, and ethics in computing. " +
         "<br> <a href='#DaveOffice'>GO HERE</a> </center>", -0.140, -0.925],
             
@@ -82,17 +84,25 @@ var offices = [
 
 var labs = [
    			//Labs
-   			["<center><u>ECSL Lab</u> <br> <a href='#ECSL'>GO HERE</a> </center>", -0.570, -1.697],
+   			["<center><u>Evolutionary Computing Systems Lab</u> <br> ECSL investigates systems that combine genetic algorithm search with case-based " +
+        "reasoning principles. Such Case Injected Genetic Algorithms (CIGAR) lead to a new paradigm for machine learning " +
+        "with special emphasis on design, optimization, and human modeling. " +
+        "<br> <a href='#ECSL'>GO HERE</a> </center>", -0.570, -1.697],
    			
-   			["<center><u>Computer Networking Lab</u> <br> <a href='#NetworkLab'>GO HERE</a> </center>", 0.000, -1.690],
+   			["<center><u>Computer Networking Lab</u> <br> The research efforts in the CNL are on various topics in computer communication networks " +
+        "encompassing both experimental and theoretical aspects. Research performed in the CNL has been funded by both the government and by the industry. " +
+        "<br> <a href='#NetworkLab'>GO HERE</a> </center>", 0.000, -1.690],
    			
    			["<center><u>Robotics Lab</u> <br> Dr. David Feil-Seifer and Dr. Monica Nicolescu run the Robotics Lab. " +
         "Some of the research interests of these professors include: socially assistive robotics, artificial intelligence, " +
         "human-robot interaction, and behavior-based control. <br> <a href='#RoboticsLab'>GO HERE</a> </center>", 0.679, 1.570],
    			
-   			["<center><u>Robotics Lab Workroom</u> <br> <a href='#RoboticsWorkroom'>GO HERE</a> </center>", 0.570, 1.230],
+   			["<center><u>Robotics Lab Workroom</u> <br> This room is currently used by undergraduate researchers who are working on senior projects related to robotics " +
+        "<br> <a href='#RoboticsWorkroom'>GO HERE</a> </center>", 0.570, 1.230],
             
-            ["<center><u>Cyber Infrastructure Lab</u> <br> <a href='#CyberLab'>GO HERE</a> </center>", 0.867, -0.457],
+        ["<center><u>Cyber Infrastructure Lab</u> <br> The focused of the CIL is on developing new computing environments and " +
+        "related methodologies that enable and accelerate modern scientific research and knowledge discovery. " +
+        "<br> <a href='#CyberLab'>GO HERE</a> </center>", 0.867, -0.457],
 ];
 
 var classrooms = [
@@ -101,16 +111,16 @@ var classrooms = [
 
    			["<center>Engineering Grid Node <br> <a href='#GridNode'>GO HERE</a> </center>", -0.820, -1.700],
             
-            ["<center>Classroom <br> <a href='#Class2'>GO HERE</a> </center>",  0.250, -0.740],
+        ["<center>Classroom <br> <a href='#Class2'>GO HERE</a> </center>",  0.250, -0.740],
             
-            ["<center>Classroom <br> <a href='#Class1'>GO HERE</a> </center>",  0.570, -0.740],
+        ["<center>Classroom <br> <a href='#Class1'>GO HERE</a> </center>",  0.570, -0.740],
 ];
 
 var amenities = [
    			//Amenities
    			["<center>Men's Restroom <br> <a href='#MenRR2'>GO HERE</a> </center>", 0.135, -0.443],
    			["<center>Men's Restroom <br> <a href='#MenRR1'>GO HERE</a> </center>", 0.125, 1.230],
-            ["<center>Women's Restroom <br> <a href='#WomenRR1'>GO HERE</a> </center>", -0.140,  0.550],
+        ["<center>Women's Restroom <br> <a href='#WomenRR1'>GO HERE</a> </center>", -0.140,  0.550],
 ];    
 
 
