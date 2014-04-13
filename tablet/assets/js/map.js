@@ -1,45 +1,83 @@
 //create an array to hold all the markers
 var offices = [
    			//CSE Offices
-   			["<center><u>ECC</u> <br> The Engineering Computing Center is for the use of students that are pursuing a major or minor in the College of Engineering. It is also available to anyone that is currently enrolled in an engineering or computer science class. <br> <a href='#ECC'>GO HERE</a> </center>", 0.268, 0.134],
+   			["<center><u>ECC</u> <br> The Engineering Computing Center is for the use of students that are pursuing a major or minor in the College of Engineering. " + 
+        "It is also available to anyone that is currently enrolled in an engineering or computer science class. " +
+        "<br> <a href='#ECC'>GO HERE</a> </center>", 0.268, 0.134],
    			
-   			["<center><u>Computer Science and Engineering Department Office</u> <br> The Department of Computer Science and Engineering offers undergraduate and graduate degrees that provide a well-rounded education in computing. Our students gain experience with both hardware and software and learn how to blend technical expertise with creative problem-solving skills to push technological boundaries, create automated solutions to human problems and build better computing systems. <br> <a href='#CSEClaytonOffice'>GO HERE</a> </center>", 0.252, 1.496],
+   			["<center><u>Computer Science and Engineering Department Office</u> <br>" +  
+        "The Department of Computer Science and Engineering offers undergraduate and graduate degrees that provide a well-rounded education in computing. " +
+        "Our students gain experience with both hardware and software and learn how to blend technical expertise with creative problem-solving " +
+        "skills to push technological boundaries, create automated solutions to human problems and build better computing systems. " +
+        "<br> <a href='#CSEClaytonOffice'>GO HERE</a> </center>", 0.252, 1.496],
 
    			["<center><u>IT Offices</u> <br> <a href='#ITOffice'>GO HERE</a> </center>", 0.486, 1.570],
             
-            ["<center><u>Steve Clayton's Office</u> <br> <a href='#CSEClaytonOffice'>GO HERE</a> </center>",  0.280,  1.230],
+        ["<center><u>Steve Clayton's Office</u> <br> <a href='#CSEClaytonOffice'>GO HERE</a> </center>",  0.280,  1.230],
    			
-   			["<center><u>Dr. George Bebis's Office</u> <br> <a href='#CSEClaytonOffice'>GO HERE</a> </center>", 0.120, 1.650],
+   			["<center><u>Dr. George Bebis's Office</u> <br> Dr. Bebis is the chair of the CSE department as well as a professor. " +
+        "His research interests include: computer vision, image processing, machine learning, and pattern recognition. " +
+        "His research has been funded by the NSF and NASA, among others. " +
+        "<br> <a href='#CSEClaytonOffice'>GO HERE</a> </center>", 0.120, 1.650],
    			
    			["<center><u>Graduate Student Offices</u> <br> <a href='#GradOffices'>GO HERE</a> </center>", 0.909, -0.260],
    			
-   			["<center><u>Dr. Fred Harris's Office</u> <br> <a href='#HarrisNancyOffice'>GO HERE</a> </center>", -0.140, 1.650],
+   			["<center><u>Dr. Fred Harris's Office</u> <br> Dr. Harris is the professor in charge of the High Performance Computation and Visualization (HPCVIS) Lab. " +
+        "His research interests include: computer graphics, parallel computing, cortical simulation, and virtual reality. " +
+        "<br> <a href='#HarrisNancyOffice'>GO HERE</a> </center>", -0.140, 1.650],
    			
-   			["<center><u>Nancy Latourette's Office</u> <br> <a href='#HarrisNancyOffice'>GO HERE</a> </center>", -0.140,  1.488],
+   			["<center><u>Nancy LaTourette's Office</u> <br> Prof. LaTourette is a lecturer for the CSE department. Her research interests include: " +
+        "discrete mathematics, theory of computation, and systems administration. " +
+        "<br> <a href='#HarrisNancyOffice'>GO HERE</a> </center>", -0.140,  1.488],
             
-            ["<center><u>Dr. Monica Nicolescu's Office</u> <br> <a href='#MonicaOffice'>GO HERE</a> </center>", -0.140,  1.350],
+        ["<center><u>Dr. Monica Nicolescu's Office</u> <br> Dr. Nicolescu is one of the professors in charge of the Robotics Lab. " +
+        "Her research interests include: robotics, artificial intelligence, machine learning, human robot interaction, and multi-robot systems. " +
+        "<br> <a href='#MonicaOffice'>GO HERE</a> </center>", -0.140,  1.350],
             
-            ["<center><u>Dr. Mehmet Gunes's Office</u> <br> <a href='#GunesOffice'>GO HERE</a> </center>", -0.140,  1.210],
+        ["<center><u>Dr. Mehmet Gunes's Office</u> <br> Dr. Gunes is a professor that works in the Computer Network Lab. " +
+        "His research interests include: communications, complex networks, internet measurements, and network security. Much of his gets funded by the NSF. " +
+        "<br> <a href='#GunesOffice'>GO HERE</a> </center>", -0.140,  1.210],
             
-            ["<center><u>Dr. Murat Yuksel's Office</u> <br> <a href='#YukselOffice'>GO HERE</a> </center>", -0.140,  1.080],
+        ["<center><u>Dr. Murat Yuksel's Office</u> <br> Dr. Yuksel is an associate professor for the CSE department. " +
+        "His research interests include: networked and wireless systems, optical wireless, big-data networking, and cloud-assisted routing. " +
+        "<br> <a href='#YukselOffice'>GO HERE</a> </center>", -0.140,  1.080],
+
+        ["<center><u>Dr. Sergiu Dascalu's Office</u> <br> Dr. Dascalu is the Director of the Software Engineering Laboratory (SOELA) and the " +
+        "Co-Director of the Cyber Infrastructure Lab (CIL). His main research interests include Software Engineering and Human-Computer Interaction. " +
+        "<br> <a href='#DascaluOffice'>GO HERE</a> </center>", -0.140,  0.950],
             
-            ["<center><u>Dr. Bobby Bryant's Office</u> <br> <a href='#BryantOffice'>GO HERE</a> </center>", -0.400, -1.451],
+        ["<center><u>Dr. Bobby Bryant's Office</u> <br> Dr. Bryant is an assistant professor for the CSE department. His research interests include: " +
+        "machine learning, agent modeling, biologically inspired methods, and simulated biological intelligence. " +
+        "<br> <a href='#BryantOffice'>GO HERE</a> </center>", -0.400, -1.451],
             
-            ["<center><u>Dr. Eelke Folmer's Office </u> <br> <a href='#EelkeOffice'>GO HERE</a> </center>", -0.280, -1.448],
+        ["<center><u>Dr. Eelke Folmer's Office </u> <br> Dr. Folmer is an associate professor for the CSE department. His research focuses on " +
+        "designing, building, and evaluating technology to address high impact social problems pertaining to assistive technology, “real world” " +
+        "accessibility, health and well-being. " +
+        "<br> <a href='#EelkeOffice'>GO HERE</a> </center>", -0.280, -1.448],
             
-            ["<center><u>Dr. Yaakov Varol's Office</u> <br> <a href='#VarolOffice'>GO HERE</a> </center>", -0.140, -1.050],
+        ["<center><u>Dr. Yaakov Varol's Office</u> <br> Dr. Varol is a professor for the CSE department. His research interests include: " +
+        "parallel computing, algorithm design and analysis, data fusion, and discrete simulation and modeling. " +
+        "<br> <a href='#VarolOffice'>GO HERE</a> </center>", -0.140, -1.050],
             
-            ["<center><u>Dr. Dave Feil-Seifer's Office</u> <br> <a href='#DaveOffice'>GO HERE</a> </center>", -0.140, -0.925],
+        ["<center><u>Dr. Dave Feil-Seifer's Office</u> <br> Dr. Feil-Seifer is an assistant professor that works in the Robotics Lab. " +
+        "His research interests includes: socially assistive robotics, human-robot interaction, machine learning, and ethics in computing. " +
+        "<br> <a href='#DaveOffice'>GO HERE</a> </center>", -0.140, -0.925],
             
-            ["<center><u>Dr. Michael Leverington's Office</u> <br> <a href='#MichaelOffice'>GO HERE</a> </center>", -0.140,  0.315],
+        ["<center><u>Dr. Michael Leverington's Office</u> <br> Dr. Leverington is a lecturer for the CSE department. His research interests " +
+        "include: curriculum and course development, teaching effectiveness, and problem-solving (human and computer). " +
+        "<br> <a href='#MichaelOffice'>GO HERE</a> </center>", -0.140,  0.315],
             
-            ["<center><u>Dr. Mircea Nicolescu's Office</u> <br> <a href='#MirceaOffice'>GO HERE</a> </center>", -0.140,  0.440],
+        ["<center><u>Dr. Mircea Nicolescu's Office</u> <br> Dr. Nicolescu is an associate professor for the CSE department. His research interests " +
+        "include: computer vision, three-dimensional reconstruction, and image and video segmentation. " +
+        "<br> <a href='#MirceaOffice'>GO HERE</a> </center>", -0.140,  0.440],
             
-            ["<center><u>Dr. Sushil Louis's Office</u> <br> <a href='#SushilOfficeClass'>GO HERE</a> </center>", -0.140,  0.675],
+        ["<center><u>Dr. Sushil Louis's Office</u> <br> Dr. Louis is a professor who works on evolutionary algorithms. His research interests include: " +
+        "genetic algorithms, serious games, game artificial intelligence, and engineering design and optimization. " +
+        "<br> <a href='#SushilOfficeClass'>GO HERE</a> </center>", -0.140,  0.675],
             
-            ["<center><u>Dr. Sergiu Dascalu's Office</u> <br> Dr. Dascalu is the Director of the Software Engineering Laboratory (SOELA) and the Co-Director of the Cyber Infrastructure Lab (CIL). His main research interests include Software Engineering and Human-Computer Interaction. <br> <a href='#DascaluOffice'>GO HERE</a> </center>", -0.140,  0.950],
-            
-            ["<center><u>Dr. Shamik Sengupta's Office</u> <br> <a href='#ShamikOffice'>GO HERE</a> </center>", -0.520, -1.454],
+        ["<center><u>Dr. Shamik Sengupta's Office</u> <br> Dr. Sengupta is an assistant professor for the CSE department . His research interests include: " +
+        "wireless network and mobile computing, network security, covert communications, and dynamic spectrum access. " +
+        "<br> <a href='#ShamikOffice'>GO HERE</a> </center>", -0.520, -1.454],
 ];
 
 var labs = [
@@ -48,7 +86,9 @@ var labs = [
    			
    			["<center><u>Computer Networking Lab</u> <br> <a href='#NetworkLab'>GO HERE</a> </center>", 0.000, -1.690],
    			
-   			["<center><u>Robotics Lab</u> <br> Dr. Dave Feil-Seifer and Dr. Monica Nicolescu run the Robotics Lab. Some of the research interests of these professors include: socially assistive robotics, artificial intelligence, human-robot interaction, and behavior-based control. <br> <a href='#RoboticsLab'>GO HERE</a> </center>", 0.679, 1.570],
+   			["<center><u>Robotics Lab</u> <br> Dr. David Feil-Seifer and Dr. Monica Nicolescu run the Robotics Lab. " +
+        "Some of the research interests of these professors include: socially assistive robotics, artificial intelligence, " +
+        "human-robot interaction, and behavior-based control. <br> <a href='#RoboticsLab'>GO HERE</a> </center>", 0.679, 1.570],
    			
    			["<center><u>Robotics Lab Workroom</u> <br> <a href='#RoboticsWorkroom'>GO HERE</a> </center>", 0.570, 1.230],
             
