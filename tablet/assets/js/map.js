@@ -118,12 +118,14 @@ var classrooms = [
         ["<center>Classroom <br> <a href='#Class1'>GO HERE</a> </center>",  0.570, -0.740],
 ];
 
-var amenities = [
-        //Amenities
-        ["<center>Men's Restroom <br> <a href='#MenRR2'>GO HERE</a> </center>", 0.135, -0.443],
-        ["<center>Men's Restroom <br> <a href='#MenRR1'>GO HERE</a> </center>", 0.125, 1.230],
-        ["<center>Women's Restroom <br> <a href='#WomenRR1'>GO HERE</a> </center>", -0.140,  0.550],
+var mensRR = [
+    ["<center>Men's Restroom <br> <a href='#MenRR2'>GO HERE</a> </center>", 0.135, -0.443],
+    ["<center>Men's Restroom <br> <a href='#MenRR1'>GO HERE</a> </center>", 0.125, 1.230],
 ];    
+
+var womensRR = [
+    ["<center>Women's Restroom <br> <a href='#WomenRR1'>GO HERE</a> </center>", -0.140,  0.550],
+]
 
 // create the map
 var map = L.map('map_pane', {zoom:8, minZoom:8, maxZoom:10, zoomControl:false}).setView([0,0], 0);
@@ -176,17 +178,19 @@ var redIcon = L.icon({
     shadowAnchor: [12.5, 41]
 });
 
-var yellowIcon = L.icon({
-    iconUrl: 'assets/img/marker-icon-yellow.png',
-    iconRetinaUrl: 'assets/img/marker-icon-2x-yellow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowUrl: 'assets/img/marker-shadow.png',
-    shadowSize: [41, 41],
-    shadowAnchor: [12.5, 41]
+var maleIcon = L.icon({
+    iconUrl: 'assets/img/male.png',
+    iconSize: [20,40],
+    iconAnchor: [10, 40],
+    popupAnchor: [0, -40],
 });
 
+var femaleIcon = L.icon({
+    iconUrl: 'assets/img/female.png',
+    iconSize: [20,40],
+    iconAnchor: [10, 40],
+    popupAnchor: [0, -40],
+});
 
 //Place all office markers on the map
 for (var i = 0; i < offices.length; i++) 
@@ -218,20 +222,30 @@ for (var i = 0; i < classrooms.length; i++)
   map.addLayer(cluster);
 }
 
-//Place all amenities markers on the map
-for (var i = 0; i < amenities.length; i++) 
+//Place men's restrooms on the map
+for (var i = 0; i < mensRR.length; i++) 
 {
-  marker = new L.marker([amenities[i][1],amenities[i][2]], {icon: yellowIcon})
-      .bindPopup(amenities[i][0]);
+  marker = new L.marker([mensRR[i][1],mensRR[i][2]], {icon: maleIcon})
+      .bindPopup(mensRR[i][0]);
+
+  cluster.addLayer(marker);
+  map.addLayer(cluster);
+}
+
+//Place women's restrooms on the map
+for (var i = 0; i < womensRR.length; i++) 
+{
+  marker = new L.marker([womensRR[i][1],womensRR[i][2]], {icon: femaleIcon})
+      .bindPopup(womensRR[i][0]);
 
   cluster.addLayer(marker);
   map.addLayer(cluster);
 }
 
 //(just for testing) create a popup whereever the user clicks the map
-var popup = L.popup();
-function onMapClick(e) {
-popup.setLatLng(e.latlng).setContent("You clicked the map at " + e.latlng.toString()).openOn(map);
-}
+// var popup = L.popup();
+// function onMapClick(e) {
+// popup.setLatLng(e.latlng).setContent("You clicked the map at " + e.latlng.toString()).openOn(map);
+// }
 
-map.on('click', onMapClick);
+// map.on('click', onMapClick);

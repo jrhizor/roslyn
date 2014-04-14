@@ -1,9 +1,9 @@
 /*
   TODO:
-  [ ] add all locations  
-  [ ] add all destinations for locations
-  [ ] add descriptions for locations
-  [ ] make groupings
+  [x] add all locations  
+  [x] add all destinations for locations
+  [x] add descriptions for locations
+  [x] make groupings
   [ ] make multiple colored icons for markers
   [ ] send destination to ROS
   [ ] get current location from ROS and display it
@@ -170,7 +170,8 @@ tf_listener.subscribe('base_link', function(tf) {
   }
 
   var end_tour = function() {
-    $("#welcome_pane").fadeTo(200,1);
+    //$("#welcome_pane").fadeTo(200,0);
+    $("#end_tour_pane").fadeTo(200, 1);
     $("#begin_tour_button").show();
     $("#map_pane").hide();
     $("#interactive_mode_pane").hide();

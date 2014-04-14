@@ -95,6 +95,17 @@ div#message
 	width:800px;
 }
 
+div#message_end
+{
+
+	font-size:32px;
+	font-family:georgia;
+	font-style: italic;
+	font-weight: bold;
+	text-align: center;
+
+}
+
 .current 
 {
 	text-decoration: underline;
@@ -163,5 +174,6 @@ div#map_robot_marker
 
 .leaflet-container 
 {
-    background: #fff;
+    /*background: #fff;*/
+    background-image: url(../img/binding_light.png)
 }
