@@ -1,5 +1,10 @@
 * { margin:0; padding:0; }
 
+html
+{
+	width: 1280;
+}
+
 body
 {
 	background-image: url(../img/binding_light.png);
@@ -31,7 +36,6 @@ div#footer
 	left:0;
 	width:1280px;
 	height:100px;
-	background:;
 	text-align: center;
 }
 

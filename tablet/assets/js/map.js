@@ -128,7 +128,12 @@ var womensRR = [
 ]
 
 // create the map
-var map = L.map('map_pane', {zoom:8, minZoom:8, maxZoom:10, zoomControl:false}).setView([0,0], 0);
+var map = L.map('map_pane', {
+  zoom:8, 
+  minZoom:8, 
+  maxZoom:10, 
+  zoomControl:false})
+  .setView([0,0], 0);
 
 // assign the bounds for the image
 var southWest = L.latLng(-400/360.0, -640/360.0),
