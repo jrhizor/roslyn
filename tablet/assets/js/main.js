@@ -170,8 +170,8 @@ tf_listener.subscribe('base_link', function(tf) {
   }
 
   var end_tour = function() {
-    //$("#welcome_pane").fadeTo(200,0);
-    $("#end_tour_pane").fadeTo(200, 1);
+    $("#welcome_pane").fadeTo(200,1);
+    $("#end_tour_pane").fadeTo(200, 0);
     $("#begin_tour_button").show();
     $("#map_pane").hide();
     $("#interactive_mode_pane").hide();
