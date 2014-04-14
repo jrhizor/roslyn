@@ -1,4 +1,4 @@
-var cluster = L.markerClusterGroup();
+var cluster = L.markerClusterGroup({showCoverageOnHover: false, maxClusterRadius: 47});
 
 //create an array to hold all the markers
 var offices = [
