@@ -3,6 +3,7 @@
 body
 {
 	background-image: url(../img/binding_light.png)
+	width: 1920;
 }
 
 div.button

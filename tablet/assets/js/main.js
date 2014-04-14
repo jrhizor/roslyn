@@ -176,7 +176,8 @@ tf_listener.subscribe('base_link', function(tf) {
     $("#map_pane").hide();
     $("#interactive_mode_pane").hide();
 
-    show_welcome();
+    
+
 
     $("div").removeClass("current");
     $("#welcome_button").addClass("current");
