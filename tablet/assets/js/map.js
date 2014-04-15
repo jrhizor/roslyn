@@ -119,12 +119,14 @@ var classrooms = [
 ];
 
 var mensRR = [
-    ["<center>Men's Restroom <br> <a href='#MenRR2'>GO HERE</a> </center>", 0.135, -0.443],
-    ["<center>Men's Restroom <br> <a href='#MenRR1'>GO HERE</a> </center>", 0.125, 1.230],
+    ["<center>Men's Restroom <br> <a href='#MenRR2'>GO HERE</a> </center>", 0.110, -0.443],
+    ["<center>Men's Restroom <br> <a href='#MenRR1'>GO HERE</a> </center>", 0.110, 1.230],
 ];    
 
 var womensRR = [
     ["<center>Women's Restroom <br> <a href='#WomenRR1'>GO HERE</a> </center>", -0.140,  0.550],
+    ["<center>Women's Restroom <br> <a href='#WomenRR2'>GO HERE</a> </center>", 0.110,  -1.480],
+
 ]
 
 // create the map
@@ -248,9 +250,9 @@ for (var i = 0; i < womensRR.length; i++)
 }
 
 //(just for testing) create a popup whereever the user clicks the map
-// var popup = L.popup();
-// function onMapClick(e) {
-// popup.setLatLng(e.latlng).setContent("You clicked the map at " + e.latlng.toString()).openOn(map);
-// }
+var popup = L.popup();
+function onMapClick(e) {
+popup.setLatLng(e.latlng).setContent("You clicked the map at " + e.latlng.toString()).openOn(map);
+}
 
-// map.on('click', onMapClick);
+map.on('click', onMapClick);

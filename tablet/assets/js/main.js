@@ -53,6 +53,7 @@ var destinations =
   "Class1": [0.56853, -0.56442],
   "Class2": [0.21423, -0.56442],
   "MenRR2": [0.00824, -0.443],
+  "WomenRR2": [0.00824, -1.480],
   "DaveOffice": [0.00824, -0.925],
   "VarolOffice": [0.00824,-1.050],
   "NetworkLab": [0.08377, -1.58066],
@@ -176,8 +177,7 @@ tf_listener.subscribe('base_link', function(tf) {
     $("#map_pane").hide();
     $("#interactive_mode_pane").hide();
 
-    
-
+    show_welcome();
 
     $("div").removeClass("current");
     $("#welcome_button").addClass("current");
