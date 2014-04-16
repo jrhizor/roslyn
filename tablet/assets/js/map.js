@@ -119,14 +119,17 @@ var classrooms = [
 ];
 
 var mensRR = [
-    ["<center>Men's Restroom <br> <a href='#MenRR2'>GO HERE</a> </center>", 0.110, -0.443],
-    ["<center>Men's Restroom <br> <a href='#MenRR1'>GO HERE</a> </center>", 0.110, 1.230],
+    ["<center>Men's Restroom <br> <a href='#MenRR2'>GO HERE</a> </center>", 0.100, -0.443],
+    ["<center>Men's Restroom <br> <a href='#MenRR1'>GO HERE</a> </center>", 0.100, 1.230],
 ];    
 
 var womensRR = [
     ["<center>Women's Restroom <br> <a href='#WomenRR1'>GO HERE</a> </center>", -0.140,  0.550],
-    ["<center>Women's Restroom <br> <a href='#WomenRR2'>GO HERE</a> </center>", 0.110,  -1.480],
+    ["<center>Women's Restroom <br> <a href='#WomenRR2'>GO HERE</a> </center>", 0.100,  -1.480],
+]
 
+var helpMarker = [
+    ["<center><u>Icon Key</u></center>", 1.000, -1.59]
 ]
 
 // create the map
@@ -146,8 +149,8 @@ boundsImage = L.latLngBounds(southWest, northEast);
 L.imageOverlay('assets/img/scaleMap.png', boundsImage).addTo(map);
 
 //sets bounds for the map
-var southWest2 = L.latLng(-500/360.0, -740/360.0),
-northEast2 = L.latLng(500/360.0, 740/360.0),
+var southWest2 = L.latLng(-500/360.0, -850/360.0),  
+northEast2 = L.latLng(500/360.0, 900/360.0),        
 boundsMap = L.latLngBounds(southWest2, northEast2);
 
 map.setMaxBounds(boundsMap);

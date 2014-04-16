@@ -164,7 +164,8 @@ tf_listener.subscribe('base_link', function(tf) {
     $("div").removeClass("current");
     $("#interactive_mode_button").addClass("current");
 
-    $("body").css("background", "url('assets/img/camera.png')");
+    document.body.style.background="url('assets/img/camera.png')";
+    document.body.style.backgroundRepeat="no-repeat";
   
     hide_welcome();
 
@@ -182,7 +183,8 @@ tf_listener.subscribe('base_link', function(tf) {
     $("div").removeClass("current");
     $("#welcome_button").addClass("current");
 
-    $("body").css("background", "url(assets/img/binding_light.png)");
+    document.body.style.background="url('assets/img/binding_light.png')";
+
   };
 
   // handle buttons 

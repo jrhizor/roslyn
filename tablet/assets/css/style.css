@@ -3,7 +3,6 @@
 body
 {
 	background-image: url(../img/binding_light.png);
-	background-repeat: no-repeat;
 }
 
 div.button
@@ -27,7 +26,7 @@ h1#header
 div#footer
 {
 	position:absolute;
-	top: 610px;
+	top: 700px;
 	left:0;
 	width:1280px;
 	height:100px;
@@ -113,7 +112,6 @@ div#message_end
 
 }
 
-
 div#map_pane
 {
 	opacity: 0;
@@ -125,11 +123,16 @@ div#map_pane
 	z-index: 99;
 }
 
-div#interactive_mode_pane, div#end_tour_pane
+div#interactive_mode_pane
 {
 	opacity: 0;
-	background-repeat: no-repeat;
 }
+
+div#end_tour_pane
+{
+	opacity: 0;
+}
+
 .marker
 {
 	position: absolute;
@@ -157,6 +160,14 @@ div#welcome_button, div#end_tour_button
 div#map_pane 
 {
     height: 100%;
+    height:750px; 
+    width:1280px;
+}
+
+div#welcome_pane
+{
+	width: 1280px;
+	height: 800px;
 }
 
 div#map_robot_marker
