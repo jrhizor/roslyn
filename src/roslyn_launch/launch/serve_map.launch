@@ -1,4 +1,3 @@
 <launch>
-  <!-- Run the map server -->
-    <node name="map_server" pkg="map_server" type="map_server" args="$(find roslyn_launch)/launch/maps/map.yaml" output="screen"/>
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find roslyn_launch)/launch/maps/map.yaml"/>
 </launch>
