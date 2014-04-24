@@ -32,22 +32,53 @@ var convertLeaflettoTF = function(x,y) {
 
 var destinations = 
 {
-	//    long-y     lat-x
-  "ECC": [0.00275, 0.12634],
-  "CSEClaytonOffice": [0.28839, 1.35132],
-  "ITOffice": [0.49301, 1.35132],
-  "RoboticsLab": [0.71272, 1.35132],
-  "RoboticsWorkroom": [0.75254, 1.230],
-  "MenRR1": [0.00549, 1.230],
-  "WomenRR1": [0.00824, 0.550],
-  "HarrisNancyOffice": [0.00824, 1.44196],
-  "MonicaOffice": [0.00824, 1.350],
-  "GunesOffice": [0.00824, 1.210],
-  "YukselOffice": [0.00824, 1.080],
-  "DascaluOffice": [0.00824, 0.950],
-  "SushilOfficeClass": [0.00824, 0.675],
-  "MirceaOffice": [0.00824, 0.440],
-  "MichaelOffice": [0.00824, 0.315],
+	//    leaflet locations [y,x]
+  // "ECC": [0.00275, 0.12634],
+  // "CSEClaytonOffice": [0.28839, 1.35132],
+  // "ITOffice": [0.49301, 1.35132],
+  // "RoboticsLab": [0.71272, 1.35132],
+  // "RoboticsWorkroom": [0.75254, 1.230],
+  // "MenRR1": [0.00549, 1.230],
+  // "WomenRR1": [0.00824, 0.550],
+  // "HarrisNancyOffice": [0.00824, 1.44196],
+  // "MonicaOffice": [0.00824, 1.350],
+  // "GunesOffice": [0.00824, 1.210],
+  // "YukselOffice": [0.00824, 1.080],
+  // "DascaluOffice": [0.00824, 0.950],
+  // "SushilOfficeClass": [0.00824, 0.675],
+  // "MirceaOffice": [0.00824, 0.440],
+  // "MichaelOffice": [0.00824, 0.315],
+  // "CyberLab": [0.75254, -0.457],
+  // "GradOffices": [0.75254, -0.26],
+  // "Class1": [0.56853, -0.56442],
+  // "Class2": [0.21423, -0.56442],
+  // "MenRR2": [0.00824, -0.443],
+  // "WomenRR2": [0.00824, -1.480],
+  // "DaveOffice": [0.00824, -0.925],
+  // "VarolOffice": [0.00824,-1.050],
+  // "NetworkLab": [0.08377, -1.58066],
+  // "EelkeOffice": [-0.280, -1.58752],
+  // "BryantOffice": [-0.400, -1.5889],
+  // "ShamikOffice": [-0.520, -1.59439],
+  // "GridNode": [-0.820, -1.59851],
+  // "ECSL": [-0.570,-1.59439]
+
+  //ros locations [x,y]
+  "ECC": [-34.403, -21.9127],  //
+  "CSEClaytonOffice": [3.578, -14.293],  //
+  "ITOffice": [3.5221, -6.8798],		//
+  "RoboticsLab": [3.563, -1.4458],		//
+  "RoboticsWorkroom": [0.154026, 0.278556],  //
+  "MenRR1": [0, -21.214],         //
+  "WomenRR1": [-19.09,-21.55],          //
+  "HarrisNancyOffice": [6.4101,-21.7],   //
+  "MonicaOffice": [2.28,-21.791],      //
+  "GunesOffice": [-1.3765,-21.729],    //
+  "YukselOffice": [-4.7363,-21.319],   //
+  "DascaluOffice": [-6.1214,-21.314],   //
+  "SushilOfficeClass": [-12.084, -21.55],  //
+  "MirceaOffice": [-19.09,-21.55],     //
+  "MichaelOffice": [0.00824, 0.315],     
   "CyberLab": [0.75254, -0.457],
   "GradOffices": [0.75254, -0.26],
   "Class1": [0.56853, -0.56442],
@@ -62,6 +93,8 @@ var destinations =
   "ShamikOffice": [-0.520, -1.59439],
   "GridNode": [-0.820, -1.59851],
   "ECSL": [-0.570,-1.59439]
+
+  acm= [-10.782, -21.653]  //
 
 }
 
@@ -214,6 +247,8 @@ tf_listener.subscribe('base_link', function(tf) {
       // ECC
       var ecc_x = -34.403;      
       var ecc_y = -21.9127;
+
+      // 
 
       var x;
       var y;
