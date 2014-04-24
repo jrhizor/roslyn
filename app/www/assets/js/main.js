@@ -65,11 +65,53 @@ var destinations =
 
 }
 
+function onDeviceReady()
+{
+  if(!navigator)
+  {
+    alert("no navigator")
+  }
+  else
+  {
+    for(var propName in o) {
+      alert(propName)  
+    }
+
+  }
+
+  if (!navigator.Camera) {
+      alert("Camera API not supported", "Error");
+    }
+    else
+    {
+    var options =   {   quality: 50,
+                        destinationType: Camera.DestinationType.DATA_URL,
+                        sourceType: 1,      // 0:Photo Library, 1=Camera, 2=Saved Album
+                        encodingType: 0     // 0=JPG 1=PNG
+                    };
+
+    navigator.camera.getPicture(
+        function(imageData) {
+            $('.employee-image', this.el).attr('src', "data:image/jpeg;base64," + imageData);
+        },
+        function() {
+            alert('Error taking picture', 'Error');
+        },
+        options);  
+    }
+
+}
+
+
 $(document).ready(function(){
 
+var video = document.getElementById('video');
+video.play();
 
+document.addEventListener("deviceready",onDeviceReady,false);
 
-var ros = new ROSLIB.Ros({url:'ws://10.8.4.1:9090'});
+// handle ROS connection
+var ros = new ROSLIB.Ros({url:'ws://10.8.4.6:9090'});
 
 // If there is an error on the backend, an 'error' emit will be emitted.
 ros.on('error', function(error) {
