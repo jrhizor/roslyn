@@ -18,6 +18,7 @@
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/assets \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/cordova_plugins.js \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/test.css \
+/home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/plugins \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/cordova.js \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/spec.html \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/test.html \
@@ -38,6 +39,7 @@
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/assets/img \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/assets/js/main.js \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/assets/js/eventemitter2.js \
+/home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/assets/js/cordova.js \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/assets/js/roslib.js \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/assets/js/leaflet.markercluster \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/assets/js/jquery2.js \
@@ -126,6 +128,12 @@
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/assets/img/marker-icon-yellow.png \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/assets/img/SEM_Floor_2.png \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/assets/img/male.png \
+/home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/plugins/org.apache.cordova.camera \
+/home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/plugins/org.apache.cordova.camera/www \
+/home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/plugins/org.apache.cordova.camera/www/CameraPopoverHandle.js \
+/home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/plugins/org.apache.cordova.camera/www/Camera.js \
+/home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/plugins/org.apache.cordova.camera/www/CameraConstants.js \
+/home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/plugins/org.apache.cordova.camera/www/CameraPopoverOptions.js \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/res/icon \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/res/screen \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/res/icon/tizen \

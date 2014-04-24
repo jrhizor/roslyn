@@ -1,73 +1,48 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
-
-<title>Roslyn</title>
-
-<meta charset="utf-8" />
-
-
-<!--meta name="viewport" content="width=device-width,initial-scale=1, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"-->
-
-<link rel="stylesheet" href="assets/js/leaflet-0.7.2/leaflet.css" />
-<link rel="stylesheet" href="assets/css/style.css">
-
-<!-- Leaflet script -->
-<script src="assets/js/leaflet-0.7.2/leaflet.js"></script>
-
-<!-- Robot communication files -->
-<script src="assets/js/jquery2.js"></script>
-<script src="assets/js/eventemitter2.js"></script>
-<script src="assets/js/roslib.js"></script>
-<script src="assets/js/main.js"></script>
-
-<!-- Marker Cluster files -->
-<link rel="stylesheet" href="assets/js/leaflet.markercluster/dist/MarkerCluster.css" />
-<link rel="stylesheet" href="assets/js/leaflet.markercluster/dist/MarkerCluster.Default.css" />
-<script src="assets/js/leaflet.markercluster/dist/leaflet.markercluster-src.js"></script>
-
-
-
+<title>My app</title>
+<script charset="utf-8" type="text/javascript" src="assets/js/cordova.js"></script><script type="text/javascript">// <![CDATA[
+  document.addEventListener("deviceready",function() {
+    var iframe = document.getElementById('iframe');
+    var url = "file://";
+    // Announce that we have a camera.
+    iframe.addEventListener("load", function(event) {
+      iframe.contentWindow.postMessage({
+        cameraEnabled: navigator.camera != null && navigator.camera.getPicture != null
+      }, url);
+    }, false);
+    // Listen for requests to use it.
+    window.addEventListener("message", function(event) {
+      if (event.origin == url) {
+        if (event.data == "camera") {
+          navigator.camera.getPicture(function(imageData) {
+            iframe.contentWindow.postMessage({
+              image: imageData
+            }, url);
+          }, function(message) {
+            iframe.contentWindow.postMessage({
+              error: message
+            }, url);
+          }, {
+            quality: 50,
+            destinationType: Camera.DestinationType.DATA_URL,
+            targetWidth: 640,
+            targetHeight: 640
+          });
+        }
+      }
+    }, false);
+    iframe.src= url;
+  }, false);
+// ]]></script>
+<style type='text/css'>
+  body,html,iframe {
+    margin: 0; padding: 0; border: none; width: 100%; height: 100%;
+  }
+</style>
 </head>
-
 <body>
-
-
-<h1 id="header">Roslyn: Your Tour Guide Robot</h1>
-
-<!-- <div style="position:absolute; left:0; top:0; width:1280px; height:800px; background:#eee;z-index:-1;"></div> -->
-
-<div id="welcome_pane" >
-	<div id="begin_tour_button" class="button">Begin Tour</div>
-	<div id="message">Welcome to the University of Nevada, Reno. I can take you on a tour of the Computer Science 
-	 and Engineering Department on this floor. Places we can go include offices, labs, and the computing center. </div>
-</div>
-
-
-
-<div id="map_pane"><div id="map_robot_marker"></div></div>
-
-<script src="assets/js/map.js"></script>
-
-
-<div id="interactive_mode_pane">
-	<!-- dots -->
-	<div class="marker" style="top:360px;left:760px;"></div>
-	<div class="marker" style="top:270px;left:350px;"></div>
-</div>
-
-<div id="end_tour_pane">
-	<div id="message_end">Thank you for touring the Computer Science &amp; Engineering Department. 
-	I hope you enjoyed your time and learned about the incredible program we have here as well as some interesting 
-	research that our department performs. </div>
-</div>
-
-<div id="footer">
-	<div id="map_button" class="button">Map</div>
-	<div id="interactive_mode_button" class="button">Interactive Mode</div>
-	<div id="welcome_button" class="button current">Welcome</div>
-	<div id="end_tour_button" class="button">End Tour</div>
-</div>
-
+  <iframe src='' id='iframe'></iframe>
 </body>
 </html>
