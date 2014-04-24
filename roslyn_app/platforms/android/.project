@@ -34,7 +34,7 @@
 		<link>
 			<name>config.xml</name>
 			<type>1</type>
-			<locationURI>PARENT-3-PROJECT_LOC/roslyn/tablet/config.xml</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/www/config.xml</locationURI>
 		</link>
 		<link>
 			<name>merges</name>
@@ -44,7 +44,7 @@
 		<link>
 			<name>www</name>
 			<type>2</type>
-			<location>/home/jrhizor/Desktop/roslyn_app/www</location>
+			<location>/home/jrhizor/Desktop/roslyn/roslyn_app/www</location>
 		</link>
 	</linkedResources>
 	<filteredResources>
