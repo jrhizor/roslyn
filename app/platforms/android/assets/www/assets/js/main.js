@@ -19,34 +19,34 @@
 var marker;
 
 var convertTFtoLeaflet = function(x,y) {
-  var x_prime = 0.0127815*x+0.695113;
-  var y_prime = 0.0936971*y+1.39433;
+  var x_prime = (x * -4.347238) + (y * 6.819415);
+  var y_prime = (x * -2.656387) + (y * 4.170410);
   return [x_prime, y_prime];
 };
 
-// DO THIS
-// var convertLeaflettoTF = function(x_prime,y_prime) {
-//   var x_prime = 0.0127815*x+0.695113;
-//   var y_prime = 0.0936971*y+1.39433;
-//   return [x_prime, y_prime];
-// };
+var convertLeaflettoTF = function(x,y) {
+  var x_prime = (x * -282.354631) + (y * 461.703328);
+  var y_prime = (x * -179.848807) + (y * 294.326665);
+  return [x_prime, y_prime];
+};
 
 var destinations = 
 {
-  "ECC": [0.00275, 0.12634],
-  "CSEClaytonOffice": [0.28839, 1.35132],
-  "ITOffice": [0.49301, 1.35132],
-  "RoboticsLab": [0.71272, 1.35132],
-  "RoboticsWorkroom": [0.75254, 1.230],
-  "MenRR1": [0.00549, 1.230],
-  "WomenRR1": [0.00824, 0.550],
-  "HarrisNancyOffice": [0.00824, 1.44196],
-  "MonicaOffice": [0.00824, 1.350],
-  "GunesOffice": [0.00824, 1.210],
-  "YukselOffice": [0.00824, 1.080],
-  "DascaluOffice": [0.00824, 0.950],
-  "SushilOfficeClass": [0.00824, 0.675],
-  "MirceaOffice": [0.00824, 0.440],
+	//    long-y     lat-x
+"ECC": [-34.403, -21.9127],  //
+  "CSEClaytonOffice": [3.578, -14.293],  //
+  "ITOffice": [3.5221, -6.8798],    //
+  "RoboticsLab": [3.563, -1.4458],    //
+  "RoboticsWorkroom": [0.154026, 0.278556],  //
+  "MenRR1": [0, -21.214],         //
+  "WomenRR1": [-19.09,-21.55],          //
+  "HarrisNancyOffice": [6.4101,-21.7],   //
+  "MonicaOffice": [2.28,-21.791],      //
+  "GunesOffice": [-1.3765,-21.729],    //
+  "YukselOffice": [-4.7363,-21.319],   //
+  "DascaluOffice": [-6.1214,-21.314],   //
+  "SushilOfficeClass": [-12.084, -21.55],  //
+  "MirceaOffice": [-19.09,-21.55],     //
   "MichaelOffice": [0.00824, 0.315],
   "CyberLab": [0.75254, -0.457],
   "GradOffices": [0.75254, -0.26],
@@ -67,46 +67,58 @@ var destinations =
 
 function onDeviceReady()
 {
-  if(!navigator)
-  {
-    alert("no navigator")
-  }
-  else
-  {
-    for(var propName in o) {
-      alert(propName)  
-    }
+ //  alert('onDeviceReady')
+ 
 
-  }
+ // if(typeof navigator.camera != 'undefined')
+ //  {
+ //    alert('oh yes1')
+ //  }
+ //  else
+ //  {
+ //    alert('oh no1')
+ //  }
 
-  if (!navigator.Camera) {
-      alert("Camera API not supported", "Error");
-    }
-    else
-    {
-    var options =   {   quality: 50,
-                        destinationType: Camera.DestinationType.DATA_URL,
-                        sourceType: 1,      // 0:Photo Library, 1=Camera, 2=Saved Album
-                        encodingType: 0     // 0=JPG 1=PNG
-                    };
 
-    navigator.camera.getPicture(
-        function(imageData) {
-            $('.employee-image', this.el).attr('src', "data:image/jpeg;base64," + imageData);
-        },
-        function() {
-            alert('Error taking picture', 'Error');
-        },
-        options);  
-    }
+ //  if(typeof navigator.camera.getPicture != 'undefined')
+ //  {
+ //    alert('oh yes')
+ //  }
+ //  else
+ //  {
+ //    alert('oh no')
+ //  }
+
+  // if (navigator.camera == null) {
+  //   location.reload();
+  // }
+
+  // if (!navigator.Camera) {
+  //     alert("Camera API not supported", "Error");
+  //   }
+  //   else
+  //   {
+  //   var options =   {   quality: 50,
+  //                       destinationType: Camera.DestinationType.DATA_URL,
+  //                       sourceType: 1,      // 0:Photo Library, 1=Camera, 2=Saved Album
+  //                       encodingType: 0     // 0=JPG 1=PNG
+  //                   };
+
+  //   navigator.camera.getPicture(
+  //       function(imageData) {
+  //           $('.employee-image', this.el).attr('src', "data:image/jpeg;base64," + imageData);
+  //       },
+  //       function() {
+  //           alert('Error taking picture', 'Error');
+  //       },
+  //       options);  
+  //   }
 
 }
 
 
 $(document).ready(function(){
 
-var video = document.getElementById('video');
-video.play();
 
 document.addEventListener("deviceready",onDeviceReady,false);
 
@@ -242,11 +254,13 @@ tf_listener.subscribe('base_link', function(tf) {
   });
 
   $(window).bind( 'hashchange', function(e) { 
-    if(window.location.hash && (window.location.hash=="#ECC" || window.location.hash=="#RoboticsWorkroom"))
+    if(window.location.hash)
     {
       // TODO CONVERT THIS-21.9127
-      // var converted = convertLeaflettoTF(destinations[window.location.hash.substring(1)]);
-      
+      var converted = destinations[window.location.hash.substring(1)];
+      console.log(destinations[window.location.hash.substring(1)])
+      console.log(converted);
+
       // RoboticsWorkroom
       var robotics_lab_x = 0.154026;      
       var robotics_lab_y = 0.278556;
@@ -280,8 +294,8 @@ tf_listener.subscribe('base_link', function(tf) {
         },
         pose : {
           position : {
-            x : x,
-            y : y,
+            x : converted[0],
+            y : converted[1],
             z : 0
           },
           orientation : {
