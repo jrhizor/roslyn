@@ -163,9 +163,6 @@ tf_listener.subscribe('base_link', function(tf) {
 
     $("div").removeClass("current");
     $("#interactive_mode_button").addClass("current");
-
-    document.body.style.background="url('assets/img/camera.png')";
-    document.body.style.backgroundRepeat="no-repeat";
   
     hide_welcome();
 

@@ -258,4 +258,4 @@ for (var i = 0; i < womensRR.length; i++)
 // popup.setLatLng(e.latlng).setContent("You clicked the map at " + e.latlng.toString()).openOn(map);
 // }
 
-map.on('click', onMapClick);
+//map.on('click', onMapClick);
