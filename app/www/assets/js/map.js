@@ -190,15 +190,15 @@ var redIcon = L.icon({
 
 var maleIcon = L.icon({
     iconUrl: 'assets/img/male.png',
-    iconSize: [20,40],
-    iconAnchor: [10, 40],
-    popupAnchor: [0, -40],
+    iconSize: [25,25],
+    iconAnchor: [12, 25],
+    popupAnchor: [0, -25],
 });
 
 var femaleIcon = L.icon({
     iconUrl: 'assets/img/female.png',
-    iconSize: [20,40],
-    iconAnchor: [10, 40],
+    iconSize: [25,25],
+    iconAnchor: [12, 25],
     popupAnchor: [0, -40],
 });
 
