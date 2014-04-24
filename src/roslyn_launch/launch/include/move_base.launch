@@ -1,11 +1,11 @@
 <launch>
-	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-		<rosparam file="$(find roslyn_launch)/launch/navigation_params/costmap_common_params.yaml" command="load" ns="global_costmap" />
-		<rosparam file="$(find roslyn_launch)/launch/navigation_params/costmap_common_params.yaml" command="load" ns="local_costmap" />
-		<rosparam file="$(find roslyn_launch)/launch/navigation_params/local_costmap_params.yaml" command="load" />
-		<rosparam file="$(find roslyn_launch)/launch/navigation_params/global_costmap_params.yaml" command="load" />
-		<rosparam file="$(find roslyn_launch)/launch/navigation_params/base_local_planner_params.yaml" command="load" />
-		<param name="meter_score" value="true"/>
-		<param name="controller_frequency" value="10"/>
-	</node>
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find roslyn_launch)/launch/navigation_params/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find roslyn_launch)/launch/navigation_params/costmap_common_params.yaml" command="load" ns="local_costmap"/>
+    <rosparam file="$(find roslyn_launch)/launch/navigation_params/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find roslyn_launch)/launch/navigation_params/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find roslyn_launch)/launch/navigation_params/base_local_planner_params.yaml" command="load" />
+    <param name="meter_score" value="true"/>
+    <param name="controller_frequency" value="10"/>
+  </node>
 </launch>
