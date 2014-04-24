@@ -1,4 +1,5 @@
 <launch>
+<!--
   <node pkg="gmapping" type="slam_gmapping" name="gmapping" output="screen" >
     <remap from="scan" to="/urg/scan"/>
     <param name="odom_frame" value="rrl4odom"/>
@@ -7,6 +8,7 @@
     <param name="linearUpdate" type="double" value="0.1"/>
     <param name="angularUpdate" type="double" value="0.03"/>
   </node>
+-->
   <node pkg="gmapping" type="slam_gmapping" name="gmapping_sick" output="screen" >
     <remap from="map" to="map_sick"/>
     <remap from="scan" to="/rrl4/scan"/>
