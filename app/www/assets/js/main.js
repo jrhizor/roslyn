@@ -19,20 +19,20 @@
 var marker;
 
 var convertTFtoLeaflet = function(x,y) {
-  var x_prime = 0.0127815*x+0.695113;
-  var y_prime = 0.0936971*y+1.39433;
+  var x_prime = (x * -4.347238) + (y * 6.819415);
+  var y_prime = (x * -2.656387) + (y * 4.170410);
   return [x_prime, y_prime];
 };
 
-// DO THIS
-// var convertLeaflettoTF = function(x_prime,y_prime) {
-//   var x_prime = 0.0127815*x+0.695113;
-//   var y_prime = 0.0936971*y+1.39433;
-//   return [x_prime, y_prime];
-// };
+var convertLeaflettoTF = function(x,y) {
+  var x_prime = (x * -282.354631) + (y * 461.703328);
+  var y_prime = (x * -179.848807) + (y * 294.326665);
+  return [x_prime, y_prime];
+};
 
 var destinations = 
 {
+	//    long-y     lat-x
   "ECC": [0.00275, 0.12634],
   "CSEClaytonOffice": [0.28839, 1.35132],
   "ITOffice": [0.49301, 1.35132],
@@ -203,8 +203,10 @@ tf_listener.subscribe('base_link', function(tf) {
     if(window.location.hash && (window.location.hash=="#ECC" || window.location.hash=="#RoboticsWorkroom"))
     {
       // TODO CONVERT THIS-21.9127
-      // var converted = convertLeaflettoTF(destinations[window.location.hash.substring(1)]);
-      
+      var converted = convertLeaflettoTF(destinations[window.location.hash.substring(1)][1], destinations[window.location.hash.substring(1)][0]);
+      console.log(destinations[window.location.hash.substring(1)])
+      console.log(converted);
+
       // RoboticsWorkroom
       var robotics_lab_x = 0.154026;      
       var robotics_lab_y = 0.278556;
