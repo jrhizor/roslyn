@@ -19,3 +19,13 @@
 /build
 /devel
 .DS_Store
+
+*.apk
+*.ap_
+*.dex
+
+*.class
+roslyn_app/platforms/android/bin/
+roslyn_app/platforms/android/gen/
+roslyn_app/platforms/android/ant-gen/
+roslyn_app/platforms/android/ant-build/
