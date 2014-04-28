@@ -98,11 +98,65 @@ var destinations =
 
 }
 
+function onDeviceReady()
+{
+ //  alert('onDeviceReady')
+ 
+
+ // if(typeof navigator.camera != 'undefined')
+ //  {
+ //    alert('oh yes1')
+ //  }
+ //  else
+ //  {
+ //    alert('oh no1')
+ //  }
+
+
+ //  if(typeof navigator.camera.getPicture != 'undefined')
+ //  {
+ //    alert('oh yes')
+ //  }
+ //  else
+ //  {
+ //    alert('oh no')
+ //  }
+
+  // if (navigator.camera == null) {
+  //   location.reload();
+  // }
+
+  // if (!navigator.Camera) {
+  //     alert("Camera API not supported", "Error");
+  //   }
+  //   else
+  //   {
+  //   var options =   {   quality: 50,
+  //                       destinationType: Camera.DestinationType.DATA_URL,
+  //                       sourceType: 1,      // 0:Photo Library, 1=Camera, 2=Saved Album
+  //                       encodingType: 0     // 0=JPG 1=PNG
+  //                   };
+
+  //   navigator.camera.getPicture(
+  //       function(imageData) {
+  //           $('.employee-image', this.el).attr('src', "data:image/jpeg;base64," + imageData);
+  //       },
+  //       function() {
+  //           alert('Error taking picture', 'Error');
+  //       },
+  //       options);  
+  //   }
+
+}
+
+
 $(document).ready(function(){
 
 
+document.addEventListener("deviceready",onDeviceReady,false);
 
-var ros = new ROSLIB.Ros({url:'ws://10.8.4.1:9090'});
+// handle ROS connection
+var ros = new ROSLIB.Ros({url:'ws://10.8.4.6:9090'});
 
 // If there is an error on the backend, an 'error' emit will be emitted.
 ros.on('error', function(error) {
@@ -233,10 +287,10 @@ tf_listener.subscribe('base_link', function(tf) {
   });
 
   $(window).bind( 'hashchange', function(e) { 
-    if(window.location.hash && (window.location.hash=="#ECC" || window.location.hash=="#RoboticsWorkroom"))
+    if(window.location.hash)
     {
       // TODO CONVERT THIS-21.9127
-      var converted = convertLeaflettoTF(destinations[window.location.hash.substring(1)][1], destinations[window.location.hash.substring(1)][0]);
+      var converted = destinations[window.location.hash.substring(1)];
       console.log(destinations[window.location.hash.substring(1)])
       console.log(converted);
 
@@ -275,8 +329,8 @@ tf_listener.subscribe('base_link', function(tf) {
         },
         pose : {
           position : {
-            x : x,
-            y : y,
+            x : converted[0],
+            y : converted[1],
             z : 0
           },
           orientation : {

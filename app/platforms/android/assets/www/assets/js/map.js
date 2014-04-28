@@ -199,7 +199,7 @@ var femaleIcon = L.icon({
     iconUrl: 'assets/img/female.png',
     iconSize: [25,25],
     iconAnchor: [12, 25],
-    popupAnchor: [0, -40],
+    popupAnchor: [0, -25],
 });
 
 //Place all office markers on the map
