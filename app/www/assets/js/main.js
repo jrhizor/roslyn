@@ -19,17 +19,28 @@
 var marker;
 
 var convertTFtoLeaflet = function(x,y) {
-  var x_prime = (x * -4.347238) + (y * 6.819415);
-  var y_prime = (x * -2.656387) + (y * 4.170410);
-  return [x_prime, y_prime];
-  //0.01648, -1.38977
+  a =  0.0006;
+  b =  0.0310;
+  c =  0.7145;
+  d =  0.0338;
+  e =  0.0002;
+  f =  1.2579;
+  g =  0.0007;
+  h = -0.0007;
+  i =  1.0000;
+
+  x_prime = a*x + b*y + c;
+  y_prime = d*x + e*y + f;
+  w_prime = g*x + h*y + i;
+
+  return [x_prime/w_prime, y_prime/w_prime];
 };
 
-var convertLeaflettoTF = function(x,y) {
-  var x_prime = (x * -282.354631) + (y * 461.703328);
-  var y_prime = (x * -179.848807) + (y * 294.326665);
-  return [x_prime, y_prime];
-};
+// var convertLeaflettoTF = function(x,y) {
+//   var x_prime = (x * -282.354631) + (y * 461.703328);
+//   var y_prime = (x * -179.848807) + (y * 294.326665);
+//   return [x_prime, y_prime];
+// };
 
 var destinations = 
 {
@@ -229,13 +240,14 @@ tf_listener.subscribe('base_link', function(tf) {
   //console.log(tf_listener.processFeedback(tf));
   //console.log(tf);
   console.log(tf.translation.x, tf.translation.y);
-  console.log(convertLeaflettoTF(tf.translation.x, tf.translation.y));
+  console.log(convertTFtoLeaflet(tf.translation.x, tf.translation.y));
   console.log('-------')
-  //map.removeLayer(marker);
+  
+  map.removeLayer(marker);
 
  //[0.01648, -1.38977
 
-  //current_loc.setLatLng(convertTFtoLeaflet(tf.translation.x, tf.translation.y));
+  current_loc.setLatLng(convertTFtoLeaflet(tf.translation.x, tf.translation.y));
 
   // map.removeLayer(marker);
   // marker = new L.marker(convertTFtoLeaflet(tf.translation.x, tf.translation.y), {icon: redIcon})
