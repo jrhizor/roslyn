@@ -369,7 +369,7 @@ function onMapClick(e) {
 popup.setLatLng(e.latlng).setContent("You clicked the map at " + e.latlng.toString()).openOn(map);
 }
 
-map.on('click', onMapClick);
+//map.on('click', onMapClick);
 
 var current_loc = new L.marker([0,0], {icon: currentLocIcon});
 map.addLayer(current_loc);
