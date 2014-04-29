@@ -188,8 +188,8 @@ $(document).ready(function(){
 //document.addEventListener("deviceready",onDeviceReady,false);
 
 // handle ROS connection
-// var ros = new ROSLIB.Ros({url:'ws://10.8.4.1:9090'});
-var ros = new ROSLIB.Ros({url:'ws://127.0.0.1:9090'});
+var ros = new ROSLIB.Ros({url:'ws://10.8.4.1:9090'});
+// var ros = new ROSLIB.Ros({url:'ws://127.0.0.1:9090'});
 
 // If there is an error on the backend, an 'error' emit will be emitted.
 ros.on('error', function(error) {
