@@ -261,7 +261,17 @@ var acmIcon = L.icon({
     iconSize: [40,40],
     iconAnchor: [20, 35],
     popupAnchor: [0, -35]
-})
+});
+
+var currentLocIcon = L.icon({
+    iconUrl: 'assets/img/markerCurrentLoc.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowUrl: 'assets/img/marker-shadow.png',
+    shadowSize: [41, 41],
+    shadowAnchor: [12.5, 41]
+});
 
 //Place all office markers on the map
 for (var i = 0; i < offices.length; i++) 
@@ -361,5 +371,5 @@ popup.setLatLng(e.latlng).setContent("You clicked the map at " + e.latlng.toStri
 
 map.on('click', onMapClick);
 
-var current_loc = new L.marker([0,0], {icon: maleIcon});
+var current_loc = new L.marker([0,0], {icon: currentLocIcon});
 map.addLayer(current_loc);
