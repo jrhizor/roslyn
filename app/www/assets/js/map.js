@@ -223,15 +223,15 @@ var purpleIcon = L.icon({
 
 var maleIcon = L.icon({
     iconUrl: 'assets/img/male.png',
-    iconSize: [25,25],
-    iconAnchor: [22, 35],
+    iconSize: [35,35],
+    iconAnchor: [27, 35],
     popupAnchor: [0, -25]
 });
 
 var femaleIcon = L.icon({
     iconUrl: 'assets/img/female.png',
-    iconSize: [25,25],
-    iconAnchor: [22, 35],
+    iconSize: [35,35],
+    iconAnchor: [27, 35],
     popupAnchor: [0, -25]
 });
 
