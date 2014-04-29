@@ -23,6 +23,14 @@
                         {
                             "xml": "<feature name=\"Capture\"><param name=\"android-package\" value=\"org.apache.cordova.mediacapture.Capture\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Html5Video\"><param name=\"android-package\" value=\"org.apache.cordova.plugin.Html5Video\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -64,10 +72,16 @@
         },
         "org.apache.cordova.media-capture": {
             "PACKAGE_NAME": "com.unr.roslyn"
+        },
+        "jaeger.Html5Video": {
+            "PACKAGE_NAME": "com.unr.roslyn"
         }
     },
     "dependent_plugins": {
         "org.apache.cordova.file": {
+            "PACKAGE_NAME": "com.unr.roslyn"
+        },
+        "org.apache.cordova.device": {
             "PACKAGE_NAME": "com.unr.roslyn"
         }
     }

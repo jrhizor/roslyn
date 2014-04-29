@@ -22,6 +22,7 @@ var convertTFtoLeaflet = function(x,y) {
   var x_prime = (x * -4.347238) + (y * 6.819415);
   var y_prime = (x * -2.656387) + (y * 4.170410);
   return [x_prime, y_prime];
+  //0.01648, -1.38977
 };
 
 var convertLeaflettoTF = function(x,y) {
@@ -32,7 +33,7 @@ var convertLeaflettoTF = function(x,y) {
 
 var destinations = 
 {
-	//    leaflet locations [y,x]
+	//    leaflet locations in hall [y,x]
   // "ECC": [0.00275, 0.12634],
   // "CSEClaytonOffice": [0.28839, 1.35132],
   // "ITOffice": [0.49301, 1.35132],
@@ -62,6 +63,7 @@ var destinations =
   // "ShamikOffice": [-0.520, -1.59439],
   // "GridNode": [-0.820, -1.59851],
   // "ECSL": [-0.570,-1.59439]
+
 
   //ros locations [x,y]
   "ECC": [-34.403, -21.9127],  //
@@ -132,7 +134,7 @@ function onDeviceReady()
   //   else
   //   {
   //   var options =   {   quality: 50,
-  //                       destinationType: Camera.DestinationType.DATA_URL,
+  //                       de//stinationType: Camera.DestinationType.DATA_URL,
   //                       sourceType: 1,      // 0:Photo Library, 1=Camera, 2=Saved Album
   //                       encodingType: 0     // 0=JPG 1=PNG
   //                   };
@@ -155,7 +157,8 @@ $(document).ready(function(){
 //document.addEventListener("deviceready",onDeviceReady,false);
 
 // handle ROS connection
-var ros = new ROSLIB.Ros({url:'ws://10.8.4.1:9090'});
+//var ros = new ROSLIB.Ros({url:'ws://10.8.4.1:9090'});
+var ros = new ROSLIB.Ros({url:'ws://127.0.0.1:9090'});
 
 // If there is an error on the backend, an 'error' emit will be emitted.
 ros.on('error', function(error) {
@@ -176,7 +179,9 @@ var listener = new ROSLIB.Topic({
 
 var tf_listener = new ROSLIB.TFClient({
   ros : ros,
-  fixedFrame: 'map'
+  fixedFrame: 'map',
+  angularThres : 0.001,
+  transThres : 0.001
 });
 
 
@@ -201,9 +206,16 @@ listener.subscribe(function(message) {
 
 
 tf_listener.subscribe('base_link', function(tf) {
-  // console.log(tf_listener.processFeedback(tf));
-
+  //console.log(tf_listener.processFeedback(tf));
+  //console.log(tf);
   console.log(tf.translation.x, tf.translation.y);
+  console.log(convertLeaflettoTF(tf.translation.x, tf.translation.y));
+  console.log('-------')
+  //map.removeLayer(marker);
+
+ //[0.01648, -1.38977
+
+  //current_loc.setLatLng(convertTFtoLeaflet(tf.translation.x, tf.translation.y));
 
   // map.removeLayer(marker);
   // marker = new L.marker(convertTFtoLeaflet(tf.translation.x, tf.translation.y), {icon: redIcon})

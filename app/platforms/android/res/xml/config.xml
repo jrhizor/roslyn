@@ -28,4 +28,10 @@
     <access origin="*" />
     <preference name="orientation" value="landscape" />
     <preference name="fullscreen" value="true" />
+    <feature name="Device">
+        <param name="android-package" value="org.apache.cordova.device.Device" />
+    </feature>
+    <feature name="Html5Video">
+        <param name="android-package" value="org.apache.cordova.plugin.Html5Video" />
+    </feature>
 </widget>

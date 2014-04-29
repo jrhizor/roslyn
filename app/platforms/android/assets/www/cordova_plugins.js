@@ -92,6 +92,13 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/jaeger.Html5Video/www/Html5Video.js",
+        "id": "jaeger.Html5Video.Html5Video",
+        "clobbers": [
+            "plugins.html5Video"
+        ]
+    },
+    {
         "file": "plugins/org.apache.cordova.file/www/DirectoryEntry.js",
         "id": "org.apache.cordova.file.DirectoryEntry",
         "clobbers": [
@@ -219,6 +226,13 @@ module.exports = [
         "merges": [
             "window.FileSystem"
         ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.device/www/device.js",
+        "id": "org.apache.cordova.device.device",
+        "clobbers": [
+            "device"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -227,7 +241,9 @@ module.exports.metadata =
     "org.apache.cordova.camera": "0.2.9",
     "org.apache.cordova.media": "0.2.10",
     "org.apache.cordova.media-capture": "0.3.0",
-    "org.apache.cordova.file": "1.1.0"
+    "jaeger.Html5Video": "1.2.1",
+    "org.apache.cordova.file": "1.1.0",
+    "org.apache.cordova.device": "0.2.10-dev"
 }
 // BOTTOM OF METADATA
 });
