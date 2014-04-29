@@ -94,7 +94,7 @@ var destinations =
   "GridNode": [-0.820, -1.59851],
   "ECSL": [-0.570,-1.59439]
 
-  acm= [-10.782, -21.653]  //
+  //acm= [-10.782, -21.653]  //
 
 }
 
@@ -149,11 +149,10 @@ function onDeviceReady()
 
 }
 
-
 $(document).ready(function(){
 
 
-document.addEventListener("deviceready",onDeviceReady,false);
+//document.addEventListener("deviceready",onDeviceReady,false);
 
 // handle ROS connection
 var ros = new ROSLIB.Ros({url:'ws://10.8.4.6:9090'});
@@ -255,7 +254,27 @@ tf_listener.subscribe('base_link', function(tf) {
 
   }
 
+
+  var submitEndTour = new ROSLIB.Topic({
+    ros : ros,
+    name : '/move_base/cancel',
+    messageType : 'actionlib_msgs/GoalID'
+  });
+
   var end_tour = function() {
+
+
+    var newGoal = new ROSLIB.Message({
+      stamp : {
+        secs : 0,
+        nsecs : 0
+      },
+      id : ""
+    });
+
+
+    submitEndTour.publish(newGoal);
+
     $("#welcome_pane").fadeTo(200,1);
     $("#end_tour_pane").fadeTo(200, 0);
     $("#begin_tour_button").show();
