@@ -1,17 +1,16 @@
 TrajectoryPlannerROS:
   #movement control
-  max_vel_x: 1.0
+  max_vel_x: 0.6
   min_vel_x: 0.1
-  max_rotational_vel: .8
+  max_rotational_vel: .5
   min_in_place_rotational_vel: 0.1
-  acc_lim_th: 3.2
-  acc_lim_x: 2.5
-  acc_lim_y: 2.5
-  escape_vel: -0.2
+  acc_lim_th: 4.5
+  acc_lim_x: 3.5
+  escape_vel: -0.25
 
   #local navigation settings
   oscillation_reset_dist: 0.05
-  publish_cost_grid_pc: true
+  publish_cost_grid_pc: false
   global_frame_id: /odom
 
   #robot description
@@ -19,6 +18,6 @@ TrajectoryPlannerROS:
 
   #Tolerance values for goal reaching
   xy_goal_tolerance: 0.5
-  yaw_goal_tolerance: 0.25
+  yaw_goal_tolerance: 4
 
   meter_scoring: true
