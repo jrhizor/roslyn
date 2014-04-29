@@ -19,20 +19,32 @@
 var marker;
 
 var convertTFtoLeaflet = function(x,y) {
-  var x_prime = (x * -4.347238) + (y * 6.819415);
-  var y_prime = (x * -2.656387) + (y * 4.170410);
-  return [x_prime, y_prime];
+  a =  0.0006;
+  b =  0.0310;
+  c =  0.7145;
+  d =  0.0338;
+  e =  0.0002;
+  f =  1.2579;
+  g =  0.0007;
+  h = -0.0007;
+  i =  1.0000;
+
+  x_prime = a*x + b*y + c;
+  y_prime = d*x + e*y + f;
+  w_prime = g*x + h*y + i;
+
+  return [x_prime/w_prime, y_prime/w_prime];
 };
 
-var convertLeaflettoTF = function(x,y) {
-  var x_prime = (x * -282.354631) + (y * 461.703328);
-  var y_prime = (x * -179.848807) + (y * 294.326665);
-  return [x_prime, y_prime];
-};
+// var convertLeaflettoTF = function(x,y) {
+//   var x_prime = (x * -282.354631) + (y * 461.703328);
+//   var y_prime = (x * -179.848807) + (y * 294.326665);
+//   return [x_prime, y_prime];
+// };
 
 var destinations = 
 {
-	//    leaflet locations [y,x]
+	//    leaflet locations in hall [y,x]
   // "ECC": [0.00275, 0.12634],
   // "CSEClaytonOffice": [0.28839, 1.35132],
   // "ITOffice": [0.49301, 1.35132],
@@ -63,39 +75,60 @@ var destinations =
   // "GridNode": [-0.820, -1.59851],
   // "ECSL": [-0.570,-1.59439]
 
+
   //ros locations [x,y]
-  "ECC": [-34.403, -21.9127],  //
-  "CSEClaytonOffice": [3.578, -14.293],  //
-  "ITOffice": [3.5221, -6.8798],		//
-  "RoboticsLab": [3.563, -1.4458],		//
-  "RoboticsWorkroom": [0.154026, 0.278556],  //
-  "MenRR1": [0, -21.214],         //
-  "WomenRR1": [-19.09,-21.55],          //
-  "HarrisNancyOffice": [6.4101,-21.7],   //
-  "MonicaOffice": [2.28,-21.791],      //
-  "GunesOffice": [-1.3765,-21.729],    //
-  "YukselOffice": [-4.7363,-21.319],   //
-  "DascaluOffice": [-6.1214,-21.314],   //
-  "SushilOfficeClass": [-12.084, -21.55],  //
-  "MirceaOffice": [-19.09,-21.55],     //
-  "MichaelOffice": [0.00824, 0.315],     
-  "CyberLab": [0.75254, -0.457],
-  "GradOffices": [0.75254, -0.26],
-  "Class1": [0.56853, -0.56442],
-  "Class2": [0.21423, -0.56442],
-  "MenRR2": [0.00824, -0.443],
-  "WomenRR2": [0.00824, -1.480],
-  "DaveOffice": [0.00824, -0.925],
-  "VarolOffice": [0.00824,-1.050],
-  "NetworkLab": [0.08377, -1.58066],
-  "EelkeOffice": [-0.280, -1.58752],
-  "BryantOffice": [-0.400, -1.5889],
-  "ShamikOffice": [-0.520, -1.59439],
-  "GridNode": [-0.820, -1.59851],
-  "ECSL": [-0.570,-1.59439]
+  //labs
+  "RoboticsLab": [3.563, -1.4458],    
+  "RoboticsWorkroom": [0.154026, 0.278556], 
+  "NetworkLab": [-81.688, -17.962], 
+  "ECSL": [-82.039, -35.98], //
 
-  //acm= [-10.782, -21.653]  //
+  //classrooms
+  "Class2": [-52.361, -2.4175],
+  "GridNode": [-82.387, -48.185],
+  "ClassFountain": [-52.026, -17.147],          //by fountain
 
+  //offices
+  "CSEClaytonOffice": [3.578, -14.293],  
+  "ITOffice": [3.5221, -6.8798],    
+  "HarrisNancyOffice": [6.4101,-21.7],   
+  "MonicaOffice": [2.28,-21.791],      
+  "GunesOffice": [-1.3765,-21.729],    
+  "YukselOffice": [-4.7363,-21.319],   
+  "DascaluOffice": [-6.1214,-21.5],   
+  "SushilOfficeClass": [-15.084, -21.5],     //also has classroom 
+  "MirceaOffice": [-19.09,-21.5],    
+  "MichaelOffice": [-26.797, -21.5],       
+  "CyberLab": [-46.922, 0.5665],
+  "GradOffices": [-40.068, 0.3446],
+  "DaveOffice": [-61.8, -21.5],   
+  "VarolOffice": [-66.034,-21.5],
+  "EelkeOffice": [-81.861, -29.852],  //
+  "BryantOffice": [-81.843, -32.415], //
+  "ShamikOffice": [-82.09, -37.258],  //
+  "ACM": [-12.084, -21.5],  //
+
+  //ECC
+  "ECC": [-34.403, -21.9127],  
+
+  //Other Stuff
+  "MenRRbyCSEOffice": [0, -21.214],
+  "MenRRbyECC": [-48.252, -21.5],
+  "WomenRRbySushil": [-19.09,-21.55],
+  "WomenRRbyNetworking": [-79.788, -21.5], 
+  
+  "stairsECC":  [-28.446, -21.5],
+  "stairsBackElevator": [-23.695, 0.56313],
+  "stairsElevatorECSL": [-82.387, -48.185],
+  "stairsGradOffices": [-51.698, 0.3898],
+  "stairsHarris": [7.8375, -21.5],
+
+  "elevatorBack": [-25.639, 1.127],
+
+  "fountainOffice": [3.5654, -17.406],
+  "fountainNetworking": [-81.688, -17.962],
+  "fountainClassroom": [-52.026, -17.147]
+  
 }
 
 function onDeviceReady()
@@ -132,7 +165,7 @@ function onDeviceReady()
   //   else
   //   {
   //   var options =   {   quality: 50,
-  //                       destinationType: Camera.DestinationType.DATA_URL,
+  //                       de//stinationType: Camera.DestinationType.DATA_URL,
   //                       sourceType: 1,      // 0:Photo Library, 1=Camera, 2=Saved Album
   //                       encodingType: 0     // 0=JPG 1=PNG
   //                   };
@@ -156,6 +189,7 @@ $(document).ready(function(){
 
 // handle ROS connection
 var ros = new ROSLIB.Ros({url:'ws://10.8.4.1:9090'});
+// var ros = new ROSLIB.Ros({url:'ws://127.0.0.1:9090'});
 
 // If there is an error on the backend, an 'error' emit will be emitted.
 ros.on('error', function(error) {
@@ -176,7 +210,9 @@ var listener = new ROSLIB.Topic({
 
 var tf_listener = new ROSLIB.TFClient({
   ros : ros,
-  fixedFrame: 'map'
+  fixedFrame: 'map',
+  angularThres : 0.001,
+  transThres : 0.001
 });
 
 
@@ -201,9 +237,17 @@ listener.subscribe(function(message) {
 
 
 tf_listener.subscribe('base_link', function(tf) {
-  // console.log(tf_listener.processFeedback(tf));
+  //console.log(tf_listener.processFeedback(tf));
+  //console.log(tf);
+  // console.log(tf.translation.x, tf.translation.y);
+  // console.log(convertTFtoLeaflet(tf.translation.x, tf.translation.y));
+  // console.log('-------')
+  
+  map.removeLayer(marker);
 
-  console.log(tf.translation.x, tf.translation.y);
+ //[0.01648, -1.38977
+
+  current_loc.setLatLng(convertTFtoLeaflet(tf.translation.x, tf.translation.y));
 
   // map.removeLayer(marker);
   // marker = new L.marker(convertTFtoLeaflet(tf.translation.x, tf.translation.y), {icon: redIcon})
@@ -271,6 +315,9 @@ tf_listener.subscribe('base_link', function(tf) {
 
 
     submitEndTour.publish(newGoal);
+
+    map.setView([0,0], 0);
+    map.closePopup();
 
     $("#welcome_pane").fadeTo(200,1);
     $("#end_tour_pane").fadeTo(200, 0);

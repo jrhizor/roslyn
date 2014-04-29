@@ -52,6 +52,7 @@
 /home/jrhizor/Desktop/roslyn/app/platforms/android/ant-build/classes/org/apache/cordova/media/AudioPlayer$MODE.class \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/ant-build/classes/org/apache/cordova/media/AudioHandler.class \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/ant-build/classes/org/apache/cordova/media/AudioPlayer$1.class \
+/home/jrhizor/Desktop/roslyn/app/platforms/android/ant-build/classes/org/apache/cordova/device/Device.class \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/ant-build/classes/org/apache/cordova/camera/ExifHelper.class \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/ant-build/classes/org/apache/cordova/camera/FileHelper.class \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/ant-build/classes/org/apache/cordova/camera/CameraLauncher.class \
@@ -60,4 +61,6 @@
 /home/jrhizor/Desktop/roslyn/app/platforms/android/ant-build/classes/org/apache/cordova/mediacapture/Capture$2.class \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/ant-build/classes/org/apache/cordova/mediacapture/Capture.class \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/ant-build/classes/org/apache/cordova/mediacapture/Capture$3.class \
+/home/jrhizor/Desktop/roslyn/app/platforms/android/ant-build/classes/org/apache/cordova/plugin/Html5Video$1.class \
+/home/jrhizor/Desktop/roslyn/app/platforms/android/ant-build/classes/org/apache/cordova/plugin/Html5Video.class \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/ant-build/dexedLibs/classes-3bca4ec2c028558e9b72401f974a57b7.jar \
