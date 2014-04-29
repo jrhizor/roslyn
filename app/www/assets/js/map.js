@@ -181,7 +181,7 @@ var greenIcon = L.icon({
     iconUrl: 'assets/img/marker-icon-green.png',
     iconRetinaUrl: 'assets/img/marker-icon-2x-green.png',
     iconSize: [25, 41],
-    iconAnchor: [12, 41],
+    iconAnchor: [22, 51],
     popupAnchor: [1, -34],
     shadowUrl: 'assets/img/marker-shadow.png',
     shadowSize: [41, 41],
@@ -192,7 +192,7 @@ var blueIcon = L.icon({
     iconUrl: 'assets/img/marker-icon-blue.png',
     iconRetinaUrl: 'assets/img/marker-icon-2x-blue.png',
     iconSize: [25, 41],
-    iconAnchor: [12, 41],
+    iconAnchor: [22, 51],
     popupAnchor: [1, -34],
     shadowUrl: 'assets/img/marker-shadow.png',
     shadowSize: [41, 41],
@@ -203,7 +203,7 @@ var redIcon = L.icon({
     iconUrl: 'assets/img/marker-icon-red.png',
     iconRetinaUrl: 'assets/img/marker-icon-2x-red.png',
     iconSize: [25, 41],
-    iconAnchor: [12, 41],
+    iconAnchor: [22, 51],
     popupAnchor: [1, -34],
     shadowUrl: 'assets/img/marker-shadow.png',
     shadowSize: [41, 41],
@@ -214,7 +214,7 @@ var purpleIcon = L.icon({
     iconUrl: 'assets/img/marker-icon-purple.png',
     iconRetinaUrl: 'assets/img/marker-icon-2x-purple.png',
     iconSize: [25, 41],
-    iconAnchor: [12, 41],
+    iconAnchor: [22, 51],
     popupAnchor: [1, -34],
     shadowUrl: 'assets/img/marker-shadow.png',
     shadowSize: [41, 41],
@@ -224,49 +224,49 @@ var purpleIcon = L.icon({
 var maleIcon = L.icon({
     iconUrl: 'assets/img/male.png',
     iconSize: [25,25],
-    iconAnchor: [12, 25],
+    iconAnchor: [22, 35],
     popupAnchor: [0, -25]
 });
 
 var femaleIcon = L.icon({
     iconUrl: 'assets/img/female.png',
     iconSize: [25,25],
-    iconAnchor: [12, 25],
+    iconAnchor: [22, 35],
     popupAnchor: [0, -25]
 });
 
 var stairIcon = L.icon({
     iconUrl: 'assets/img/stairs.png',
     iconSize: [30,30],
-    iconAnchor: [15, 25],
+    iconAnchor: [25, 35],
     popupAnchor: [0, -15]
 });
 
 var fountainIcon = L.icon({
     iconUrl: 'assets/img/fountain.png',
     iconSize: [25,25],
-    iconAnchor: [12, 25],
+    iconAnchor: [22, 35],
     popupAnchor: [0, -25]
 });
 
 var elevatorIcon = L.icon({
     iconUrl: 'assets/img/elevator.png',
     iconSize: [30,30],
-    iconAnchor: [15, 25],
+    iconAnchor: [25, 35],
     popupAnchor: [0, -25]
 });
 
 var acmIcon = L.icon({
 	iconUrl: 'assets/img/acm.png',
     iconSize: [40,40],
-    iconAnchor: [20, 35],
+    iconAnchor: [30, 45],
     popupAnchor: [0, -35]
 });
 
 var currentLocIcon = L.icon({
     iconUrl: 'assets/img/markerCurrentLoc.png',
     iconSize: [25, 41],
-    iconAnchor: [12, 41],
+    iconAnchor: [22, 51],
     popupAnchor: [1, -34],
     shadowUrl: 'assets/img/marker-shadow.png',
     shadowSize: [41, 41],
