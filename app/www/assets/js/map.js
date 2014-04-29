@@ -1,12 +1,8 @@
 var cluster = L.markerClusterGroup({showCoverageOnHover: false, maxClusterRadius: 47});
 
-//create an array to hold all the markers
+//create arrays to store the different types of points of interests
 var offices = [
         //CSE Offices
-        ["<center><u>ECC</u> <br> The Engineering Computing Center is for the use of students that are pursuing a major or minor in the College of Engineering. " + 
-        "It is also available to anyone that is currently enrolled in an engineering or computer science class. " +
-        "<br> <a href='#ECC'>GO HERE</a> </center>", 0.268, 0.134],
-        
         ["<center><u>Computer Science and Engineering Department Office</u> <br>" +  
         "The Department of Computer Science and Engineering offers undergraduate and graduate degrees that provide a well-rounded education in computing. " +
         "Our students gain experience with both hardware and software and learn how to blend technical expertise with creative problem-solving " +
@@ -81,7 +77,7 @@ var offices = [
             
         ["<center><u>Dr. Shamik Sengupta's Office</u> <br> Dr. Sengupta is an assistant professor for the CSE department . His research interests include: " +
         "wireless network and mobile computing, network security, covert communications, and dynamic spectrum access. " +
-        "<br> <a href='#ShamikOffice'>GO HERE</a> </center>", -0.520, -1.454],
+        "<br> <a href='#ShamikOffice'>GO HERE</a> </center>", -0.520, -1.454]
 ];
 
 var labs = [
@@ -110,26 +106,51 @@ var labs = [
 var classrooms = [
         //Classrooms        
         ["<center>Classroom <br> <a href='#SushilOfficeClass'>GO HERE</a> </center>", 0.178, 0.909],
-
         ["<center>Engineering Grid Node <br> <a href='#GridNode'>GO HERE</a> </center>", -0.820, -1.700],
-            
         ["<center>Classroom <br> <a href='#Class2'>GO HERE</a> </center>",  0.250, -0.740],
-            
-        ["<center>Classroom <br> <a href='#Class1'>GO HERE</a> </center>",  0.570, -0.740],
+        ["<center>Classroom <br> <a href='#ClassFountain'>GO HERE</a> </center>",  0.570, -0.740],
 ];
 
+var ecc = ["<center><u>ECC</u> <br> The Engineering Computing Center is for the use of students that are pursuing a major or minor in the College of Engineering. " + 
+        "It is also available to anyone that is currently enrolled in an engineering or computer science class. " +
+        "<br> <a href='#ECC'>GO HERE</a> </center>", 0.268, 0.134];
+
+var acmLounge = ["<center><u>ACM Student Lounge</u> <br> Students may purchase snacks and refreshments from this lounge between classes." +
+        "This is also a place where people can meetup to spend time between classes. " +
+        "<br><a href='#ACM'>GO HERE</a> </center>", -0.140, 0.82397]
+
 var mensRR = [
-    ["<center>Men's Restroom <br> <a href='#MenRR2'>GO HERE</a> </center>", 0.100, -0.443],
-    ["<center>Men's Restroom <br> <a href='#MenRR1'>GO HERE</a> </center>", 0.100, 1.230],
+    	["<center>Men's Restroom<br> <a href='#MenRRbyECC'>GO HERE</a> </center>", 0.100, -0.443],
+    	["<center>Men's Restroom<br> <a href='#MenRRbyCSEOffice'>GO HERE</a> </center>", 0.100, 1.230],
 ];    
 
 var womensRR = [
-    ["<center>Women's Restroom <br> <a href='#WomenRR1'>GO HERE</a> </center>", -0.140,  0.550],
-    ["<center>Women's Restroom <br> <a href='#WomenRR2'>GO HERE</a> </center>", 0.100,  -1.480],
+    	["<center>Women's Restroom<br> <a href='#WomenRRbySushil'>GO HERE</a> </center>", -0.140,  0.550],
+    	["<center>Women's Restroom<br> <a href='#WomenRRbyNetworking'>GO HERE</a> </center>", 0.100,  -1.480],
 ]
 
 var helpMarker = [
-    ["<center><u>Icon Key</u></center>", 1.000, -1.59]
+    	["<center><u>Icon Key</u></center>", 1.000, -1.59]
+]
+
+var fountains = [
+		["<center><u>Water Fountain</u> <br> <a href='#fountainOffice'>GO HERE</a> </center>", 0.17853, 1.332],		    //outside CSE office
+		["<center><u>Water Fountain</u> <br> <a href='#ClassFountain'>GO HERE</a> </center>", 0.14832, -0.53833],	    //outside Classroom
+		["<center><u>Water Fountain</u> <br> <a href='#fountainNetworking'>GO HERE</a> </center>", 0.03021, -1.6095]	//outside networking lab
+]
+
+var stairs = [
+		["<center><u>Stairs</u> <br> <a href='#stairsElevatorECSL'>GO HERE</a> </center>", -0.99147, -1.604],	//near ECSL
+		["<center><u>Stairs</u> <br> <a href='#stairsGradOffices'>GO HERE</a> </center>", 0.85416, -0.57404],	//near grad student lounges
+		["<center><u>Stairs</u> <br> <a href='#stairsBackElevator'>GO HERE</a> </center>", 0.86926, 0.42984],	//near elevator
+		["<center><u>Stairs</u> <br> <a href='#stairsECC'>GO HERE</a> </center>", -0.140, 0.20737],	    //near ECC
+		["<center><u>Stairs</u> <br> <a href='#stairsHarris'>GO HERE</a> </center>", -0.015,1.59027]		//near Harris
+]
+
+var elevators = [
+		["<center>Elevator <br> <a href='#stairsElevatorECSL'>GO HERE</a> </center>", 0.89398, 0.34607],  //back 
+		["<center>Elevator <br> <a href='#elevatorBack'>GO HERE</a> </center>", -0.90359, -1.49826]  //by ecsl
+
 ]
 
 // create the map
@@ -155,6 +176,7 @@ boundsMap = L.latLngBounds(southWest2, northEast2);
 
 map.setMaxBounds(boundsMap);
 
+// Set parameters for the different icons
 var greenIcon = L.icon({
     iconUrl: 'assets/img/marker-icon-green.png',
     iconRetinaUrl: 'assets/img/marker-icon-2x-green.png',
@@ -188,19 +210,58 @@ var redIcon = L.icon({
     shadowAnchor: [12.5, 41]
 });
 
+var purpleIcon = L.icon({
+    iconUrl: 'assets/img/marker-icon-purple.png',
+    iconRetinaUrl: 'assets/img/marker-icon-2x-purple.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowUrl: 'assets/img/marker-shadow.png',
+    shadowSize: [41, 41],
+    shadowAnchor: [12.5, 41]
+});
+
 var maleIcon = L.icon({
     iconUrl: 'assets/img/male.png',
     iconSize: [25,25],
     iconAnchor: [12, 25],
-    popupAnchor: [0, -25],
+    popupAnchor: [0, -25]
 });
 
 var femaleIcon = L.icon({
     iconUrl: 'assets/img/female.png',
     iconSize: [25,25],
     iconAnchor: [12, 25],
-    popupAnchor: [0, -25],
+    popupAnchor: [0, -25]
 });
+
+var stairIcon = L.icon({
+    iconUrl: 'assets/img/stairs.png',
+    iconSize: [30,30],
+    iconAnchor: [15, 25],
+    popupAnchor: [0, -15]
+});
+
+var fountainIcon = L.icon({
+    iconUrl: 'assets/img/fountain.png',
+    iconSize: [25,25],
+    iconAnchor: [12, 25],
+    popupAnchor: [0, -25]
+});
+
+var elevatorIcon = L.icon({
+    iconUrl: 'assets/img/elevator.png',
+    iconSize: [30,30],
+    iconAnchor: [15, 25],
+    popupAnchor: [0, -25]
+});
+
+var acmIcon = L.icon({
+	iconUrl: 'assets/img/acm.png',
+    iconSize: [40,40],
+    iconAnchor: [20, 35],
+    popupAnchor: [0, -35]
+})
 
 //Place all office markers on the map
 for (var i = 0; i < offices.length; i++) 
@@ -252,10 +313,51 @@ for (var i = 0; i < womensRR.length; i++)
   map.addLayer(cluster);
 }
 
-//(just for testing) create a popup whereever the user clicks the map
-// var popup = L.popup();
-// function onMapClick(e) {
-// popup.setLatLng(e.latlng).setContent("You clicked the map at " + e.latlng.toString()).openOn(map);
-// }
+//Place water fountain markers on map
+for (var i = 0; i < fountains.length; i++) 
+{
+  marker = new L.marker([fountains[i][1],fountains[i][2]], {icon: fountainIcon})
+      .bindPopup(fountains[i][0]);
 
-//map.on('click', onMapClick);
+  cluster.addLayer(marker);
+  map.addLayer(cluster);
+}
+
+//Place stair markers on the map
+for (var i = 0; i < stairs.length; i++) 
+{
+  marker = new L.marker([stairs[i][1],stairs[i][2]], {icon: stairIcon})
+      .bindPopup(stairs[i][0]);
+
+  cluster.addLayer(marker);
+  map.addLayer(cluster);
+}
+
+//Place elevator markers on the map
+for (var i = 0; i < elevators.length; i++) 
+{
+  marker = new L.marker([elevators[i][1],elevators[i][2]], {icon: elevatorIcon})
+      .bindPopup(elevators[i][0]);
+
+  cluster.addLayer(marker);
+  map.addLayer(cluster);
+}
+
+//Place ECC marker
+marker = new L.marker([ecc[1], ecc[2]], {icon: purpleIcon}).bindPopup(ecc[0]);
+cluster.addLayer(marker);
+map.addLayer(cluster);
+
+//Place ACM lounge marker
+marker = new L.marker([acmLounge[1], acmLounge[2]], {icon: acmIcon}).bindPopup(acmLounge[0]);
+cluster.addLayer(marker);
+map.addLayer(cluster);
+
+//(just for testing) create a popup whereever the user clicks the map
+var popup = L.popup();
+function onMapClick(e) {
+popup.setLatLng(e.latlng).setContent("You clicked the map at " + e.latlng.toString()).openOn(map);
+
+}
+
+map.on('click', onMapClick);
