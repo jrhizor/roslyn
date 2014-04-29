@@ -211,3 +211,20 @@ div#map_robot_marker
     /*background: #fff;*/
     background-image: url(../img/binding_light.png)
 }
+
+a
+{
+	padding: 20px;
+}
+
+ .leaflet-marker-icon
+ {
+ 	display: block;
+ 	padding: 10px;
+ }
+
+ .marker-cluster-small
+ {
+ 	display: block;
+ 	padding: 0px;
+ }

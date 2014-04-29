@@ -19,14 +19,14 @@
 var marker;
 
 var convertTFtoLeaflet = function(x,y) {
-  a =  0.0006;
-  b =  0.0310;
-  c =  0.7145;
-  d =  0.0338;
-  e =  0.0002;
-  f =  1.2579;
-  g =  0.0007;
-  h = -0.0007;
+  a =  0.000882761490171;
+  b =  0.031119282634689;
+  c =  0.717386707994655;
+  d =  0.034585625046423;
+  e =  -0.000677698584338;
+  f =  1.234345557535625;
+  g =  0.000576726276420;
+  h = -0.000862727104055;
   i =  1.0000;
 
   x_prime = a*x + b*y + c;
@@ -188,8 +188,8 @@ $(document).ready(function(){
 //document.addEventListener("deviceready",onDeviceReady,false);
 
 // handle ROS connection
-var ros = new ROSLIB.Ros({url:'ws://10.8.4.1:9090'});
-// var ros = new ROSLIB.Ros({url:'ws://127.0.0.1:9090'});
+// var ros = new ROSLIB.Ros({url:'ws://10.8.4.1:9090'});
+var ros = new ROSLIB.Ros({url:'ws://127.0.0.1:9090'});
 
 // If there is an error on the backend, an 'error' emit will be emitted.
 ros.on('error', function(error) {
