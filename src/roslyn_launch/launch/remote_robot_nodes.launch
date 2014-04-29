@@ -1,0 +1,22 @@
+<launch>
+  <machine name="roslyn" address="rrl4.local" env-loader="/opt/ros/hydro/remote-env.sh" user="pi"/>
+  <node pkg="p2os_driver" type="p2os_driver" name="p2os_driver_4" output="screen" machine="roslyn">
+    <param name="port" value="/dev/sensors/pioneer"/>
+    <param name="baud" value="9600"/>
+    <param name="use_sonar" value="false"/>
+    <param name="use_gripper" value="false"/>
+    <param name="use_ptz" value="false"/>
+    <param name="publish_diagnostics" value="false"/>
+  </node>
+  <node pkg="sicktoolbox_wrapper" type="sicklms" name="sicklms" output="screen" machine="roslyn">
+    <param name="port" value="/dev/sensors/laser"/>
+    <param name="baud" value="19200"/>
+    <param name="frame_id" value="/base_laser"/>
+    <param name="connect_delay" value="30"/>
+    <!--<param name="tf_prefix" value="/starscream"/>-->
+  </node>
+  <node pkg="tf" type="static_transform_publisher" name="baselink_to_baselaser_4" args="0 0 0.1 0 0 0 /base_link /base_laser 1000">
+  </node>
+
+</launch>
+

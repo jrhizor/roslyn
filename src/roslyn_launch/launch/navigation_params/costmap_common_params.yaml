@@ -8,7 +8,7 @@ footprint: [ [0.3302, -0.0508], [0.254, -0.0508], [0.254, -0.254], [-0.254, -0.2
 #footprint_padding: 0.01
 inflation_radius: 0.15
 
-transform_tolerance: 0.75
+transform_tolerance: 1.5
 
 observation_sources: laser_scan_sensor
 
