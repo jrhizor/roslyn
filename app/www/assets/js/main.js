@@ -155,7 +155,7 @@ $(document).ready(function(){
 //document.addEventListener("deviceready",onDeviceReady,false);
 
 // handle ROS connection
-var ros = new ROSLIB.Ros({url:'ws://10.8.4.6:9090'});
+var ros = new ROSLIB.Ros({url:'ws://10.8.4.1:9090'});
 
 // If there is an error on the backend, an 'error' emit will be emitted.
 ros.on('error', function(error) {
@@ -265,15 +265,15 @@ tf_listener.subscribe('base_link', function(tf) {
 
 
     var newGoal = new ROSLIB.Message({
-      stamp : {
-        secs : 0,
-        nsecs : 0
-      },
+      stamp : {},
       id : ""
     });
 
 
     submitEndTour.publish(newGoal);
+
+    map.setView([0,0], 0);
+    map.closePopup();
 
     $("#welcome_pane").fadeTo(200,1);
     $("#end_tour_pane").fadeTo(200, 0);
