@@ -316,6 +316,8 @@ tf_listener.subscribe('base_link', function(tf) {
 
     submitEndTour.publish(newGoal);
 
+    setTimeout(function(){location.reload()},100)
+
     map.setView([0,0], 0);
     map.closePopup();
 
