@@ -6,6 +6,13 @@
 /home/jrhizor/Desktop/roslyn/app/platforms/android/ant-build/classes/com/unr/roslyn/R$drawable.class \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/ant-build/classes/com/unr/roslyn/BuildConfig.class \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/ant-build/classes/com/unr/roslyn/R$xml.class \
+/home/jrhizor/Desktop/roslyn/app/platforms/android/ant-build/classes/com/unr/roslyn_lawlor/R$string.class \
+/home/jrhizor/Desktop/roslyn/app/platforms/android/ant-build/classes/com/unr/roslyn_lawlor/R.class \
+/home/jrhizor/Desktop/roslyn/app/platforms/android/ant-build/classes/com/unr/roslyn_lawlor/Roslyn.class \
+/home/jrhizor/Desktop/roslyn/app/platforms/android/ant-build/classes/com/unr/roslyn_lawlor/R$attr.class \
+/home/jrhizor/Desktop/roslyn/app/platforms/android/ant-build/classes/com/unr/roslyn_lawlor/R$drawable.class \
+/home/jrhizor/Desktop/roslyn/app/platforms/android/ant-build/classes/com/unr/roslyn_lawlor/BuildConfig.class \
+/home/jrhizor/Desktop/roslyn/app/platforms/android/ant-build/classes/com/unr/roslyn_lawlor/R$xml.class \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/ant-build/classes/org/apache/cordova/file/FileUtils$6.class \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/ant-build/classes/org/apache/cordova/file/LocalFilesystem.class \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/ant-build/classes/org/apache/cordova/file/FileUtils$22.class \

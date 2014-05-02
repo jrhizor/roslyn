@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.unr.roslyn" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.unr.roslyn_lawlor" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <preference name="loglevel" value="DEBUG" />
     <feature name="App">
         <param name="android-package" value="org.apache.cordova.App" />
@@ -23,7 +23,7 @@
     <feature name="Html5Video">
         <param name="android-package" value="org.apache.cordova.plugin.Html5Video" />
     </feature>
-    <name>Roslyn</name>
+    <name>Roslyn Lawlor</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
     </description>

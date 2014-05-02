@@ -1,4 +1,4 @@
-/home/jrhizor/Desktop/roslyn/app/platforms/android/ant-gen/com/unr/roslyn/R.java \
+/home/jrhizor/Desktop/roslyn/app/platforms/android/ant-gen/com/unr/roslyn_lawlor/R.java \
  : /home/jrhizor/Desktop/roslyn/app/platforms/android/res/drawable-ldpi/icon.png \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/res/drawable-hdpi/icon.png \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/res/xml/config.xml \

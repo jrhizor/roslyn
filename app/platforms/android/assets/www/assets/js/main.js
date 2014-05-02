@@ -162,7 +162,7 @@ var jsLoadImage = function()
   showing.unbind();
 
   working.load(jsLoadImage);
-  working.attr("src", "http://localhost:8080/shot.jpg?rnd="+Math.floor(Math.random()*1000000));
+  working.attr("src", "http://10.8.4.16:8080/shot.jpg?rnd="+Math.floor(Math.random()*1000000));
   if(!jsSizeOk)
   {
     jsSizeOk = true;
@@ -172,15 +172,15 @@ var jsLoadImage = function()
 
 var videoCreate = function()
 {
-  $('#video_pane').append($('<img id="img1" class="video-image" alt="video" src="http://localhost:8080/shot.jpg?1"/>'));
-  $('#video_pane').append($('<img id="img2" class="video-image" style="display:none;" alt="video" src="http://localhost:8080/shot.jpg?2"/>'));
+  $('#video_pane').append($('<img id="img1" class="video-image" alt="video" src="http://10.8.4.16:8080/shot.jpg?1"/>'));
+  $('#video_pane').append($('<img id="img2" class="video-image" style="display:none;" alt="video" src="http://10.8.4.16:8080/shot.jpg?2"/>'));
   working = $("#img2");
   showing = $("#img1");
   working.css("zIndex", -1);
   jsSizeOk = false;
   jsUpdate = true;
   working.load(jsLoadImage);
-  working.attr("src", "http://localhost:8080/shot.jpg?rnd="+Math.floor(Math.random()*1000000));
+  working.attr("src", "http://10.8.4.16:8080/shot.jpg?rnd="+Math.floor(Math.random()*1000000));
   
 }
 
