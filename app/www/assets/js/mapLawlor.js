@@ -150,8 +150,8 @@ var popup = L.popup();
 function onMapClick(e) {
     popup
         .setLatLng(e.latlng)
-        //.setContent("<center>Click on any marker to see a description of that place. <br>If you want to go to the selected destination, <br> press 'GO HERE' </center>")
-        .setContent(e.latlng.toString())
+        .setContent("<center>Click on any marker to see a description of that place. <br>If you want to go to the selected destination, <br> press 'GO HERE' </center>")
+        // .setContent(e.latlng.toString())
         .openOn(map);
 }
 
