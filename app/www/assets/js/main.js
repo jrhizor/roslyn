@@ -19,14 +19,14 @@
 var marker;
 
 var convertTFtoLeaflet = function(x,y) {
-  a =  0.0006;
-  b =  0.0310;
-  c =  0.7145;
-  d =  0.0338;
-  e =  0.0002;
-  f =  1.2579;
-  g =  0.0007;
-  h = -0.0007;
+  a =  0.000882761490171;
+  b =  0.031119282634689;
+  c =  0.717386707994655;
+  d =  0.034585625046423;
+  e =  -0.000677698584338;
+  f =  1.234345557535625;
+  g =  0.000576726276420;
+  h = -0.000862727104055;
   i =  1.0000;
 
   x_prime = a*x + b*y + c;
@@ -131,55 +131,108 @@ var destinations =
   
 }
 
-function onDeviceReady()
+
+var working = null;
+var showing = null;
+var jsUpdate = false;
+var jsSizeOk = false;
+
+
+var videoDestroy = function()
 {
- //  alert('onDeviceReady')
- 
+  $('#img1').remove();
+  $('#img2').remove();
+  jsUpdate = false;
+  working = null;
+  showing = null;
+}
 
- // if(typeof navigator.camera != 'undefined')
- //  {
- //    alert('oh yes1')
- //  }
- //  else
- //  {
- //    alert('oh no1')
- //  }
+var jsLoadImage = function()
+{
+  if(!jsUpdate)
+    return;
+
+  var oldshowing = showing;
+  showing = working;
+  working = oldshowing;
+
+  showing.css('visibility', 'visible');
+  working.css('visibility', 'hidden');
+
+  showing.unbind();
+
+  working.load(jsLoadImage);
+  working.attr("src", "http://localhost:8080/shot.jpg?rnd="+Math.floor(Math.random()*1000000));
+  if(!jsSizeOk)
+  {
+    jsSizeOk = true;
+    $('#img2').css('margin-top', '-'+showing.height()+'px').css('display', 'block');
+  }
+}
+
+var videoCreate = function()
+{
+  $('#video_pane').append($('<img id="img1" class="video-image" alt="video" src="http://localhost:8080/shot.jpg?1"/>'));
+  $('#video_pane').append($('<img id="img2" class="video-image" style="display:none;" alt="video" src="http://localhost:8080/shot.jpg?2"/>'));
+  working = $("#img2");
+  showing = $("#img1");
+  working.css("zIndex", -1);
+  jsSizeOk = false;
+  jsUpdate = true;
+  working.load(jsLoadImage);
+  working.attr("src", "http://localhost:8080/shot.jpg?rnd="+Math.floor(Math.random()*1000000));
+  
+}
 
 
- //  if(typeof navigator.camera.getPicture != 'undefined')
- //  {
- //    alert('oh yes')
- //  }
- //  else
- //  {
- //    alert('oh no')
- //  }
+var displayNearestPOI = function() {
 
-  // if (navigator.camera == null) {
-  //   location.reload();
-  // }
+  var min_distance = 10000000;
+  var value = '';
 
-  // if (!navigator.Camera) {
-  //     alert("Camera API not supported", "Error");
-  //   }
-  //   else
-  //   {
-  //   var options =   {   quality: 50,
-  //                       de//stinationType: Camera.DestinationType.DATA_URL,
-  //                       sourceType: 1,      // 0:Photo Library, 1=Camera, 2=Saved Album
-  //                       encodingType: 0     // 0=JPG 1=PNG
-  //                   };
+  for(var i=0; i<offices.length; i++)
+  {
+    var cur = current_loc.getLatLng();
+    var distance = Math.sqrt((cur.lng-offices[i][1])*(cur.lng-offices[i][1])+(cur.lat-offices[i][2])*(cur.lat-offices[i][2]));
 
-  //   navigator.camera.getPicture(
-  //       function(imageData) {
-  //           $('.employee-image', this.el).attr('src', "data:image/jpeg;base64," + imageData);
-  //       },
-  //       function() {
-  //           alert('Error taking picture', 'Error');
-  //       },
-  //       options);  
-  //   }
+    if(distance<min_distance)
+    {
+      min_distance = distance;
+      value = offices[i][0];
+    }
+  }
 
+  for(var i=0; i<labs.length; i++)
+  {
+    var cur = current_loc.getLatLng();
+    var distance = Math.sqrt((cur.lng-labs[i][1])*(cur.lng-labs[i][1])+(cur.lat-labs[i][2])*(cur.lat-labs[i][2]));
+
+    if(distance<min_distance)
+    {
+      min_distance = distance;
+      value = labs[i][0];
+    }
+  }
+
+    var cur = current_loc.getLatLng();
+    var distance_ecc = Math.sqrt((cur.lng-ecc[1])*(cur.lng-ecc[1])+(cur.lat-ecc[2])*(cur.lat-ecc[2]));
+    var distance_acm = Math.sqrt((cur.lng-acmLounge[1])*(cur.lng-acmLounge[1])+(cur.lat-acmLounge[2])*(cur.lat-acmLounge[2]));
+
+    if(distance_ecc<min_distance)
+    {
+      min_distance = distance_ecc;
+      value = ecc[0];
+    }
+
+    if(distance_acm<min_distance)
+    {
+      min_distance = distance_acm;
+      value = acmLounge[0];
+    }
+
+    $("#information_content").html(value);
+
+    setTimeout(displayNearestPOI, 3000);
 }
 
 $(document).ready(function(){
@@ -256,9 +309,8 @@ tf_listener.subscribe('base_link', function(tf) {
 });
 
 
-
-
-
+  videoCreate();
+  displayNearestPOI();
 
   // initialize
   $("#end_tour_button").hide();
@@ -427,7 +479,4 @@ tf_listener.subscribe('base_link', function(tf) {
 
 
 });
-
-
-
 

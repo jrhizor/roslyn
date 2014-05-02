@@ -136,8 +136,6 @@ div#interactive_mode_pane
 	width: 960px;
 	height: 552px;
 	overflow:hidden;
-	background-image:url('../img/camera.png');
-	background-repeat:no-repeat;
 }
 
 div#end_tour_pane
@@ -211,3 +209,69 @@ div#map_robot_marker
     /*background: #fff;*/
     background-image: url(../img/binding_light.png)
 }
+
+a
+{
+	padding: 20px;
+}
+
+ .leaflet-marker-icon
+ {
+ 	display: block;
+ 	padding: 10px;
+ }
+
+ .marker-cluster-small
+ {
+ 	display: block;
+ 	padding: 0px;
+ }
+/*
+ #video_pane img#img1
+ {
+ 	position:absolute;
+ 	width:200px;
+ 	height:200px;
+ 	top:0;
+ 	left:0;	
+ }
+
+
+ #video_pane img#img2
+ {
+ 	margin-top:-200px;
+ 	position:absolute;
+ 	width:200px;
+ 	height:200px;
+ 	top:0;
+ 	left:0;	
+ }*/
+
+ #information
+ {
+ 	position:absolute;
+ 	left:330px;
+	top:220px;
+	font-size:16px;
+	text-align: center;
+	background: #fff;
+	height:200px;
+	width:300px;
+	border-top-left-radius: 16px;
+	border-top-right-radius: 16px;
+	border-bottom-left-radius: 16px;
+	border-bottom-right-radius: 16px;
+	border:2px solid #000;
+	color:#000;
+ }
+
+ #information_content
+ {
+ 	width:250px;
+ 	height: auto;
+    margin: auto;
+    padding: 10px;
+    position: relative;
+ }
+
+ #information_content a { display:block; padding:20px; color:#0078A8; }
