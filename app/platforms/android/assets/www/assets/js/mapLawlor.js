@@ -144,8 +144,8 @@ marker = new L.marker([hall[1], hall[2]], {icon: wolfIcon}).bindPopup(hall[0]);
 cluster.addLayer(marker);
 map.addLayer(cluster);
 
-var current_loc = new L.marker([-0.29,0.14395], {icon: currentLocIcon});
-map.addLayer(current_loc);
+// var current_loc = new L.marker([-0.29,0.14395], {icon: currentLocIcon});
+// map.addLayer(current_loc);
 
 //(just for testing) create a popup whereever the user clicks the map
 var popup = L.popup();

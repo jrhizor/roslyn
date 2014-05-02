@@ -15,6 +15,13 @@
   [ ] test on actual tour
   [ ] add appropriate distance from human
 */
+var media_poster, media_entrance, media_hallway, media_room;
+
+
+function success() {}
+function errorThrown(e) {
+   // alert('Error while playing the sound!');
+}
 
 var marker;
 
@@ -87,8 +94,11 @@ var destinations =
 
 function onDeviceReady()
 {
- //  alert('onDeviceReady')
- 
+  media_room = new Media('/android_asset/www/room.mp3', success, errorThrown);
+  media_hallway = new Media('/android_asset/www/hallway.mp3', success, errorThrown);
+  media_entrance = new Media('/android_asset/www/entrance.mp3', success, errorThrown);
+  media_poster   = new Media('/android_asset/www/poster.mp3', success, errorThrown);
+
 
  // if(typeof navigator.camera != 'undefined')
  //  {
@@ -139,7 +149,7 @@ function onDeviceReady()
 $(document).ready(function(){
 
 
-//document.addEventListener("deviceready",onDeviceReady,false);
+document.addEventListener("deviceready",onDeviceReady,false);
 
 // handle ROS connection
 var ros = new ROSLIB.Ros({url:'ws://10.8.4.1:9090'});
@@ -201,7 +211,7 @@ tf_listener.subscribe('base_link', function(tf) {
 
  //[0.01648, -1.38977
 
-  current_loc.setLatLng(convertTFtoLeaflet(tf.translation.x, tf.translation.y));
+  // current_loc.setLatLng(convertTFtoLeaflet(tf.translation.x, tf.translation.y));
 
   // map.removeLayer(marker);
   // marker = new L.marker(convertTFtoLeaflet(tf.translation.x, tf.translation.y), {icon: redIcon})
@@ -308,6 +318,30 @@ tf_listener.subscribe('base_link', function(tf) {
   $(window).bind( 'hashchange', function(e) { 
     if(window.location.hash)
     {
+
+      media_poster.stop();
+      media_entrance.stop();
+      media_hallway.stop();
+      media_room.stop();
+
+      if(window.location.hash.substring(1)=="poster")
+      {
+        media_poster.play();
+      }
+      else if(window.location.hash.substring(1)=="lawlorEntrance")
+      {
+        media_entrance.play();
+      }
+      else if(window.location.hash.substring(1)=="posterRoom")
+      {
+        media_room.play();
+      }
+      
+  //     poster": [34.803, 21.964],    if
+  // "lawlorEntrance": [54.251,19.341], 
+  // "lawlorOffice": [], 
+  // "posterRoom":
+      
       // TODO CONVERT THIS-21.9127
       var converted = destinations[window.location.hash.substring(1)];
       console.log(destinations[window.location.hash.substring(1)])

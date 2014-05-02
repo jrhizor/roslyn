@@ -14,13 +14,17 @@
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/_where-is-www.txt \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/spec \
+/home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/room.mp3 \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/icon.png \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/assets \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/cordova_plugins.js \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/test.css \
+/home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/poster.mp3 \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/plugins \
+/home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/entrance.mp3 \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/cordova.js \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/spec.html \
+/home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/hallway.mp3 \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/test.html \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/res \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/index.html \
@@ -39,7 +43,6 @@
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/assets/img \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/assets/js/main.js \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/assets/js/eventemitter2.js \
-/home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/assets/js/cordova.js \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/assets/js/roslib.js \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/assets/js/mapLawlor.js \
 /home/jrhizor/Desktop/roslyn/app/platforms/android/assets/www/assets/js/leaflet.markercluster \
