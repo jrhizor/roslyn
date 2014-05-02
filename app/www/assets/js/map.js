@@ -3,7 +3,7 @@ var cluster = L.markerClusterGroup({showCoverageOnHover: false, maxClusterRadius
 //create arrays to store the different types of points of interests
 var offices = [
         //CSE Offices
-        ["<center><b>Computer Science and Engineering Department Office</b> <br>" +  
+        ["<center><b>Computer Science and Engineering <br> Department Office</b> <br>" +  
         "The Department of Computer Science and Engineering offers undergraduate and graduate degrees that provide a well-rounded education in computing. " +
         "Our students gain experience with both hardware and software and learn how to blend technical expertise with creative problem-solving " +
         "skills to push technological boundaries, create automated solutions to human problems and build better computing systems. " +
@@ -366,10 +366,14 @@ map.addLayer(cluster);
 //(just for testing) create a popup whereever the user clicks the map
 var popup = L.popup();
 function onMapClick(e) {
-popup.setLatLng(e.latlng).setContent("You clicked the map at " + e.latlng.toString()).openOn(map);
+    popup
+        .setLatLng(e.latlng)
+        .setContent("<center>Click on any marker to see a description of that place. <br>If you want to go to the selected destination, <br> press 'GO HERE' </center>")
+        // .setContent(e.latlng.toString())
+        .openOn(map);
 }
 
-//map.on('click', onMapClick);
+map.on('click', onMapClick);
 
 var current_loc = new L.marker([0,0], {icon: currentLocIcon});
 map.addLayer(current_loc);
