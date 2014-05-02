@@ -1,11 +1,11 @@
 <launch>
   <!--- Run AMCL and Nav stack -->
-  <include file="$(find roslyn_launch)/launch/navigate.launch" />
+  <include file="$(find roslyn_launch)/launch/include/navigate.launch" />
 
   <!--- Run the map server -->
-  <include file="$(find roslyn_launch)/launch/serve_map.launch" />
+  <include file="$(find roslyn_launch)/launch/include/serve_map.launch" />
 
-  <include file="$(find roslyn_launch)/launch/remote_robot_nodes.launch" />
+  <include file="$(find roslyn_launch)/launch/include/remote_robot_nodes.launch" />
 
-  <include file="$(find roslyn_launch)/launch/tablet_link.launch" />
+  <include file="$(find roslyn_launch)/launch/include/tablet_link.launch" />
 </launch>

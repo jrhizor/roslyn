@@ -1,19 +1,19 @@
 <launch>
 <!--
   <node pkg="gmapping" type="slam_gmapping" name="gmapping" output="screen" >
-    <remap from="scan" to="/urg/scan"/>
-    <param name="odom_frame" value="rrl4odom"/>
-    <param name="base_frame" value="rrl4base_link"/>
+    <remap from="scan" to="/rrl2/scan"/>
+    <param name="odom_frame" value="rrl2odom"/>
+    <param name="base_frame" value="rrl2base_link"/>
     <param name="particles" type="int" value="1000"/>
     <param name="linearUpdate" type="double" value="0.1"/>
     <param name="angularUpdate" type="double" value="0.03"/>
   </node>
 -->
   <node pkg="gmapping" type="slam_gmapping" name="gmapping_sick" output="screen" >
-    <remap from="map" to="map_sick"/>
-    <remap from="scan" to="/rrl4/scan"/>
-    <param name="odom_frame" value="rrl4odom"/>
-    <param name="base_frame" value="rrl4base_link"/>
+    <remap from="map" to="map"/>
+    <remap from="scan" to="/rrl2/scan"/>
+    <param name="odom_frame" value="rrl2odom"/>
+    <param name="base_frame" value="rrl2base_link"/>
     <param name="particles" type="int" value="1000"/>
     <param name="linearUpdate" type="double" value="0.1"/>
     <param name="angularUpdate" type="double" value="0.03"/>
