@@ -12,12 +12,7 @@ var posterRoom =
             "Senior capstone projects represent innovative engineering products " +
             "designed by teams of undergraduate students during the course of their senior year." +
             "<br> <a href='#posterRoom'>GO HERE</a></center>", -0.32135, 0.64819];
-
-var lawlorOffice =
-        [   "<center><b>Lawlor Events Center Offices</b><br>" +
-            "Offices used by Lawlor Events Center." +
-            "<br> <a href='#lawlorOffice'>GO HERE</a></center>", -0.222, 1.057];
-                
+    
 var entrance =
         [   "<center><b>Lawlor Events Center Entrance</b><br>" +
             "Lawlor Events Center houses many different types of events. These include: " +
@@ -30,6 +25,11 @@ var hall =
             "notice an awesome wolf in the case. GO PACK!"
             , 0.589, 0.664];
 
+var testMarkers =[
+        ["Example Clustering 1", 0.0604, -0.9],
+        ["Example Clustering 2", -0.0248,-0.6]
+
+        ];
 // create the map
 var map = L.map('map_pane', {
   zoom:8, 
@@ -47,8 +47,8 @@ boundsImage = L.latLngBounds(southWest, northEast);
 L.imageOverlay('assets/img/roslynInterfaceMap.png', boundsImage).addTo(map);
 
 //sets bounds for the map
-var southWest2 = L.latLng(-350/360.0, -550/360.0),  
-northEast2 = L.latLng(350/360.0, 500/360.0),        
+var southWest2 = L.latLng(-500/360.0, -860/360.0),  
+northEast2 = L.latLng(550/360.0, 860/360.0),        
 boundsMap = L.latLngBounds(southWest2, northEast2);
 
 map.setMaxBounds(boundsMap);
@@ -126,15 +126,18 @@ marker = new L.marker([posterRoom[1], posterRoom[2]], {icon: greenIcon}).bindPop
 cluster.addLayer(marker);
 map.addLayer(cluster);
 
-//Place lawlor offices marker
-marker = new L.marker([lawlorOffice[1], lawlorOffice[2]], {icon: purpleIcon}).bindPopup(lawlorOffice[0]);
-cluster.addLayer(marker);
-map.addLayer(cluster);
-
 //Place lawlor entrance marker
 marker = new L.marker([entrance[1], entrance[2]], {icon: redIcon}).bindPopup(entrance[0]);
 cluster.addLayer(marker);
 map.addLayer(cluster);
+
+//Place example clustering markers
+for(i=0; i<testMarkers.length; i++)
+{
+    marker = new L.marker([testMarkers[i][1], testMarkers[i][2]], {icon: purpleIcon}).bindPopup(testMarkers[i][0]);
+cluster.addLayer(marker);
+map.addLayer(cluster);
+}
 
 //Place hall marker
 marker = new L.marker([hall[1], hall[2]], {icon: wolfIcon}).bindPopup(hall[0]);

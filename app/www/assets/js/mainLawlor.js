@@ -78,10 +78,10 @@ var destinations =
 
   //ros locations [x,y]
   //labs
-  "poster": [],    
-  "lawlorEntrance": [], 
+  "poster": [34.803, 21.964],    
+  "lawlorEntrance": [54.251,19.341], 
   "lawlorOffice": [], 
-  "posterRoom": []
+  "posterRoom": [43.868,20.157]
   
 }
 
