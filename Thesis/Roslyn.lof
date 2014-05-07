@@ -1,5 +1,6 @@
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {I.1}{\ignorespaces The system architecture showing relationship between high level nodes in the system. The “ROS Nodes” are open source nodes (not developed in this project) which provide data to the system and control the robot hardware.}}{14}
-\contentsline {figure}{\numberline {I.2}{\ignorespaces Social Navigation class diagram showing the relationship between classes and the rest of the system’s data flow.}}{14}
-\contentsline {figure}{\numberline {I.3}{\ignorespaces Social Navigation class diagram showing the relationship between classes and the rest of the system’s data flow.}}{15}
-\contentsline {figure}{\numberline {I.4}{\ignorespaces User Interface class diagram showing the relationship between classes and the rest of the system’s data flow.}}{16}
+\contentsline {figure}{\numberline {I.1}{\ignorespaces The system architecture showing relationship between high level nodes in the system. The “ROS Nodes” are open source nodes (not developed in this project) which provide data to the system and control the robot hardware.}}{15}
+\contentsline {figure}{\numberline {I.2}{\ignorespaces Social Navigation class diagram showing the relationship between classes and the rest of the system’s data flow.}}{15}
+\contentsline {figure}{\numberline {I.3}{\ignorespaces Social Navigation class diagram showing the relationship between classes and the rest of the system’s data flow.}}{16}
+\contentsline {figure}{\numberline {I.4}{\ignorespaces User Interface class diagram showing the relationship between classes and the rest of the system’s data flow.}}{17}
+\contentsline {figure}{\numberline {I.5}{\ignorespaces The top-level activity diagram for Roslyn. It provides a view of the system from either the operator or guest's point of view.}}{18}
