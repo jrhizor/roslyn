@@ -1,16 +1,21 @@
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {I.1}{\ignorespaces System architecture}}{22}
-\contentsline {figure}{\numberline {I.2}{\ignorespaces Social Navigation classes}}{22}
-\contentsline {figure}{\numberline {I.3}{\ignorespaces User Interface classes}}{23}
-\contentsline {figure}{\numberline {I.4}{\ignorespaces Top-level activities}}{24}
-\contentsline {figure}{\numberline {I.5}{\ignorespaces Statechart for message passing system.}}{25}
-\contentsline {figure}{\numberline {I.6}{\ignorespaces Statechart for navigation system.}}{26}
-\contentsline {figure}{\numberline {I.7}{\ignorespaces Statechart for the user interface.}}{27}
-\contentsline {figure}{\numberline {I.8}{\ignorespaces User Interface - Welcome}}{27}
-\contentsline {figure}{\numberline {I.9}{\ignorespaces User Interface - Map}}{28}
-\contentsline {figure}{\numberline {I.10}{\ignorespaces User Interface - Map with marker}}{28}
-\contentsline {figure}{\numberline {I.11}{\ignorespaces User Interface - Map with marker, description}}{29}
-\contentsline {figure}{\numberline {I.12}{\ignorespaces User Interface - Map zoomed}}{29}
-\contentsline {figure}{\numberline {I.13}{\ignorespaces User Interface - Interactive}}{30}
-\contentsline {figure}{\numberline {I.14}{\ignorespaces User Interface - Interactive Markers}}{30}
-\contentsline {figure}{\numberline {I.15}{\ignorespaces User Interface - Goodbye}}{31}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {III.1}{\ignorespaces System architecture}}{18}
+\contentsline {figure}{\numberline {III.2}{\ignorespaces Social Navigation classes}}{18}
+\contentsline {figure}{\numberline {III.3}{\ignorespaces User Interface classes}}{19}
+\contentsline {figure}{\numberline {III.4}{\ignorespaces Top-level activities}}{20}
+\contentsline {figure}{\numberline {III.5}{\ignorespaces Statechart for message passing system.}}{21}
+\contentsline {figure}{\numberline {III.6}{\ignorespaces Statechart for navigation system.}}{22}
+\contentsline {figure}{\numberline {III.7}{\ignorespaces Statechart for the user interface.}}{23}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {IV.1}{\ignorespaces User Interface - Welcome}}{26}
+\contentsline {figure}{\numberline {IV.2}{\ignorespaces User Interface - Map}}{26}
+\contentsline {figure}{\numberline {IV.3}{\ignorespaces User Interface - Map with marker}}{27}
+\contentsline {figure}{\numberline {IV.4}{\ignorespaces User Interface - Map with marker, description}}{27}
+\contentsline {figure}{\numberline {IV.5}{\ignorespaces User Interface - Map zoomed}}{28}
+\contentsline {figure}{\numberline {IV.6}{\ignorespaces User Interface - Interactive}}{28}
+\contentsline {figure}{\numberline {IV.7}{\ignorespaces User Interface - Interactive Markers}}{29}
+\contentsline {figure}{\numberline {IV.8}{\ignorespaces User Interface - Goodbye}}{29}
+\addvspace {10\p@ }
+\addvspace {10\p@ }

@@ -37,7 +37,7 @@
 \evensidemargin 0.04truein % right margin is 1 inch
 \topmargin 0.12truein       % top margin is 1 inch
 \headheight 0truein      % no heading
-\headsep   0truein       % remove headsep
+\headsep   0.2truein       % remove headsep
 \textheight 8.0truein    % text height 
 \footskip 0.5truein      % textheight+footskip < 9in
 \textwidth 5.87truein     % text width minus allowance
@@ -64,15 +64,15 @@
 
 %% Put Page number on lower right corner
 \renewcommand{\ps@plain}{%
-  \renewcommand{\@oddhead}{}%   empty
-  \renewcommand{\@evenhead}{}%  empty
-  \renewcommand{\@evenfoot}{\hfill\textrm{\thepage}}%
-  \renewcommand{\@oddfoot}{\@evenfoot}}
+  \renewcommand{\@oddhead}{\@evenhead}}%   empty
+  \renewcommand{\@evenhead}{\hfill\textrm{\thepage}}%  empty
+  \renewcommand{\@evenfoot}{}%
+  \renewcommand{\@oddfoot}{}
 
 %% Title page
 
 \newcommand{\titleinfo}{%
-A Th Presented to the\\
+A Thesis Presented to the\\
 FACULTY OF THE GRADUATE SCHOOL\\
 UNIVERSITY OF SOUTHERN CALIFORNIA\\
 In Partial Fulfillment of the\\
