@@ -1,0 +1,2 @@
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {I.1}{\ignorespaces The system architecture showing relationship between high level nodes in the system. The “ROS Nodes” are open source nodes (not developed in this project) which provide data to the system and control the robot hardware.}}{13}
