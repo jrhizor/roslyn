@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.5.6)  7 MAY 2014 01:49
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.5.6)  7 MAY 2014 01:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -164,13 +164,13 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-[1
-
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
 Missing character: There is no ‚ in font cmr10!
 Missing character: There is no Ä in font cmr10!
 Missing character: There is no ô in font cmr10!
- [2] (./Roslyn.toc
+
+[2
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./Roslyn.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <10.95> on input line 3.
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -181,10 +181,10 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 \tf@toc=\write3
 \openout3 = `Roslyn.toc'.
 
+ [3
 
-[3
-
-] (./Roslyn.lot)
+]
+(./Roslyn.lot)
 \tf@lot=\write4
 \openout4 = `Roslyn.lot'.
 
@@ -390,7 +390,7 @@ Missing character: There is no ú in font cmr10!
 Missing character: There is no ‚ in font cmr10!
 Missing character: There is no Ä in font cmr10!
 Missing character: There is no ù in font cmr10!
- <system_class_overview.pdf, id=71, 435.6275pt x 291.0875pt>
+ <system_class_overview.pdf, id=67, 435.6275pt x 291.0875pt>
 File: system_class_overview.pdf Graphic file (type pdf)
 
 <use system_class_overview.pdf>
@@ -400,27 +400,27 @@ Missing character: There is no ‚ in font cmr10!
 Missing character: There is no Ä in font cmr10!
 Missing character: There is no ô in font cmr10!
 
-<social_navigation.pdf, id=72, 611.28375pt x 492.84125pt>
+<social_navigation.pdf, id=68, 611.28375pt x 492.84125pt>
 File: social_navigation.pdf Graphic file (type pdf)
 
 <use social_navigation.pdf>
 Package pdftex.def Info: social_navigation.pdf used on input line 413.
 (pdftex.def)             Requested size: 318.1684pt x 256.51956pt.
 
-<user_interface.pdf, id=73, 614.295pt x 466.74374pt>
+<user_interface.pdf, id=69, 614.295pt x 466.74374pt>
 File: user_interface.pdf Graphic file (type pdf)
  <use user_interface.pdf>
 Package pdftex.def Info: user_interface.pdf used on input line 421.
 (pdftex.def)             Requested size: 318.1684pt x 241.74667pt.
 
-<activity_diagram.pdf, id=74, 516.93124pt x 543.02875pt>
+<activity_diagram.pdf, id=70, 516.93124pt x 543.02875pt>
 File: activity_diagram.pdf Graphic file (type pdf)
 
 <use activity_diagram.pdf>
 Package pdftex.def Info: activity_diagram.pdf used on input line 430.
 (pdftex.def)             Requested size: 318.1684pt x 334.24655pt.
  [15]
-<Low_level_message_passing_diagram.pdf, id=78, 585.18625pt x 607.26875pt>
+<Low_level_message_passing_diagram.pdf, id=74, 585.18625pt x 607.26875pt>
 File: Low_level_message_passing_diagram.pdf Graphic file (type pdf)
 
 <use Low_level_message_passing_diagram.pdf>
@@ -428,14 +428,14 @@ Package pdftex.def Info: Low_level_message_passing_diagram.pdf used on input li
 ne 441.
 (pdftex.def)             Requested size: 318.1684pt x 330.19046pt.
 
-<processing_nav_statechart.pdf, id=79, 419.5675pt x 412.54124pt>
+<processing_nav_statechart.pdf, id=75, 419.5675pt x 412.54124pt>
 File: processing_nav_statechart.pdf Graphic file (type pdf)
 
 <use processing_nav_statechart.pdf>
 Package pdftex.def Info: processing_nav_statechart.pdf used on input line 449.
 (pdftex.def)             Requested size: 318.1684pt x 312.84216pt.
 
-<user_interface_statechart.pdf, id=80, 702.625pt x 548.0475pt>
+<user_interface_statechart.pdf, id=76, 702.625pt x 548.0475pt>
 File: user_interface_statechart.pdf Graphic file (type pdf)
 
 <use user_interface_statechart.pdf>
@@ -460,49 +460,49 @@ Missing character: There is no ú in font cmr10!
 Missing character: There is no ‚ in font cmr10!
 Missing character: There is no Ä in font cmr10!
 Missing character: There is no ù in font cmr10!
- <ui1.png, id=84, 1927.2pt x 1204.5pt>
+ <ui1.png, id=80, 1927.2pt x 1204.5pt>
 File: ui1.png Graphic file (type png)
 
 <use ui1.png>
 Package pdftex.def Info: ui1.png used on input line 484.
 (pdftex.def)             Requested size: 318.1684pt x 198.8442pt.
- <ui2.png, id=85, 2006.49625pt x 1108.14pt>
+ <ui2.png, id=81, 2006.49625pt x 1108.14pt>
 File: ui2.png Graphic file (type png)
  <use ui2.png>
 Package pdftex.def Info: ui2.png used on input line 490.
 (pdftex.def)             Requested size: 318.1684pt x 175.71658pt.
 
-<ui3.png, id=87, 2006.49625pt x 1109.14375pt>
+<ui3.png, id=83, 2006.49625pt x 1109.14375pt>
 File: ui3.png Graphic file (type png)
  <use ui3.png>
 Package pdftex.def Info: ui3.png used on input line 496.
 (pdftex.def)             Requested size: 318.1684pt x 175.87575pt.
 
-<ui4.png, id=88, 2006.49625pt x 1114.1625pt>
+<ui4.png, id=84, 2006.49625pt x 1114.1625pt>
 File: ui4.png Graphic file (type png)
  <use ui4.png>
 Package pdftex.def Info: ui4.png used on input line 502.
 (pdftex.def)             Requested size: 318.1684pt x 176.67157pt.
 
-<ui5.png, id=89, 2006.49625pt x 1112.155pt>
+<ui5.png, id=85, 2006.49625pt x 1112.155pt>
 File: ui5.png Graphic file (type png)
  <use ui5.png>
 Package pdftex.def Info: ui5.png used on input line 508.
 (pdftex.def)             Requested size: 318.1684pt x 176.35324pt.
 
-<ui6.png, id=90, 2006.49625pt x 1112.155pt>
+<ui6.png, id=86, 2006.49625pt x 1112.155pt>
 File: ui6.png Graphic file (type png)
  <use ui6.png>
 Package pdftex.def Info: ui6.png used on input line 514.
 (pdftex.def)             Requested size: 318.1684pt x 176.35324pt.
 
-<ui7.png, id=91, 1927.2pt x 1204.5pt>
+<ui7.png, id=87, 1927.2pt x 1204.5pt>
 File: ui7.png Graphic file (type png)
  <use ui7.png>
 Package pdftex.def Info: ui7.png used on input line 520.
 (pdftex.def)             Requested size: 318.1684pt x 198.8442pt.
 
-<ui8.png, id=92, 2006.49625pt x 1114.1625pt>
+<ui8.png, id=88, 2006.49625pt x 1114.1625pt>
 File: ui8.png Graphic file (type png)
  <use ui8.png>
 Package pdftex.def Info: ui8.png used on input line 526.
@@ -552,7 +552,7 @@ _interface_statechart.pdf> <./ui1.png>] [28 <./ui2.png> <./ui3.png>] [29 <./ui4
 Here is how much of TeX's memory you used:
  1814 strings out of 495028
  25803 string characters out of 6181498
- 115446 words of memory out of 5000000
+ 115436 words of memory out of 5000000
  4997 multiletter control sequences out of 15000+600000
  8960 words of font info for 32 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
@@ -561,14 +561,13 @@ Here is how much of TeX's memory you used:
 mbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.
 pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></
 usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on Roslyn.pdf (38 pages, 9611589 bytes).
+re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on Roslyn.pdf (37 pages, 9593586 bytes).
 PDF statistics:
- 282 PDF objects out of 1000 (max. 8388607)
- 187 compressed objects within 2 object streams
+ 275 PDF objects out of 1000 (max. 8388607)
+ 182 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  76 words of extra memory for PDF output out of 10000 (max. 10000000)
 
