@@ -1,0 +1,1727 @@
+diff --git a/.gitignore b/.gitignore
+new file mode 100644
+index 0000000..4a3b256
+--- /dev/null
++++ b/.gitignore
+@@ -0,0 +1,16 @@
++# Compiled Object files
++*.slo
++*.lo
++*.o
++
++# Compiled Dynamic libraries
++*.so
++*.dylib
++
++# Compiled Static libraries
++*.lai
++*.la
++*.a
++
++#ignore gedit temp files 
++*~
+diff --git a/Makefile b/Makefile
+deleted file mode 100644
+index a818cca..0000000
+--- a/Makefile
++++ /dev/null
+@@ -1 +0,0 @@
+-include $(shell rospack find mk)/cmake_stack.mk
+\ No newline at end of file
+diff --git a/README.md b/README.md
+index d4081d8..d4ff2db 100644
+--- a/README.md
++++ b/README.md
+@@ -1,7 +1,7 @@
+ p2os
+ ====
+ 
+-P2OS ROS driver for Groovy. We are currently updating the packages to use [catkin](http://ros.org/wiki/catkin) instead of rosbuild.
++P2OS ROS driver for Groovy/Hydro/Indigo(maybe?).
+ 
+ p2os_dashboard
+ --------------
+@@ -13,13 +13,15 @@ p2os_driver
+ -----------
+ 
+ Essential to the P2OS is the driver. This controls the interface for the P2OS controller. 
+-No catkin.
++What's working: driving, sonars, diasgnostics, gripper
++What isn't working: bumpers, PTZ (if you have a bumper and want to help Tim fix it email him).
++Catkin support!
+ 
+ p2os_launch
+ -----------
+ 
+ Relevant ROS launch files for the Robot. 
+-No catkin.
++Catkin support!
+ 
+ p2os_teleop
+ -----------
+@@ -38,3 +40,5 @@ To Do:
+ 
+ * The gazebo_plugin node for controlling the differential drive was recently removed (commented out in the CMakeLists.txt file) from Gazebo. So, the P2OS gazebo launch file fails. 
+ * Update the rest of the packages to use the catkin build system instead of rosbuild.
++* In p2os_driver: make SendReceive, or more specifically the Receive part, asynchronous to improve controller response time
++
+diff --git a/p2os_driver/CMakeLists.txt b/p2os_driver/CMakeLists.txt
+index dd090a7..f81047c 100644
+--- a/p2os_driver/CMakeLists.txt
++++ b/p2os_driver/CMakeLists.txt
+@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
+ project(p2os_driver)
+ 
+ find_package(catkin REQUIRED COMPONENTS diagnostic_updater nav_msgs message_generation roscpp geometry_msgs tf std_msgs)
+-
++#find_package(catkin REQUIRED COMPONENTS nav_msgs message_generation roscpp geometry_msgs tf std_msgs)
+ #######################################
+ ## Declare ROS messages and services ##
+ #######################################
+diff --git a/p2os_driver/CMakeLists.txt.backup b/p2os_driver/CMakeLists.txt.backup
+deleted file mode 100644
+index 716aac5..0000000
+--- a/p2os_driver/CMakeLists.txt.backup
++++ /dev/null
+@@ -1,14 +0,0 @@
+-cmake_minimum_required(VERSION 2.4.6)
+-include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
+-
+-# Set the build type.  Options are:
+-#  Coverage       : w/ debug symbols, w/o optimization, w/ code-coverage
+-#  Debug          : w/ debug symbols, w/o optimization
+-#  Release        : w/o debug symbols, w/ optimization
+-#  RelWithDebInfo : w/ debug symbols, w/ optimization
+-#  MinSizeRel     : w/o debug symbols, w/ optimization, stripped binaries
+-#set(ROS_BUILD_TYPE RelWithDebInfo)
+-
+-rosbuild_init()
+-rosbuild_genmsg()
+-rosbuild_add_executable(bin/p2os src/p2osnode.cc src/p2os.cc src/kinecalc.cc src/packet.cc src/robot_params.cc src/sip.cc src/p2os_ptz.cpp)
+diff --git a/p2os_driver/Makefile b/p2os_driver/Makefile
+deleted file mode 100644
+index bbd3fc6..0000000
+--- a/p2os_driver/Makefile
++++ /dev/null
+@@ -1 +0,0 @@
+-include $(shell rospack find mk)/cmake.mk
+diff --git a/p2os_driver/include/p2os.h b/p2os_driver/include/p2os.h
+index 7a772ca..917773e 100644
+--- a/p2os_driver/include/p2os.h
++++ b/p2os_driver/include/p2os.h
+@@ -56,19 +56,16 @@ typedef struct ros_p2os_data
+     p2os_driver::DIO dio;
+     p2os_driver::AIO aio;
+     geometry_msgs::TransformStamped odom_trans;
++    std::string tf_prefix;
+ } ros_p2os_data_t;
+ 
+ // this is here because we need the above typedef's before including it.
+-#include "sip.h"
+-#include "kinecalc.h"
++#include "sip.h"	//is a data container
+ 
+-#include "p2os_ptz.h"
++#include "p2os_ptz.h" //controls a camera
+ 
+ class SIP;
+ 
+-// Forward declaration of the KineCalc_Base class declared in kinecalc_base.h
+-//class KineCalc;
+-
+ 
+ class P2OSNode
+ {
+@@ -106,16 +103,16 @@ class P2OSNode
+ 
+     void check_and_set_gripper_state();
+     void gripperCallback(const p2os_driver::GripperStateConstPtr &msg);
+-    double get_pulse() {return pulse;}
++    double get_pulse() {return pulse_;}
+ 
+ 		// diagnostic messages
+ 		void check_voltage( diagnostic_updater::DiagnosticStatusWrapper &stat );
+ 		void check_stall( diagnostic_updater::DiagnosticStatusWrapper &stat );
+ 
+   protected:
+-    ros::NodeHandle n;
+-    ros::NodeHandle nh_private;
+- 
++    ros::NodeHandle n_;
++    ros::NodeHandle nh_private_;
++
+     diagnostic_updater::Updater diagnostic_;
+ 
+     diagnostic_updater::DiagnosedPublisher<p2os_driver::BatteryState> batt_pub_;
+@@ -123,34 +120,37 @@ class P2OSNode
+       ptz_state_pub_, sonar_pub_, aio_pub_, dio_pub_;
+     ros::Subscriber cmdvel_sub_, cmdmstate_sub_, gripper_sub_, ptz_cmd_sub_;
+ 
+-    tf::TransformBroadcaster odom_broadcaster;
+-    ros::Time veltime;
++    tf::TransformBroadcaster odom_broadcaster_;
++    ros::WallTime last_velocity_send_time_;
+ 
+-    SIP* sippacket;
+-    std::string psos_serial_port;
+-    std::string psos_tcp_host;
+-    int         psos_fd;
+-    bool        psos_use_tcp;
+-    int         psos_tcp_port;
+-    bool        vel_dirty, motor_dirty;
++    SIP* sippacket_;
++    std::string psos_serial_port_;
++    std::string psos_tcp_host_;
++    int         psos_fd_;
++    bool        psos_use_tcp_;
++    int         psos_tcp_port_;
++    bool        vel_dirty_, motor_dirty_;
+     bool        gripper_dirty_;
+-    int         param_idx;
++    int         param_idx_;
+     // PID settings
+-    int rot_kp, rot_kv, rot_ki, trans_kp, trans_kv, trans_ki;
++    int rot_kp_, rot_kv_, rot_ki_, trans_kp_, trans_kv_, trans_ki_;
+ 
+     int bumpstall; // should we change the bumper-stall behavior?
+-    int joystick;
+-    int direct_wheel_vel_control;
+-    int radio_modemp;
+-
+-    int motor_max_speed;
+-    int motor_max_turnspeed;
+-    short motor_max_trans_accel, motor_max_trans_decel;
+-    short motor_max_rot_accel, motor_max_rot_decel;
+-    double pulse; // Pulse time
+-    double desired_freq;
+-    double lastPulseTime; // Last time of sending a pulse or command to the robot
++    int joystick_;
++    int direct_wheel_vel_control_;
++    int radio_modemp_;
++
++    int motor_max_speed_;
++    int motor_max_turnspeed_;
++    short motor_max_trans_accel, motor_max_trans_decel_;
++    short motor_max_rot_accel, motor_max_rot_decel_;
++    double pulse_; // Pulse time
++    double desired_freq_;
++    double lastPulseTime_; // Last time of sending a pulse or command to the robot
+     bool use_sonar_;
++    bool use_gripper_;
++    bool use_ptz_;
++    bool publish_diagnostics_;
+ 
+     P2OSPtz ptz_;
+ 
+diff --git a/p2os_driver/include/robot_params.h b/p2os_driver/include/robot_params.h
+index bb80b3c..a7d799c 100644
+--- a/p2os_driver/include/robot_params.h
++++ b/p2os_driver/include/robot_params.h
+@@ -222,7 +222,7 @@ enum P2OSCommand {
+ #define CMUCAM_MESSAGE_LEN  10
+ 
+ /* conection stuff */
+-#define DEFAULT_P2OS_PORT "/dev/ttyS0"
++#define DEFAULT_P2OS_PORT "/dev/ttyUSB0"
+ #define DEFAULT_P2OS_TCP_REMOTE_HOST "localhost"
+ #define DEFAULT_P2OS_TCP_REMOTE_PORT 8101
+ 
+diff --git a/p2os_driver/manifest.xml b/p2os_driver/manifest.xml
+deleted file mode 100644
+index df50479..0000000
+--- a/p2os_driver/manifest.xml
++++ /dev/null
+@@ -1,19 +0,0 @@
+-<package>
+-  <description brief="p2os_driver">
+-     P2OS driver for ros
+-  </description>
+-  <author>dfseifer@usc.edu</author>
+-  <license>BSD</license>
+-  <review status="unreviewed" notes=""/>
+-  <url>http://pr.willowgarage.com/wiki/ros</url>
+-  <depend package="roscpp"/>
+-  <depend package="std_msgs"/>
+-  <depend package="nav_msgs"/>
+-  <depend package="tf"/>
+-  <depend package="diagnostic_updater"/>
+-  <export>
+-    <cpp cflags="-I${prefix}/include -I${prefix}/msg/cpp"/>
+-  </export>
+-</package>
+-
+-
+diff --git a/p2os_driver/p2os-joystick-teleop.xml b/p2os_driver/p2os-joystick-teleop.xml
+deleted file mode 100644
+index 27035a2..0000000
+--- a/p2os_driver/p2os-joystick-teleop.xml
++++ /dev/null
+@@ -1,16 +0,0 @@
+-<launch>
+-  <master auto="start"/>
+-
+-      <param name="axis_vx" type="int" value="1"/>
+-      <param name="axis_vw" type="int" value="0"/>
+-      <param name="axis_vy" type="int" value="2"/>
+-      <param name="axis_pan" type="int" value="3"/>
+-      <param name="axis_tilt" type="int" value="4"/>
+-      <param name="passthrough_button" type="int" value="1"/>
+-      <param name="head_button" type="int" value="1"/>
+-
+-    <node pkg="joy" type="joy" />
+-    <node pkg="teleop_base" type="teleop_base"/>
+-<!--    <node pkg="p2os" type="p2os" />-->
+-    <node pkg="gui" type="estop" />
+-</launch>
+diff --git a/p2os_driver/package.xml b/p2os_driver/package.xml
+index f7de48e..a0a3e51 100644
+--- a/p2os_driver/package.xml
++++ b/p2os_driver/package.xml
+@@ -1,15 +1,15 @@
+ <package>
+   <name>p2os_driver</name>
+-  <version>1.0.9</version>
++  <version>1.1.0</version>
+   <description>Driver file descriptions for P2OS/ARCOS robot</description>
+-  <!-- <maintainer>Edward</maintainer> -->
++  <!-- <maintainer>Tim Sweet</maintainer> -->
+ 
+   <license>BSD</license>
+ 
+-  <url type="website">http://ros.org/wiki/p2os-vanderbilt</url>
++
+   <!-- <url type="bugtracker"></url> -->
+ 
+-  <maintainer email="hunter.allen@vanderbilt.edu">Hunter Allen</maintainer>
++  <maintainer email="timothy.l.sweet@gmail.com">Timothy Sweet</maintainer>
+ 
+   <author email="hunter.allen@Vanderbilt.edu">Hunter Allen</author>
+   <author email="dfseifer@usc.edu">David Feil-Seifer</author>
+@@ -20,6 +20,7 @@
+   <author>Tucker Hermans</author>
+   <author>ActivMedia Robotics LLC</author>
+   <author>MobileRobots Inc.</author>
++  <author>Timothy Sweet</author>
+ 
+   <buildtool_depend>catkin</buildtool_depend>
+ 
+diff --git a/p2os_driver/src/p2os.cc b/p2os_driver/src/p2os.cc
+index 89895e6..77adcdf 100644
+--- a/p2os_driver/src/p2os.cc
++++ b/p2os_driver/src/p2os.cc
+@@ -30,92 +30,99 @@
+ 
+ 
+ P2OSNode::P2OSNode( ros::NodeHandle nh ) :
+-    n(nh), gripper_dirty_(false),
+-    batt_pub_( n.advertise<p2os_driver::BatteryState>("battery_state",1000),
++    n_(nh), gripper_dirty_(false),
++    batt_pub_( n_.advertise<p2os_driver::BatteryState>("battery_state",1000),
+                diagnostic_,
+-               diagnostic_updater::FrequencyStatusParam( &desired_freq, &desired_freq, 0.1),
++               diagnostic_updater::FrequencyStatusParam( &desired_freq_, &desired_freq_, 0.1),
+                diagnostic_updater::TimeStampStatusParam() ),
+     ptz_(this)
+ {
+-  // Use sonar
++  // Use sonar?
+   ros::NodeHandle n_private("~");
+   n_private.param("use_sonar", use_sonar_, false);
++  // Use gripper?
++  n_private.param( "use_gripper",use_gripper_,true); //gripper is being used
++  // Use ptz?
++  n_private.param( "use_ptz",use_ptz_,true);
+ 
+   // read in config options
+   // bumpstall
+   n_private.param( "bumpstall", bumpstall, -1 );
+   // pulse
+-  n_private.param( "pulse", pulse, -1.0 );
++  n_private.param( "pulse", pulse_, -1.0 );
+   // rot_kp
+-  n_private.param( "rot_kp", rot_kp, -1 );
++  n_private.param( "rot_kp", rot_kp_, -1 );
+   // rot_kv
+-  n_private.param( "rot_kv", rot_kv, -1 );
++  n_private.param( "rot_kv", rot_kv_, -1 );
+   // rot_ki
+-  n_private.param( "rot_ki", rot_ki, -1 );
++  n_private.param( "rot_ki", rot_ki_, -1 );
+   // trans_kp
+-  n_private.param( "trans_kp", trans_kp, -1 );
++  n_private.param( "trans_kp", trans_kp_, -1 );
+   // trans_kv
+-  n_private.param( "trans_kv", trans_kv, -1 );
++  n_private.param( "trans_kv", trans_kv_, -1 );
+   // trans_ki
+-  n_private.param( "trans_ki", trans_ki, -1 );
+-  // !!! port !!!
+-  std::string def = DEFAULT_P2OS_PORT;
+-  n_private.param( "port", psos_serial_port, def );
+-  ROS_INFO( "using serial port: [%s]", psos_serial_port.c_str() );
+-  n_private.param( "use_tcp", psos_use_tcp, false );
++  n_private.param( "trans_ki", trans_ki_, -1 );
++  // port
++  std::string default_port = DEFAULT_P2OS_PORT;
++  n_private.param( "port", psos_serial_port_, default_port );
++  n_private.param( "use_tcp", psos_use_tcp_, false );
+   std::string host = DEFAULT_P2OS_TCP_REMOTE_HOST;
+-  n_private.param( "tcp_remote_host", psos_tcp_host, host );
+-  n_private.param( "tcp_remote_port", psos_tcp_port, DEFAULT_P2OS_TCP_REMOTE_PORT );
++  n_private.param( "tcp_remote_host", psos_tcp_host_, host );
++  n_private.param( "tcp_remote_port", psos_tcp_port_, DEFAULT_P2OS_TCP_REMOTE_PORT );
+   // radio
+-  n_private.param( "radio", radio_modemp, 0 );
++  n_private.param( "radio", radio_modemp_, 0 );
+   // joystick
+-  n_private.param( "joystick", joystick, 0 );
++  n_private.param( "joystick", joystick_, 0 );
+   // direct_wheel_vel_control
+-  n_private.param( "direct_wheel_vel_control", direct_wheel_vel_control, 0 );
++  n_private.param( "direct_wheel_vel_control", direct_wheel_vel_control_, 0 );
+   // max xpeed
+   double spd;
+   n_private.param( "max_xspeed", spd, MOTOR_DEF_MAX_SPEED);
+-  motor_max_speed = (int)rint(1e3*spd);
++  motor_max_speed_ = (int)rint(1e3*spd);
+   // max_yawspeed
+   n_private.param( "max_yawspeed", spd, MOTOR_DEF_MAX_TURNSPEED);
+-  motor_max_turnspeed = (short)rint(RTOD(spd));
++  motor_max_turnspeed_ = (short)rint(RTOD(spd));
+   // max_xaccel
+   n_private.param( "max_xaccel", spd, 0.0);
+   motor_max_trans_accel = (short)rint(1e3*spd);
+   // max_xdecel
+   n_private.param( "max_xdecel", spd, 0.0);
+-  motor_max_trans_decel = (short)rint(1e3*spd);
++  motor_max_trans_decel_ = (short)rint(1e3*spd);
+   // max_yawaccel
+   n_private.param( "max_yawaccel", spd, 0.0);
+   motor_max_rot_accel = (short)rint(RTOD(spd));
+   // max_yawdecel
+   n_private.param( "max_yawdecel", spd, 0.0);
+-  motor_max_rot_decel = (short)rint(RTOD(spd));
++  motor_max_rot_decel_ = (short)rint(RTOD(spd));
++  //publish diagnostic data?
++  n_private.param( "publish_diagnostics",publish_diagnostics_,true);
++  //use tf_prefix?
++  static const std::string tf_prefix; 
++  n_private.param( "tf_prefix",this->p2os_data.tf_prefix,tf_prefix);
+ 
+-  desired_freq = 10;
++  desired_freq_ = 10;
+ 
+   // advertise services
+-  pose_pub_ = n.advertise<nav_msgs::Odometry>("pose",1000);
+-  mstate_pub_ = n.advertise<p2os_driver::MotorState>("motor_state",1000);
+-  grip_state_pub_ = n.advertise<p2os_driver::GripperState>("gripper_state",1000);
+-  ptz_state_pub_ = n.advertise<p2os_driver::PTZState>("ptz_state",1000);
+-  sonar_pub_ = n.advertise<p2os_driver::SonarArray>("sonar", 1000);
+-  aio_pub_ = n.advertise<p2os_driver::AIO>("aio", 1000);
+-  dio_pub_ = n.advertise<p2os_driver::DIO>("dio", 1000);
++  pose_pub_ = n_.advertise<nav_msgs::Odometry>("odom",100);
++  if (publish_diagnostics_) mstate_pub_ = n_.advertise<p2os_driver::MotorState>("motor_state",100);
++  if (use_gripper_) 	grip_state_pub_ = n_.advertise<p2os_driver::GripperState>("gripper_state",100);
++  if (use_ptz_) 	ptz_state_pub_ = n_.advertise<p2os_driver::PTZState>("ptz_state",100);
++  if (use_sonar_) 	sonar_pub_ = n_.advertise<p2os_driver::SonarArray>("sonar", 100);
++  if (publish_diagnostics_) aio_pub_ = n_.advertise<p2os_driver::AIO>("aio", 100);
++  if (publish_diagnostics_) dio_pub_ = n_.advertise<p2os_driver::DIO>("dio", 100);
+ 
+   // subscribe to services
+-  cmdvel_sub_ = n.subscribe("cmd_vel", 1, &P2OSNode::cmdvel_cb, this);
+-  cmdmstate_sub_ = n.subscribe("cmd_motor_state", 1, &P2OSNode::cmdmotor_state,
++  cmdvel_sub_ = n_.subscribe("cmd_vel", 1, &P2OSNode::cmdvel_cb, this);
++  cmdmstate_sub_ = n_.subscribe("cmd_motor_state", 1, &P2OSNode::cmdmotor_state,
+                                this);
+-  gripper_sub_ = n.subscribe("gripper_control", 1, &P2OSNode::gripperCallback,
+-                             this);
+-  ptz_cmd_sub_ = n.subscribe("ptz_control", 1, &P2OSPtz::callback, &ptz_);
+ 
+-  veltime = ros::Time::now();
++  if (use_gripper_) gripper_sub_ = n_.subscribe("gripper_control", 1, &P2OSNode::gripperCallback,
++                             this);
++  if (use_ptz_) ptz_cmd_sub_ = n_.subscribe("ptz_control", 1, &P2OSPtz::callback, &ptz_);
+ 
+-	// add diagnostic functions
+-	diagnostic_.add("Motor Stall", this, &P2OSNode::check_stall );
+-	diagnostic_.add("Battery Voltage", this, &P2OSNode::check_voltage );
++  // add diagnostic functions
++  if (publish_diagnostics_) diagnostic_.add("Motor Stall", this, &P2OSNode::check_stall );
++  if (publish_diagnostics_) diagnostic_.add("Battery Voltage", this, &P2OSNode::check_voltage );
+ 
+   // initialize robot parameters (player legacy)
+   initialize_robot_params();
+@@ -128,15 +135,16 @@ P2OSNode::~P2OSNode()
+ void
+ P2OSNode::cmdmotor_state( const p2os_driver::MotorStateConstPtr &msg)
+ {
+-  motor_dirty = true;
++  motor_dirty_ = true;
+   cmdmotor_state_ = *msg;
+ }
+ 
++//this function sets the motor state (not it's power levels or anything)
+ void
+ P2OSNode::check_and_set_motor_state()
+ {
+-  if( !motor_dirty ) return;
+-  motor_dirty = false;
++  if( !motor_dirty_ ) return;
++  motor_dirty_ = false;
+ 
+   unsigned char val = (unsigned char) cmdmotor_state_.state;
+   unsigned char command[4];
+@@ -155,63 +163,70 @@ P2OSNode::check_and_set_motor_state()
+ void
+ P2OSNode::check_and_set_gripper_state()
+ {
+-  if( !gripper_dirty_ ) return;
+-  gripper_dirty_ = false;
+-
+-  // Send the gripper command
+-  unsigned char grip_val = (unsigned char) gripper_state_.grip.state;
+-  unsigned char grip_command[4];
+-  P2OSPacket grip_packet;
+-  grip_command[0] = GRIPPER;
+-  grip_command[1] = ARGINT;
+-  grip_command[2] = grip_val;
+-  grip_command[3] = 0;
+-  grip_packet.Build(grip_command,4);
+-  SendReceive(&grip_packet,false);
+-
+-  // Send the lift command
+-  unsigned char lift_val = (unsigned char) gripper_state_.lift.state;
+-  unsigned char lift_command[4];
+-  P2OSPacket lift_packet;
+-  lift_command[0] = GRIPPER;
+-  lift_command[1] = ARGINT;
+-  lift_command[2] = lift_val;
+-  lift_command[3] = 0;
+-  lift_packet.Build(lift_command,4);
+-  SendReceive(&lift_packet,false);
++ if( !gripper_dirty_ ){
++	return;
++ }
++ gripper_dirty_ = false;
++
++ //send the gripper command
++ unsigned char grip_val = (unsigned char) gripper_state_.grip.state;
++ unsigned char grip_command[4];
++ P2OSPacket grip_packet;
++ grip_command[0] = GRIPPER;
++ grip_command[1] = ARGINT;
++ grip_command[2] = grip_val;
++ grip_command[3] = 0;
++ grip_packet.Build(grip_command, 4);
++ SendReceive(&grip_packet, false);
++
++ //send the lift command
++ unsigned char lift_val = (unsigned char) gripper_state_.lift.state;
++ unsigned char lift_command[4];
++ P2OSPacket lift_packet;
++ lift_command[0] = GRIPPER;
++ lift_command[1] = ARGINT;
++ lift_command[2] = lift_val;
++ lift_command[3] = 0;
++ lift_packet.Build(lift_command, 4);
++ SendReceive(&lift_packet, false);
+ }
+ 
++
+ void
+ P2OSNode::cmdvel_cb( const geometry_msgs::TwistConstPtr &msg)
+ {
++	ROS_DEBUG("Got velocity packet at %f",ros::Time::now().toSec());
+ 
++  //checks if the change in motor velocity since the last used cmd_vel is greater than a threshold
+   if( fabs( msg->linear.x - cmdvel_.linear.x ) > 0.01 || fabs( msg->angular.z-cmdvel_.angular.z) > 0.01 )
+   {
+-    veltime = ros::Time::now();
+-    ROS_DEBUG( "new speed: [%0.2f,%0.2f](%0.3f)", msg->linear.x*1e3, msg->angular.z, veltime.toSec() );
+-    vel_dirty = true;
++    ROS_DEBUG( "new speed: [%0.2f,%0.2f](%0.3f)", msg->linear.x*1e3, msg->angular.z, ros::Time::now().toSec() );
+     cmdvel_ = *msg;
+   }
+-  else
+-  {
+-    ros::Duration veldur = ros::Time::now() - veltime;
+-    if( veldur.toSec() > 2.0 && ((fabs(cmdvel_.linear.x) > 0.01) || (fabs(cmdvel_.angular.z) > 0.01)) )
+-    {
+-      ROS_DEBUG( "maintaining old speed: %0.3f|%0.3f", veltime.toSec(), ros::Time::now().toSec() );
+-      vel_dirty = true;
+-      veltime = ros::Time::now();
+-    }
+-  }
++  //this keeps the motors online even when they are getting the same command repeatedly
++  vel_dirty_ = true;
++
+ 
+ }
+ 
+ void
+ P2OSNode::check_and_set_vel()
+ {
+-  if( !vel_dirty ) return;
++  //a message must be send every 0.5 seconds, so check when the last message
++  //was and send a pulse if necessary
++  //it actually checks if the time is greater than 0.4, which should catch
++  //the time within 0.5 seconds and send the pulse
++  //the pulse stops the motors but keeps them awake
++  if(ros::WallTime::now().toSec() - last_velocity_send_time_.toSec() > 0.4) {
++	  SendPulse();
++	  last_velocity_send_time_ = ros::WallTime::now();
++  }
++  if( !vel_dirty_ ) return;
++  else ROS_DEBUG("Velocity dirty");
++  last_velocity_send_time_ = ros::WallTime::now();
+ 
+   ROS_DEBUG( "setting vel: [%0.2f,%0.2f]",cmdvel_.linear.x,cmdvel_.angular.z);
+-  vel_dirty = false;
++  vel_dirty_ = false;
+ 
+   unsigned short absSpeedDemand, absturnRateDemand;
+   unsigned char motorcommand[4];
+@@ -227,35 +242,36 @@ P2OSNode::check_and_set_vel()
+     else motorcommand[1] = ARGNINT;
+ 
+     absSpeedDemand = (unsigned short)abs(vx);
+-    if( absSpeedDemand <= this->motor_max_speed )
++    if( absSpeedDemand <= this->motor_max_speed_ )
+     {
+       motorcommand[2] = absSpeedDemand & 0x00FF;
+       motorcommand[3] = (absSpeedDemand & 0xFF00) >> 8;
+     }
+     else
+     {
+-      ROS_WARN( "speed demand thresholded! (true: %u, max: %u)", absSpeedDemand, motor_max_speed );
+-      motorcommand[2] = motor_max_speed & 0x00FF;
+-      motorcommand[3] = (motor_max_speed & 0xFF00) >> 8;
++      ROS_WARN( "speed demand thresholded! (true: %u, max: %u)", absSpeedDemand, motor_max_speed_ );
++      motorcommand[2] = motor_max_speed_ & 0x00FF;
++      motorcommand[3] = (motor_max_speed_ & 0xFF00) >> 8;
+     }
+     motorpacket.Build(motorcommand, 4);
+     SendReceive(&motorpacket);
++    ROS_DEBUG("Sent velocity packet");
+ 
+     motorcommand[0] = RVEL;
+     if( va >= 0 ) motorcommand[1] = ARGINT;
+     else motorcommand[1] = ARGNINT;
+ 
+     absturnRateDemand = (unsigned short)abs(va);
+-    if( absturnRateDemand <= motor_max_turnspeed )
++    if( absturnRateDemand <= motor_max_turnspeed_ )
+     {
+       motorcommand[2] = absturnRateDemand & 0x00FF;
+       motorcommand[3] = (absturnRateDemand & 0xFF00) >> 8;
+     }
+     else
+     {
+-      ROS_WARN("Turn rate demand threshholded!");
+-      motorcommand[2] = this->motor_max_turnspeed & 0x00FF;
+-      motorcommand[3] = (this->motor_max_turnspeed & 0xFF00) >> 8;
++      ROS_WARN("Turn rate demand thresholded!");
++      motorcommand[2] = this->motor_max_turnspeed_ & 0x00FF;
++      motorcommand[3] = (this->motor_max_turnspeed_ & 0xFF00) >> 8;
+     }
+ 
+     motorpacket.Build(motorcommand,4);
+@@ -263,10 +279,11 @@ P2OSNode::check_and_set_vel()
+   }
+ }
+ 
+-void P2OSNode::gripperCallback(const p2os_driver::GripperStateConstPtr &msg)
++void
++P2OSNode::gripperCallback(const p2os_driver::GripperStateConstPtr &msg)
+ {
+   gripper_dirty_ = true;
+-  gripper_state_ = *msg;
++  gripper_state_ =  *msg;
+ }
+ 
+ int
+@@ -276,8 +293,8 @@ P2OSNode::Setup()
+   int bauds[] = {B9600, B38400, B19200, B115200, B57600};
+   int numbauds = sizeof(bauds);
+   int currbaud = 0;
+-  sippacket = NULL;
+-  lastPulseTime = 0.0;
++  sippacket_ = NULL;
++  lastPulseTime_ = 0.0;
+ 
+   struct termios term;
+   unsigned char command;
+@@ -300,20 +317,23 @@ P2OSNode::Setup()
+ 
+   // use serial port
+ 
+-  ROS_INFO("P2OS connection opening serial port %s...",psos_serial_port.c_str());
++  ROS_INFO("P2OS connection opening serial port %s...",psos_serial_port_.c_str());
+ 
+-  if((this->psos_fd = open(this->psos_serial_port.c_str(),
++  //this attempts to open the serial port using open().
++  //open returns an int which is the system's identifier for the serial port
++  //and further calls can use write(that_int,...) to write to the serial port
++  if((this->psos_fd_ = open(this->psos_serial_port_.c_str(),
+                    O_RDWR | O_SYNC | O_NONBLOCK, S_IRUSR | S_IWUSR )) < 0 )
+   {
+-    ROS_ERROR("P2OS::Setup():open():");
++    ROS_ERROR("Failed to open serial port called %s try adding yourself to the dialout group or chmod 666 %s?",this->psos_serial_port_.c_str(),this->psos_serial_port_.c_str());
+     return(1);
+   }
+ 
+-  if(tcgetattr( this->psos_fd, &term ) < 0 )
++  if(tcgetattr( this->psos_fd_, &term ) < 0 )
+   {
+     ROS_ERROR("P2OS::Setup():tcgetattr():");
+-    close(this->psos_fd);
+-    this->psos_fd = -1;
++    close(this->psos_fd_);
++    this->psos_fd_ = -1;
+     return(1);
+   }
+ 
+@@ -321,27 +341,27 @@ P2OSNode::Setup()
+   cfsetispeed(&term, bauds[currbaud]);
+   cfsetospeed(&term, bauds[currbaud]);
+ 
+-  if(tcsetattr(this->psos_fd, TCSAFLUSH, &term ) < 0)
++  if(tcsetattr(this->psos_fd_, TCSAFLUSH, &term ) < 0)
+   {
+     ROS_ERROR("P2OS::Setup():tcsetattr():");
+-    close(this->psos_fd);
+-    this->psos_fd = -1;
++    close(this->psos_fd_);
++    this->psos_fd_ = -1;
+     return(1);
+   }
+ 
+-  if(tcflush(this->psos_fd, TCIOFLUSH ) < 0)
++  if(tcflush(this->psos_fd_, TCIOFLUSH ) < 0)
+   {
+     ROS_ERROR("P2OS::Setup():tcflush():");
+-    close(this->psos_fd);
+-    this->psos_fd = -1;
++    close(this->psos_fd_);
++    this->psos_fd_ = -1;
+     return(1);
+   }
+ 
+-  if((flags = fcntl(this->psos_fd, F_GETFL)) < 0)
++  if((flags = fcntl(this->psos_fd_, F_GETFL)) < 0)
+   {
+     ROS_ERROR("P2OS::Setup():fcntl()");
+-    close(this->psos_fd);
+-    this->psos_fd = -1;
++    close(this->psos_fd_);
++    this->psos_fd_ = -1;
+     return(1);
+   }
+   // Sync:
+@@ -354,26 +374,26 @@ P2OSNode::Setup()
+       case NO_SYNC:
+         command = SYNC0;
+         packet.Build(&command, 1);
+-        packet.Send(this->psos_fd);
++        packet.Send(this->psos_fd_);
+         usleep(P2OS_CYCLETIME_USEC);
+         break;
+       case AFTER_FIRST_SYNC:
+         ROS_INFO("turning off NONBLOCK mode...");
+-        if(fcntl(this->psos_fd, F_SETFL, flags ^ O_NONBLOCK) < 0)
++        if(fcntl(this->psos_fd_, F_SETFL, flags ^ O_NONBLOCK) < 0)
+         {
+           ROS_ERROR("P2OS::Setup():fcntl()");
+-          close(this->psos_fd);
+-          this->psos_fd = -1;
++          close(this->psos_fd_);
++          this->psos_fd_ = -1;
+           return(1);
+         }
+         command = SYNC1;
+         packet.Build(&command, 1);
+-        packet.Send(this->psos_fd);
++        packet.Send(this->psos_fd_);
+         break;
+       case AFTER_SECOND_SYNC:
+         command = SYNC2;
+         packet.Build(&command, 1);
+-        packet.Send(this->psos_fd);
++        packet.Send(this->psos_fd_);
+         break;
+       default:
+         ROS_WARN("P2OS::Setup():shouldn't be here...");
+@@ -381,7 +401,7 @@ P2OSNode::Setup()
+     }
+     usleep(P2OS_CYCLETIME_USEC);
+ 
+-    if(receivedpacket.Receive(this->psos_fd))
++    if(receivedpacket.Receive(this->psos_fd_))
+     {
+       if((psos_state == NO_SYNC) && (num_sync_attempts >= 0))
+       {
+@@ -396,19 +416,19 @@ P2OSNode::Setup()
+         {
+           cfsetispeed(&term, bauds[currbaud]);
+           cfsetospeed(&term, bauds[currbaud]);
+-          if( tcsetattr(this->psos_fd, TCSAFLUSH, &term ) < 0 )
++          if( tcsetattr(this->psos_fd_, TCSAFLUSH, &term ) < 0 )
+           {
+             ROS_ERROR("P2OS::Setup():tcsetattr():");
+-            close(this->psos_fd);
+-            this->psos_fd = -1;
++            close(this->psos_fd_);
++            this->psos_fd_ = -1;
+             return(1);
+           }
+ 
+-          if(tcflush(this->psos_fd, TCIOFLUSH ) < 0 )
++          if(tcflush(this->psos_fd_, TCIOFLUSH ) < 0 )
+           {
+             ROS_ERROR("P2OS::Setup():tcflush():");
+-            close(this->psos_fd);
+-            this->psos_fd = -1;
++            close(this->psos_fd_);
++            this->psos_fd_ = -1;
+             return(1);
+           }
+           num_sync_attempts = 3;
+@@ -424,15 +444,15 @@ P2OSNode::Setup()
+     switch(receivedpacket.packet[3])
+     {
+       case SYNC0:
+-        ROS_INFO( "SYNC0" );
++        ROS_DEBUG( "SYNC0" );
+         psos_state = AFTER_FIRST_SYNC;
+         break;
+       case SYNC1:
+-        ROS_INFO( "SYNC1" );
++        ROS_DEBUG( "SYNC1" );
+         psos_state = AFTER_SECOND_SYNC;
+         break;
+       case SYNC2:
+-        ROS_INFO( "SYNC2" );
++        ROS_DEBUG( "SYNC2" );
+         psos_state = READY;
+         break;
+       default:
+@@ -440,13 +460,13 @@ P2OSNode::Setup()
+         // and reconnect
+         if(!sent_close)
+         {
+-          ROS_DEBUG("sending CLOSE");
++          ROS_DEBUG("Detected unclean state, sending CLOSE");
+           command = CLOSE;
+           packet.Build( &command, 1);
+-          packet.Send(this->psos_fd);
++          packet.Send(this->psos_fd_);
+           sent_close = true;
+           usleep(2*P2OS_CYCLETIME_USEC);
+-          tcflush(this->psos_fd,TCIFLUSH);
++          tcflush(this->psos_fd_,TCIFLUSH);
+           psos_state = NO_SYNC;
+         }
+         break;
+@@ -455,13 +475,13 @@ P2OSNode::Setup()
+   }
+   if(psos_state != READY)
+   {
+-    if(this->psos_use_tcp)
+-    ROS_INFO("Couldn't synchronize with P2OS.\n"
++    if(this->psos_use_tcp_)
++    ROS_FATAL("Couldn't synchronize with P2OS.\n"
+            "  Most likely because the robot is not connected %s %s",
+-           this->psos_use_tcp ? "to the ethernet-serial bridge device " : "to the serial port",
+-           this->psos_use_tcp ? this->psos_tcp_host.c_str() : this->psos_serial_port.c_str());
+-    close(this->psos_fd);
+-    this->psos_fd = -1;
++           this->psos_use_tcp_ ? "to the ethernet-serial bridge device " : "to the serial port",
++           this->psos_use_tcp_ ? this->psos_tcp_host_.c_str() : this->psos_serial_port_.c_str());
++    close(this->psos_fd_);
++    this->psos_fd_ = -1;
+     return(1);
+   }
+   cnt = 4;
+@@ -477,14 +497,14 @@ P2OSNode::Setup()
+ 
+   command = OPEN;
+   packet.Build(&command, 1);
+-  packet.Send(this->psos_fd);
++  packet.Send(this->psos_fd_);
+   usleep(P2OS_CYCLETIME_USEC);
+   command = PULSE;
+   packet.Build(&command, 1);
+-  packet.Send(this->psos_fd);
++  packet.Send(this->psos_fd_);
+   usleep(P2OS_CYCLETIME_USEC);
+ 
+-  ROS_INFO("Done.\n   Connected to %s, a %s %s", name, type, subtype);
++  ROS_INFO("Connected to %s, a %s %s", name, type, subtype);
+ 
+   // now, based on robot type, find the right set of parameters
+   for(i=0;i<PLAYER_NUM_ROBOT_TYPES;i++)
+@@ -492,7 +512,7 @@ P2OSNode::Setup()
+     if(!strcasecmp(PlayerRobotParams[i].Class.c_str(),type) &&
+        !strcasecmp(PlayerRobotParams[i].Subclass.c_str(),subtype))
+     {
+-      param_idx = i;
++      param_idx_ = i;
+       break;
+     }
+   }
+@@ -500,20 +520,21 @@ P2OSNode::Setup()
+   {
+     ROS_WARN("P2OS: Warning: couldn't find parameters for this robot; "
+             "using defaults");
+-    param_idx = 0;
++    param_idx_ = 0;
+   }
+ 
+   //sleep(1);
+ 
+   // first, receive a packet so we know we're connected.
+-  if(!sippacket)
++  if(!sippacket_)
+   {
+-    sippacket = new SIP(param_idx);
++    sippacket_ = new SIP(param_idx_);
+   }
+ /*
+-  sippacket->x_offset = 0;
+-  sippacket->y_offset = 0;
+-  sippacket->angle_offset = 0;
++
++  sippacket_->x_offset = 0;
++  sippacket_->y_offset = 0;
++  sippacket_->angle_offset = 0;
+ 
+   SendReceive((P2OSPacket*)NULL,false);
+ */
+@@ -532,12 +553,12 @@ P2OSNode::Setup()
+     this->SendReceive(&accel_packet,false);
+   }
+ 
+-  if(this->motor_max_trans_decel < 0)
++  if(this->motor_max_trans_decel_ < 0)
+   {
+     accel_command[0] = SETA;
+     accel_command[1] = ARGNINT;
+-    accel_command[2] = abs(this->motor_max_trans_decel) & 0x00FF;
+-    accel_command[3] = (abs(this->motor_max_trans_decel) & 0xFF00) >> 8;
++    accel_command[2] = abs(this->motor_max_trans_decel_) & 0x00FF;
++    accel_command[3] = (abs(this->motor_max_trans_decel_) & 0xFF00) >> 8;
+     accel_packet.Build(accel_command, 4);
+     this->SendReceive(&accel_packet,false);
+   }
+@@ -550,12 +571,12 @@ P2OSNode::Setup()
+     accel_packet.Build(accel_command, 4);
+     this->SendReceive(&accel_packet,false);
+   }
+-  if(this->motor_max_rot_decel < 0)
++  if(this->motor_max_rot_decel_ < 0)
+   {
+     accel_command[0] = SETRA;
+     accel_command[1] = ARGNINT;
+-    accel_command[2] = abs(this->motor_max_rot_decel) & 0x00FF;
+-    accel_command[3] = (abs(this->motor_max_rot_decel) & 0xFF00) >> 8;
++    accel_command[2] = abs(this->motor_max_rot_decel_) & 0x00FF;
++    accel_command[3] = (abs(this->motor_max_rot_decel_) & 0xFF00) >> 8;
+     accel_packet.Build(accel_command, 4);
+     this->SendReceive(&accel_packet,false);
+   }
+@@ -564,57 +585,57 @@ P2OSNode::Setup()
+   // if requested, change PID settings
+   P2OSPacket pid_packet;
+   unsigned char pid_command[4];
+-  if(this->rot_kp >= 0)
++  if(this->rot_kp_ >= 0)
+   {
+     pid_command[0] = ROTKP;
+     pid_command[1] = ARGINT;
+-    pid_command[2] = this->rot_kp & 0x00FF;
+-    pid_command[3] = (this->rot_kp & 0xFF00) >> 8;
++    pid_command[2] = this->rot_kp_ & 0x00FF;
++    pid_command[3] = (this->rot_kp_ & 0xFF00) >> 8;
+     pid_packet.Build(pid_command, 4);
+     this->SendReceive(&pid_packet);
+   }
+-  if(this->rot_kv >= 0)
++  if(this->rot_kv_ >= 0)
+   {
+     pid_command[0] = ROTKV;
+     pid_command[1] = ARGINT;
+-    pid_command[2] = this->rot_kv & 0x00FF;
+-    pid_command[3] = (this->rot_kv & 0xFF00) >> 8;
++    pid_command[2] = this->rot_kv_ & 0x00FF;
++    pid_command[3] = (this->rot_kv_ & 0xFF00) >> 8;
+     pid_packet.Build(pid_command, 4);
+     this->SendReceive(&pid_packet);
+   }
+-  if(this->rot_ki >= 0)
++  if(this->rot_ki_ >= 0)
+   {
+     pid_command[0] = ROTKI;
+     pid_command[1] = ARGINT;
+-    pid_command[2] = this->rot_ki & 0x00FF;
+-    pid_command[3] = (this->rot_ki & 0xFF00) >> 8;
++    pid_command[2] = this->rot_ki_ & 0x00FF;
++    pid_command[3] = (this->rot_ki_ & 0xFF00) >> 8;
+     pid_packet.Build(pid_command, 4);
+     this->SendReceive(&pid_packet);
+   }
+-  if(this->trans_kp >= 0)
++  if(this->trans_kp_ >= 0)
+   {
+     pid_command[0] = TRANSKP;
+     pid_command[1] = ARGINT;
+-    pid_command[2] = this->trans_kp & 0x00FF;
+-    pid_command[3] = (this->trans_kp & 0xFF00) >> 8;
++    pid_command[2] = this->trans_kp_ & 0x00FF;
++    pid_command[3] = (this->trans_kp_ & 0xFF00) >> 8;
+     pid_packet.Build(pid_command, 4);
+     this->SendReceive(&pid_packet);
+   }
+-  if(this->trans_kv >= 0)
++  if(this->trans_kv_ >= 0)
+   {
+     pid_command[0] = TRANSKV;
+     pid_command[1] = ARGINT;
+-    pid_command[2] = this->trans_kv & 0x00FF;
+-    pid_command[3] = (this->trans_kv & 0xFF00) >> 8;
++    pid_command[2] = this->trans_kv_ & 0x00FF;
++    pid_command[3] = (this->trans_kv_ & 0xFF00) >> 8;
+     pid_packet.Build(pid_command, 4);
+     this->SendReceive(&pid_packet);
+   }
+-  if(this->trans_ki >= 0)
++  if(this->trans_ki_ >= 0)
+   {
+     pid_command[0] = TRANSKI;
+     pid_command[1] = ARGINT;
+-    pid_command[2] = this->trans_ki & 0x00FF;
+-    pid_command[3] = (this->trans_ki & 0xFF00) >> 8;
++    pid_command[2] = this->trans_ki_ & 0x00FF;
++    pid_command[3] = (this->trans_ki_ & 0xFF00) >> 8;
+     pid_packet.Build(pid_command, 4);
+     this->SendReceive(&pid_packet);
+   }
+@@ -649,7 +670,8 @@ P2OSNode::Setup()
+     this->ToggleSonarPower(1);
+     ROS_DEBUG("Sonar array powered on.");
+   }
+-  ptz_.setup();
++  
++  if(use_ptz_) ptz_.setup();
+ 
+   return(0);
+ }
+@@ -667,29 +689,35 @@ P2OSNode::Shutdown()
+ 
+   memset(buffer,0,20);
+ 
+-  if(this->psos_fd == -1)
++  if(this->psos_fd_ == -1)
+     return -1;
+ 
+   command[0] = STOP;
+   packet.Build(command, 1);
+-  packet.Send(this->psos_fd);
++  packet.Send(this->psos_fd_);
+   usleep(P2OS_CYCLETIME_USEC);
+ 
+   command[0] = CLOSE;
+   packet.Build(command, 1);
+-  packet.Send(this->psos_fd);
++  packet.Send(this->psos_fd_);
+   usleep(P2OS_CYCLETIME_USEC);
+ 
+-  close(this->psos_fd);
+-  this->psos_fd = -1;
++  close(this->psos_fd_);
++  this->psos_fd_ = -1;
+   ROS_INFO("P2OS has been shutdown");
+-  delete this->sippacket;
+-  this->sippacket = NULL;
++  delete this->sippacket_;
++  this->sippacket_ = NULL;
+ 
+   return 0;
+ }
+ 
+-
++//this function publishes auxillary information about the pioneer:
++//	pose
++//	odom (tf)
++//	battery level
++//	motor state (active/inactive)
++//	aio
++//	dio
+ void
+ P2OSNode::StandardSIPPutData(ros::Time ts)
+ {
+@@ -697,24 +725,26 @@ P2OSNode::StandardSIPPutData(ros::Time ts)
+   p2os_data.position.header.stamp = ts;
+   pose_pub_.publish( p2os_data.position );
+   p2os_data.odom_trans.header.stamp = ts;
+-  odom_broadcaster.sendTransform( p2os_data.odom_trans );
++  odom_broadcaster_.sendTransform( p2os_data.odom_trans );
+ 
+   p2os_data.batt.header.stamp = ts;
+-  batt_pub_.publish( p2os_data.batt );
+-  mstate_pub_.publish( p2os_data.motors );
++  if (publish_diagnostics_) batt_pub_.publish( p2os_data.batt );
++  if (publish_diagnostics_) mstate_pub_.publish( p2os_data.motors );
+ 
+   // put sonar data
+-  p2os_data.sonar.header.stamp = ts;
+-  sonar_pub_.publish( p2os_data.sonar );
++  if (use_sonar_) {
++    p2os_data.sonar.header.stamp = ts;
++    sonar_pub_.publish( p2os_data.sonar );
++  }
+ 
+   // put aio data
+-  aio_pub_.publish( p2os_data.aio);
++  if (publish_diagnostics_) aio_pub_.publish( p2os_data.aio);
+   // put dio data
+-  dio_pub_.publish( p2os_data.dio);
++  if (publish_diagnostics_) dio_pub_.publish( p2os_data.dio);
+ 
+-  // put gripper and lift data
+-  grip_state_pub_.publish( p2os_data.gripper );
+-  ptz_state_pub_.publish( ptz_.getCurrentState() );
++  // put gripper data
++  if (use_gripper_) grip_state_pub_.publish( p2os_data.gripper );
++  if (use_ptz_) ptz_state_pub_.publish( ptz_.getCurrentState() );
+ 
+   // put bumper data
+   // put compass data
+@@ -727,14 +757,16 @@ P2OSNode::SendReceive(P2OSPacket* pkt, bool publish_data)
+ {
+   P2OSPacket packet;
+ 
+-  if((this->psos_fd >= 0) && this->sippacket)
++  if((this->psos_fd_ >= 0) && this->sippacket_)
+   {
+-    if(pkt)
+-      pkt->Send(this->psos_fd);
++	//check if the packet was not NULL
++    if(pkt) {
++      pkt->Send(this->psos_fd_);
++    }
+ 
+     /* receive a packet */
+     pthread_testcancel();
+-    if(packet.Receive(this->psos_fd))
++    if(packet.Receive(this->psos_fd_))
+     {
+       ROS_ERROR("RunPsosThread(): Receive errored");
+       pthread_exit(NULL);
+@@ -746,9 +778,9 @@ P2OSNode::SendReceive(P2OSPacket* pkt, bool publish_data)
+        packet.packet[3] == 0x34))
+     {
+ 
+-      /* It is a server packet, so process it */
+-      this->sippacket->ParseStandard( &packet.packet[3] );
+-      this->sippacket->FillStandard(&(this->p2os_data));
++      // It is a server packet, so process it
++      this->sippacket_->ParseStandard( &packet.packet[3] );
++      this->sippacket_->FillStandard(&(this->p2os_data));
+ 
+       if(publish_data)
+         this->StandardSIPPutData(packet.timestamp);
+@@ -775,11 +807,11 @@ P2OSNode::SendReceive(P2OSPacket* pkt, bool publish_data)
+     }
+     else
+     {
+-      ROS_ERROR("Received other packet!");
++      ROS_ERROR("Received other (probably malformed) packet!");
+       packet.PrintHex();
+     }
+-  }
+ 
++  }
+   return(0);
+ }
+ 
+@@ -792,7 +824,7 @@ P2OSNode::updateDiagnostics()
+ void
+ P2OSNode::check_voltage( diagnostic_updater::DiagnosticStatusWrapper &stat )
+ {
+-	double voltage = sippacket->battery / 10.0;
++	double voltage = sippacket_->battery / 10.0;
+ 	if( voltage < 11.0 )
+ 	{
+ 		stat.summary( diagnostic_msgs::DiagnosticStatus::ERROR, "battery voltage critically low" );
+@@ -810,14 +842,14 @@ P2OSNode::check_voltage( diagnostic_updater::DiagnosticStatusWrapper &stat )
+ void
+ P2OSNode::check_stall( diagnostic_updater::DiagnosticStatusWrapper &stat )
+ {
+-	if( sippacket->lwstall || sippacket->rwstall )
++	if( sippacket_->lwstall || sippacket_->rwstall )
+ 	{
+ 		stat.summary( diagnostic_msgs::DiagnosticStatus::ERROR, "wheel stalled" );
+ 	}
+ 	else stat.summary( diagnostic_msgs::DiagnosticStatus::OK, "no wheel stall" );
+ 
+-	stat.add("left wheel stall", sippacket->lwstall );
+-	stat.add("right wheel stall", sippacket->rwstall );
++	stat.add("left wheel stall", sippacket_->lwstall );
++	stat.add("right wheel stall", sippacket_->rwstall );
+ }
+ 
+ void
+@@ -826,12 +858,12 @@ P2OSNode::ResetRawPositions()
+   P2OSPacket pkt;
+   unsigned char p2oscommand[4];
+ 
+-  if(this->sippacket)
++  if(this->sippacket_)
+   {
+-    this->sippacket->rawxpos = 0;
+-    this->sippacket->rawypos = 0;
+-    this->sippacket->xpos = 0;
+-    this->sippacket->ypos = 0;
++    this->sippacket_->rawxpos = 0;
++    this->sippacket_->rawypos = 0;
++    this->sippacket_->xpos = 0;
++    this->sippacket_->ypos = 0;
+     p2oscommand[0] = SETO;
+     p2oscommand[1] = ARGINT;
+     pkt.Build(p2oscommand, 2);
+@@ -874,16 +906,16 @@ P2OSNode::ToggleMotorPower(unsigned char val)
+ /////////////////////////////////////////////////////
+ //  Actarray stuff
+ /////////////////////////////////////////////////////
+-
++/*
+ // Ticks to degrees from the ARIA software
+ inline double P2OSNode::TicksToDegrees (int joint, unsigned char ticks)
+ {
+-  if ((joint < 0) || (joint >= sippacket->armNumJoints))
++  if ((joint < 0) || (joint >= sippacket_->armNumJoints))
+     return 0;
+ 
+   double result;
+-  int pos = ticks - sippacket->armJoints[joint].centre;
+-  result = 90.0 / static_cast<double> (sippacket->armJoints[joint].ticksPer90);
++  int pos = ticks - sippacket_->armJoints[joint].centre;
++  result = 90.0 / static_cast<double> (sippacket_->armJoints[joint].ticksPer90);
+   result = result * pos;
+   if ((joint >= 0) && (joint <= 2))
+     result = -result;
+@@ -896,19 +928,19 @@ inline unsigned char P2OSNode::DegreesToTicks (int joint, double degrees)
+ {
+   double val;
+ 
+-  if ((joint < 0) || (joint >= sippacket->armNumJoints))
++  if ((joint < 0) || (joint >= sippacket_->armNumJoints))
+     return 0;
+ 
+-  val = static_cast<double> (sippacket->armJoints[joint].ticksPer90) * degrees / 90.0;
++  val = static_cast<double> (sippacket_->armJoints[joint].ticksPer90) * degrees / 90.0;
+   val = round (val);
+   if ((joint >= 0) && (joint <= 2))
+     val = -val;
+-  val += sippacket->armJoints[joint].centre;
++  val += sippacket_->armJoints[joint].centre;
+ 
+-  if (val < sippacket->armJoints[joint].min)
+-    return sippacket->armJoints[joint].min;
+-  else if (val > sippacket->armJoints[joint].max)
+-    return sippacket->armJoints[joint].max;
++  if (val < sippacket_->armJoints[joint].min)
++    return sippacket_->armJoints[joint].min;
++  else if (val > sippacket_->armJoints[joint].max)
++    return sippacket_->armJoints[joint].max;
+   else
+     return static_cast<int> (round (val));
+ }
+@@ -928,7 +960,7 @@ inline unsigned char P2OSNode::RadiansToTicks (int joint, double rads)
+ inline double P2OSNode::RadsPerSectoSecsPerTick (int joint, double speed)
+ {
+   double degs = RTOD (speed);
+-  double ticksPerDeg = static_cast<double> (sippacket->armJoints[joint].ticksPer90) / 90.0f;
++  double ticksPerDeg = static_cast<double> (sippacket_->armJoints[joint].ticksPer90) / 90.0f;
+   double ticksPerSec = degs * ticksPerDeg;
+   double secsPerTick = 1000.0f / ticksPerSec;
+ 
+@@ -942,19 +974,49 @@ inline double P2OSNode::RadsPerSectoSecsPerTick (int joint, double speed)
+ inline double P2OSNode::SecsPerTicktoRadsPerSec (int joint, double msecs)
+ {
+   double ticksPerSec = 1.0 / (static_cast<double> (msecs) / 1000.0);
+-  double ticksPerDeg = static_cast<double> (sippacket->armJoints[joint].ticksPer90) / 90.0f;
++  double ticksPerDeg = static_cast<double> (sippacket_->armJoints[joint].ticksPer90) / 90.0f;
+   double degs = ticksPerSec / ticksPerDeg;
+   double rads = DTOR (degs);
+ 
+   return rads;
+ }
+-
++*/
+ void P2OSNode::SendPulse (void)
+ {
++  //stop the motors first
++  unsigned char motorcommand[4];
++  P2OSPacket motorpacket;
++
++  int vx = 0;
++  int va = 0;
++
++  {
++    // non-direct wheel control
++    motorcommand[0] = VEL;
++    motorcommand[1] = ARGNINT;
++
++      motorcommand[2] = 0 & 0x00FF;
++      motorcommand[3] = (0 & 0xFF00) >> 8;
++
++    motorpacket.Build(motorcommand, 4);
++    SendReceive(&motorpacket);
++    ROS_DEBUG("sent stop");
++
++    motorcommand[0] = RVEL;
++    motorcommand[1] = ARGNINT;
++
++      motorcommand[2] = 0 & 0x00FF;
++      motorcommand[3] = (0 & 0xFF00) >> 8;
++
++    motorpacket.Build(motorcommand,4);
++    SendReceive(&motorpacket);
++  }
+   unsigned char command;
+   P2OSPacket packet;
+ 
+   command = PULSE;
+   packet.Build(&command, 1);
++
+   SendReceive(&packet);
+ }
++
+diff --git a/p2os_driver/src/p2osnode.cc b/p2os_driver/src/p2osnode.cc
+index 4994cc7..602b8b9 100644
+--- a/p2os_driver/src/p2osnode.cc
++++ b/p2os_driver/src/p2osnode.cc
+@@ -46,11 +46,15 @@ int main( int argc, char** argv )
+   p->ResetRawPositions();
+ 
+   ros::Time lastTime;
+-  
++
+   while( ros::ok() )
+   {
++	//sleep(1);
++	//ROS_INFO("checking and setting velocity");
+     p->check_and_set_vel();
++    //ROS_INFO("checked and set velocity");
+     p->check_and_set_motor_state();
++    //BLAKE: uncommented this call for the gripper
+     p->check_and_set_gripper_state();
+ 
+     if( p->get_pulse() > 0 )
+@@ -58,7 +62,7 @@ int main( int argc, char** argv )
+       ros::Time currentTime = ros::Time::now();
+       ros::Duration pulseInterval = currentTime - lastTime;
+       if( pulseInterval.toSec() > p->get_pulse() )
+-      {	
++      {
+ 				ROS_DEBUG ("sending pulse" );
+         p->SendPulse();
+         lastTime = currentTime;
+diff --git a/p2os_driver/src/packet.cc b/p2os_driver/src/packet.cc
+index f14f72a..a864f57 100644
+--- a/p2os_driver/src/packet.cc
++++ b/p2os_driver/src/packet.cc
+@@ -1,7 +1,7 @@
+ /*
+  *  P2OS for ROS
+  *  Copyright (C) 2000
+- *     David Feil-Seifer, Brian Gerkey, Kasper Stoy, 
++ *     David Feil-Seifer, Brian Gerkey, Kasper Stoy,
+  *      Richard Vaughan, & Andrew Howard
+  *
+  *
+@@ -90,17 +90,19 @@ int P2OSPacket::Receive( int fd )
+   {
+     memset(prefix,0,sizeof(prefix));
+     //memset( prefix, 0, 3);
+-
++    //ROS_INFO("in Receive loop");
+     while(1)
+     {
+       cnt = 0;
+       while( cnt!=1 )
+       {
++    	//ROS_INFO("in Receive and calling read");
+         if ( (cnt+=read( fd, &prefix[2], 1 )) < 0 )
+         {
+           ROS_ERROR("Error reading packet header from robot connection: P2OSPacket():Receive():read():");
+           return(1);
+         }
++        //ROS_INFO("in Receive and called read");
+       }
+ 
+       if (prefix[0]==0xFA && prefix[1]==0xFB) break;
+@@ -113,6 +115,7 @@ int P2OSPacket::Receive( int fd )
+       prefix[1]=prefix[2];
+       //skipped++;
+     }
++    //ROS_INFO("out of Receive loop");
+     //if (skipped>3) ROS_INFO("Skipped %d bytes\n", skipped);
+ 
+     size = prefix[2]+3;
+@@ -153,7 +156,7 @@ int P2OSPacket::Build( unsigned char *data, unsigned char datasize ) {
+   packet[3+datasize+1] = chksum & 0xFF;
+ 
+   if (!Check()) {
+-    ROS_ERROR("DAMN");
++    ROS_ERROR("Packet build failed");
+     return(1);
+   }
+   return(0);
+diff --git a/p2os_driver/src/sip.cc b/p2os_driver/src/sip.cc
+index 3c5cb9f..733ab1e 100644
+--- a/p2os_driver/src/sip.cc
++++ b/p2os_driver/src/sip.cc
+@@ -1,7 +1,7 @@
+ /*
+  *  P2OS for ROS
+  *  Copyright (C) 2009
+- *     David Feil-Seifer, Brian Gerkey, Kasper Stoy, 
++ *     David Feil-Seifer, Brian Gerkey, Kasper Stoy,
+  *      Richard Vaughan, & Andrew Howard
+  *
+  *
+@@ -56,7 +56,7 @@ void SIP::FillStandard(ros_p2os_data_t* data)
+                                (this->ypos/1e3) * cos(rot));
+     pa = DTOR(this->angle_offset + angle);
+   }
+-  else
++  else 
+   {
+     px += this->xpos / 1e3;
+     py += this->ypos / 1e3;
+@@ -64,8 +64,12 @@ void SIP::FillStandard(ros_p2os_data_t* data)
+   }
+ 
+   // timestamps get set in the p2os::StandardSIPPutData fcn
+-  data->position.header.frame_id = "odom";
+-  data->position.child_frame_id = "base_link";
++  std::stringstream frame_id, child_frame_id;
++  frame_id << data->tf_prefix << "odom";
++  child_frame_id << data->tf_prefix << "base_link";
++
++  data->position.header.frame_id = frame_id.str();
++  data->position.child_frame_id = child_frame_id.str();
+ 
+   data->position.pose.pose.position.x = px;
+   data->position.pose.pose.position.y = py;
+@@ -77,7 +81,7 @@ void SIP::FillStandard(ros_p2os_data_t* data)
+   data->position.twist.twist.linear.y = 0.0;
+   data->position.twist.twist.angular.z = ((double)(rvel-lvel)/(2.0/PlayerRobotParams[param_idx].DiffConvFactor));
+ 
+-  
++
+   data->position.pose.covariance = boost::assign::list_of	(1e-3) (0)    (0)   (0)   (0)   (0)
+                                                           (0)    (1e-3) (0)   (0)   (0)   (0)
+                                                           (0)    (0)    (1e6) (0)   (0)   (0)
+@@ -99,7 +103,7 @@ void SIP::FillStandard(ros_p2os_data_t* data)
+   data->odom_trans.transform.translation.x = px;
+   data->odom_trans.transform.translation.y = py;
+   data->odom_trans.transform.translation.z = 0;
+-  data->odom_trans.transform.rotation = tf::createQuaternionMsgFromYaw(pa); 
++  data->odom_trans.transform.rotation = tf::createQuaternionMsgFromYaw(pa);
+ 
+   // battery
+   data->batt.voltage = battery / 10.0;
+@@ -109,12 +113,14 @@ void SIP::FillStandard(ros_p2os_data_t* data)
+   // not tell us whether they have been enabled
+   // data->motors.state = (status & 0x01);
+ 	data->motors.state = (motors_enabled & 0x01);
+-  /*
++  
+   ///////////////////////////////////////////////////////////////
+   // compass
+-  memset(&(data->compass),0,sizeof(data->compass));
+-  data->compass.pos.pa = DTOR(this->compass);
+-  */
++  //TODO: broken, Tim doesn't have a compass so I can't fix this, if anyone
++  //      has one and wants to help me fix it email me
++  //memset(&(data->compass),0,sizeof(data->compass));
++  //data->compass.pos.pa = DTOR(this->compass);
++  
+ 
+   ///////////////////////////////////////////////////////////////
+   // sonar
+@@ -122,9 +128,9 @@ void SIP::FillStandard(ros_p2os_data_t* data)
+   data->sonar.ranges.clear();
+   for(int i=0; i < data->sonar.ranges_count; i++)
+     data->sonar.ranges.push_back(sonars[i] / 1e3);
+-
+   ///////////////////////////////////////////////////////////////
+   // gripper
++
+   unsigned char gripState = timer;
+   if ((gripState & 0x01) && (gripState & 0x02) && !(gripState & 0x04))
+   {
+@@ -155,7 +161,7 @@ void SIP::FillStandard(ros_p2os_data_t* data)
+   data->gripper.grip.outer_beam = false;
+   data->gripper.grip.left_contact = false;
+   data->gripper.grip.right_contact = false;
+-
++  
+   if (digin & 0x08)
+   {
+     data->gripper.grip.inner_beam = true;
+@@ -213,9 +219,12 @@ void SIP::FillStandard(ros_p2os_data_t* data)
+   // Store the last lift position
+   lastLiftPos = data->gripper.lift.position;
+ 
+-  /*
++  
+   ///////////////////////////////////////////////////////////////
+   // bumper
++  //TODO: broken, Tim doesn't have a bumper to test it with. If someone has a 
++  //      bumper and wants help fixing this: email me.
++  /*
+   unsigned int bump_count = PlayerRobotParams[param_idx].NumFrontBumpers + PlayerRobotParams[param_idx].NumRearBumpers;
+   if (data->bumper.bumpers_count != bump_count)
+   {
+@@ -230,8 +239,8 @@ void SIP::FillStandard(ros_p2os_data_t* data)
+   for(int i=PlayerRobotParams[param_idx].NumRearBumpers-1;i>=0;i--)
+     data->bumper.bumpers[j++] =
+       (unsigned char)((this->rearbumpers >> i) & 0x01);
++  
+   */
+-
+   ///////////////////////////////////////////////////////////////
+   // digital I/O
+   data->dio.count = 8;
+@@ -241,9 +250,9 @@ void SIP::FillStandard(ros_p2os_data_t* data)
+   // analog I/O
+   //TODO: should do this smarter, based on which analog input is selected
+   data->aio.voltages_count = (unsigned char)1;
+-  // if (!data->aio.voltages)
+-  //   data->aio.voltages = new float[1];
+-  // data->aio.voltages[0] = (this->analog / 255.0) * 5.0;
++  //if (!data->aio.voltages)
++  //  data->aio.voltages = new float[1];
++  //data->aio.voltages[0] = (this->analog / 255.0) * 5.0;
+   data->aio.voltages.clear();
+   data->aio.voltages.push_back((this->analog / 255.0) * 5.0);
+ }
+@@ -413,7 +422,6 @@ void SIP::ParseStandard( unsigned char *buffer )
+ 
+   battery = buffer[cnt];
+   cnt += sizeof(unsigned char);
+-  ROS_DEBUG( "battery value: %d", battery );
+ 
+   lwstall = buffer[cnt] & 0x01;
+   rearbumpers = buffer[cnt] >> 1;
+@@ -433,7 +441,7 @@ void SIP::ParseStandard( unsigned char *buffer )
+ 	sonar_flag = buffer[cnt+1];
+   cnt += sizeof(short);
+ 
+-  //compass = buffer[cnt]*2;
++  compass = buffer[cnt]*2;
+   if(buffer[cnt] != 255 && buffer[cnt] != 0 && buffer[cnt] != 181)
+     compass = (buffer[cnt]-1)*2;
+   cnt += sizeof(unsigned char);
+@@ -472,6 +480,7 @@ void SIP::ParseStandard( unsigned char *buffer )
+   }
+   }
+ 
++
+   timer = (buffer[cnt] | (buffer[cnt+1] << 8));
+   cnt += sizeof(short);
+ 
+@@ -480,12 +489,13 @@ void SIP::ParseStandard( unsigned char *buffer )
+ 
+   digin = buffer[cnt];
+   cnt += sizeof(unsigned char);
+-
++  
+   digout = buffer[cnt];
+   cnt += sizeof(unsigned char);
+   // for debugging:
+   Print();
+   // PrintSonars();
++
+ }
+ 
+ /** Parse a SERAUX SIP packet.  For a CMUcam, this will have blob
+diff --git a/p2os_launch/launch/amcl.launch b/p2os_launch/launch/amcl.launch
+index 944421a..54391b2 100644
+--- a/p2os_launch/launch/amcl.launch
++++ b/p2os_launch/launch/amcl.launch
+@@ -3,7 +3,6 @@
+ 		<!-- Publish scans from best pose at a max of 10 Hz -->
+ 		<param name="odom_model_type" value="diff"/>
+ 		<param name="odom_alpha5" value="0.1"/>
+-		<param name="transform_tolerance" value="0.2" />
+ 		<param name="gui_publish_rate" value="10.0"/>
+ 		<param name="laser_max_beams" value="30"/>
+ 		<param name="min_particles" value="500"/>
+diff --git a/p2os_launch/launch/base_local_planner_params.yaml b/p2os_launch/launch/base_local_planner_params.yaml
+index 1d6fe54..13f9516 100644
+--- a/p2os_launch/launch/base_local_planner_params.yaml
++++ b/p2os_launch/launch/base_local_planner_params.yaml
+@@ -3,7 +3,7 @@ TrajectoryPlannerROS:
+   min_vel_x: 0.1
+   max_rotational_vel: 0.8
+   min_in_place_rotational_vel: 0.3
+-  backup_vel: -0.2
++  escape_vel: -0.2
+ 
+   sim_time: 2.0
+   path_distance_bias: 0.6
+diff --git a/p2os_launch/launch/p2os_teleop_joy.launch b/p2os_launch/launch/p2os_teleop_joy.launch
+index b55a50a..5457e31 100644
+--- a/p2os_launch/launch/p2os_teleop_joy.launch
++++ b/p2os_launch/launch/p2os_teleop_joy.launch
+@@ -1,6 +1,6 @@
+ <launch>
+-	<include file="$(find p2os_launch)/p2os_driver.launch" />
++	<include file="$(find p2os_launch)/launch/p2os_driver.launch" />
+ 	
+ 	<!-- run corequisites -->
+-	<include file="$(find p2os_launch)/teleop_joy.launch" />
++	<include file="$(find p2os_launch)/launch/teleop_joy.launch" />
+ </launch>
+diff --git a/p2os_launch/launch/teleop_joy.launch b/p2os_launch/launch/teleop_joy.launch
+index 38e89eb..20e3f59 100644
+--- a/p2os_launch/launch/teleop_joy.launch
++++ b/p2os_launch/launch/teleop_joy.launch
+@@ -5,6 +5,8 @@
+ 	<param name="axis_vy" type="int" value="0" />
+ 	<param name="deadman_button" type="int" value="5" />
+ 	<param name="run_button" type="int" value="4" />
++        <param name="max_vx" type="double" value="0.5"/>
++        <param name="max_vw" type="double" value="0.5"/>
+ 	<node pkg="p2os_teleop" type="p2os_teleop" name="p2os_teleop" >
+ 		<remap from="/des_vel" to="/base_controller/command" />
+ 	</node>
+diff --git a/p2os_teleop/src/p2os_teleop.cc b/p2os_teleop/src/p2os_teleop.cc
+index 3e63b47..3a5aeac 100644
+--- a/p2os_teleop/src/p2os_teleop.cc
++++ b/p2os_teleop/src/p2os_teleop.cc
+@@ -2,10 +2,10 @@
+  * teleop_base
+  * Copyright (c) 2008, Willow Garage, Inc.
+  * All rights reserved.
+- * 
++ *
+  * Redistribution and use in source and binary forms, with or without
+  * modification, are permitted provided that the following conditions are met:
+- * 
++ *
+  *     * Redistributions of source code must retain the above copyright
+  *       notice, this list of conditions and the following disclaimer.
+  *     * Redistributions in binary form must reproduce the above copyright
+@@ -14,7 +14,7 @@
+  *     * Neither the name of the <ORGANIZATION> nor the names of its
+  *       contributors may be used to endorse or promote products derived from
+  *       this software without specific prior written permission.
+- * 
++ *
+  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+@@ -35,12 +35,12 @@
+  *      it under the terms of the GNU General Public License as published by
+  *       the Free Software Foundation; either version 2 of the License, or
+  *       (at your option) any later version.
+- *       
++ *
+  *       This program is distributed in the hope that it will be useful,
+  *       but WITHOUT ANY WARRANTY; without even the implied warranty of
+  *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  *       GNU General Public License for more details.
+- *       
++ *
+  *       You should have received a copy of the GNU General Public License
+  *       along with this program; if not, write to the Free Software
+  *       Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+@@ -71,11 +71,12 @@ class TeleopBase
+   ros::Duration joy_msg_timeout_;
+ 
+   ros::NodeHandle n_;
++  ros::NodeHandle n_pub_;
+   ros::Publisher vel_pub_;
+   ros::Subscriber joy_sub_;
+   ros::Subscriber passthrough_sub_;
+ 
+-  TeleopBase(bool deadman_no_publish = false) : max_vx(0.6), max_vy(0.6), max_vw(0.8), max_vx_run(0.6), max_vy_run(0.6), max_vw_run(0.8), deadman_no_publish_(deadman_no_publish), running_(false)
++  TeleopBase(bool deadman_no_publish = false) : max_vx(0.6), max_vy(0.6), max_vw(0.8), max_vx_run(0.6), max_vy_run(0.6), max_vw_run(0.8), deadman_no_publish_(deadman_no_publish), running_(false), n_("~")
+   { }
+ 
+   void init()
+@@ -90,7 +91,7 @@ class TeleopBase
+         n_.param("max_vy_run", max_vy_run, max_vy_run);
+         n_.param("max_vw_run", max_vw_run, max_vw_run);
+ 
+-        n_.param("axis_vx", axis_vx, 3);
++        n_.param("axis_vx", axis_vx, 0);
+         n_.param("axis_vw", axis_vw, 0);
+         n_.param("axis_vy", axis_vy, 2);
+         
+@@ -127,9 +128,9 @@ class TeleopBase
+         ROS_INFO("run_button: %d", run_button);
+         ROS_DEBUG("joy_msg_timeout: %f\n", joy_msg_timeout);
+         
+-        vel_pub_ = n_.advertise<geometry_msgs::Twist>("cmd_vel", 1);
+-        passthrough_sub_ = n_.subscribe( "des_vel", 10, &TeleopBase::passthrough_cb, this );
+-        joy_sub_ = n_.subscribe("joy", 10, &TeleopBase::joy_cb, this);
++        vel_pub_ = n_pub_.advertise<geometry_msgs::Twist>("cmd_vel", 1);
++        passthrough_sub_ = n_pub_.subscribe( "des_vel", 10, &TeleopBase::passthrough_cb, this );
++        joy_sub_ = n_pub_.subscribe("joy", 10, &TeleopBase::joy_cb, this);
+ 
+  
+ 	}
+@@ -189,8 +190,8 @@ class TeleopBase
+     else
+     {
+       //cmd.linear.x = cmd.linear.y = cmd.angular.z = 0;
+-      cmd = passthrough_cmd;
+-      //if (!deadman_no_publish_)
++      //cmd = passthrough_cmd;
++      if (!deadman_no_publish_)
+       {
+         vel_pub_.publish(cmd);//Only publish if deadman_no_publish is enabled
+ 
+@@ -202,7 +203,7 @@ class TeleopBase
+ int main(int argc, char **argv)
+ {
+   ros::init(argc, argv, "teleop_base");
+-	ros::NodeHandle nh;
++	ros::NodeHandle nh("~");
+   const char* opt_no_publish    = "--deadman_no_publish";
+   
+   bool no_publish = false;
+diff --git a/stack.xml b/stack.xml
+deleted file mode 100644
+index 71e1440..0000000
+--- a/stack.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<stack>
+-  <description brief="P2OS/ARCOS device support">
+-		This stack provides the p2os driver supporting any robot that uses either P2OS or ARCOS firmware. This stack also includes urdf definitions for visualization and examples to control the robot.
+-
+-	</description>
+-  <author>Maintained by Hunter Allen (hunter.allen@Vanderbilt.Edu)</author>
+-  <license>BSD,GPLv2</license>  
+-  <review status="" notes=""/>
+-  <url>http://www.ros.org/wiki/p2os-vanderbilt</url>
+-  <depend stack="common" /> <!-- xacro -->
+-  <depend stack="common_msgs" /> <!-- nav_msgs, geometry_msgs -->
+-  <depend stack="diagnostics" /> <!-- diagnostic_updater -->
+-  <depend stack="diagnostics_monitors" /> <!-- robot_monitor -->
+-  <depend stack="geometry" /> <!-- tf -->
+-  <depend stack="joystick_drivers" /> <!-- joy -->
+-  <depend stack="rqt_robot_model" /> <!-- robot_state_publisher, urdf -->
+-  <depend stack="ros" /> <!-- roslib -->
+-  <depend stack="ros_comm" /> <!-- std_msgs, std_srvs, rospy, roscpp -->
+-  <depend stack="rqt" /> <!-- rqt_tools -->
+-
+-</stack>

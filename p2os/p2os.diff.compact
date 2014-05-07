@@ -1,0 +1,83 @@
+@@ -0,0 +1,16 @@
+@@ -1 +0,0 @@
+@@ -1,7 +1,7 @@
+@@ -13,13 +13,15 @@ p2os_driver
+@@ -38,3 +40,5 @@ To Do:
+@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
+@@ -1,14 +0,0 @@
+@@ -1 +0,0 @@
+@@ -56,19 +56,16 @@ typedef struct ros_p2os_data
+@@ -106,16 +103,16 @@ class P2OSNode
+@@ -123,34 +120,37 @@ class P2OSNode
+@@ -222,7 +222,7 @@ enum P2OSCommand {
+@@ -1,19 +0,0 @@
+@@ -1,16 +0,0 @@
+@@ -1,15 +1,15 @@
+@@ -20,6 +20,7 @@
+@@ -30,92 +30,99 @@
+@@ -128,15 +135,16 @@ P2OSNode::~P2OSNode()
+@@ -155,63 +163,70 @@ P2OSNode::check_and_set_motor_state()
+@@ -227,35 +242,36 @@ P2OSNode::check_and_set_vel()
+@@ -263,10 +279,11 @@ P2OSNode::check_and_set_vel()
+@@ -276,8 +293,8 @@ P2OSNode::Setup()
+@@ -300,20 +317,23 @@ P2OSNode::Setup()
+@@ -321,27 +341,27 @@ P2OSNode::Setup()
+@@ -354,26 +374,26 @@ P2OSNode::Setup()
+@@ -381,7 +401,7 @@ P2OSNode::Setup()
+@@ -396,19 +416,19 @@ P2OSNode::Setup()
+@@ -424,15 +444,15 @@ P2OSNode::Setup()
+@@ -440,13 +460,13 @@ P2OSNode::Setup()
+@@ -455,13 +475,13 @@ P2OSNode::Setup()
+@@ -477,14 +497,14 @@ P2OSNode::Setup()
+@@ -492,7 +512,7 @@ P2OSNode::Setup()
+@@ -500,20 +520,21 @@ P2OSNode::Setup()
+@@ -532,12 +553,12 @@ P2OSNode::Setup()
+@@ -550,12 +571,12 @@ P2OSNode::Setup()
+@@ -564,57 +585,57 @@ P2OSNode::Setup()
+@@ -649,7 +670,8 @@ P2OSNode::Setup()
+@@ -667,29 +689,35 @@ P2OSNode::Shutdown()
+@@ -697,24 +725,26 @@ P2OSNode::StandardSIPPutData(ros::Time ts)
+@@ -727,14 +757,16 @@ P2OSNode::SendReceive(P2OSPacket* pkt, bool publish_data)
+@@ -746,9 +778,9 @@ P2OSNode::SendReceive(P2OSPacket* pkt, bool publish_data)
+@@ -775,11 +807,11 @@ P2OSNode::SendReceive(P2OSPacket* pkt, bool publish_data)
+@@ -792,7 +824,7 @@ P2OSNode::updateDiagnostics()
+@@ -810,14 +842,14 @@ P2OSNode::check_voltage( diagnostic_updater::DiagnosticStatusWrapper &stat )
+@@ -826,12 +858,12 @@ P2OSNode::ResetRawPositions()
+@@ -874,16 +906,16 @@ P2OSNode::ToggleMotorPower(unsigned char val)
+@@ -896,19 +928,19 @@ inline unsigned char P2OSNode::DegreesToTicks (int joint, double degrees)
+@@ -928,7 +960,7 @@ inline unsigned char P2OSNode::RadiansToTicks (int joint, double rads)
+@@ -942,19 +974,49 @@ inline double P2OSNode::RadsPerSectoSecsPerTick (int joint, double speed)
+@@ -46,11 +46,15 @@ int main( int argc, char** argv )
+@@ -58,7 +62,7 @@ int main( int argc, char** argv )
+@@ -1,7 +1,7 @@
+@@ -90,17 +90,19 @@ int P2OSPacket::Receive( int fd )
+@@ -113,6 +115,7 @@ int P2OSPacket::Receive( int fd )
+@@ -153,7 +156,7 @@ int P2OSPacket::Build( unsigned char *data, unsigned char datasize ) {
+@@ -1,7 +1,7 @@
+@@ -56,7 +56,7 @@ void SIP::FillStandard(ros_p2os_data_t* data)
+@@ -64,8 +64,12 @@ void SIP::FillStandard(ros_p2os_data_t* data)
+@@ -77,7 +81,7 @@ void SIP::FillStandard(ros_p2os_data_t* data)
+@@ -99,7 +103,7 @@ void SIP::FillStandard(ros_p2os_data_t* data)
+@@ -109,12 +113,14 @@ void SIP::FillStandard(ros_p2os_data_t* data)
+@@ -122,9 +128,9 @@ void SIP::FillStandard(ros_p2os_data_t* data)
+@@ -155,7 +161,7 @@ void SIP::FillStandard(ros_p2os_data_t* data)
+@@ -213,9 +219,12 @@ void SIP::FillStandard(ros_p2os_data_t* data)
+@@ -230,8 +239,8 @@ void SIP::FillStandard(ros_p2os_data_t* data)
+@@ -241,9 +250,9 @@ void SIP::FillStandard(ros_p2os_data_t* data)
+@@ -413,7 +422,6 @@ void SIP::ParseStandard( unsigned char *buffer )
+@@ -433,7 +441,7 @@ void SIP::ParseStandard( unsigned char *buffer )
+@@ -472,6 +480,7 @@ void SIP::ParseStandard( unsigned char *buffer )
+@@ -480,12 +489,13 @@ void SIP::ParseStandard( unsigned char *buffer )
+@@ -3,7 +3,6 @@
+@@ -3,7 +3,7 @@ TrajectoryPlannerROS:
+@@ -1,6 +1,6 @@
+@@ -5,6 +5,8 @@
+@@ -2,10 +2,10 @@
+@@ -14,7 +14,7 @@
+@@ -35,12 +35,12 @@
+@@ -71,11 +71,12 @@ class TeleopBase
+@@ -90,7 +91,7 @@ class TeleopBase
+@@ -127,9 +128,9 @@ class TeleopBase
+@@ -189,8 +190,8 @@ class TeleopBase
+@@ -202,7 +203,7 @@ class TeleopBase
+@@ -1,21 +0,0 @@
