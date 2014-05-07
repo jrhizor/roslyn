@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.5.6)  6 MAY 2014 23:59
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.5.6)  7 MAY 2014 00:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -88,7 +88,11 @@ USCthesis style v1.0
 \c@definition=\count94
 \c@theorem=\count95
 \c@remark=\count96
- (./Roslyn.aux)
+ (./Roslyn.aux
+
+LaTeX Warning: Label `figure:social_navigation' multiply defined.
+
+)
 \openout1 = `Roslyn.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 73.
@@ -191,6 +195,12 @@ Missing character: There is no ú in font cmr10!
 Missing character: There is no ‚ in font cmr10!
 Missing character: There is no Ä in font cmr10!
 Missing character: There is no ù in font cmr10!
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ô in font cmr10!
 )
 \tf@lof=\write4
 \openout4 = `Roslyn.lof'.
@@ -316,7 +326,12 @@ Overfull \hbox (12.32986pt too wide) in alignment at lines 293--307
  [] [] 
  []
 
-[10] [11] [12]
+[10] [11] [12] <system_class_overview.pdf, id=61, 435.6275pt x 291.0875pt>
+File: system_class_overview.pdf Graphic file (type pdf)
+
+<use system_class_overview.pdf>
+Package pdftex.def Info: system_class_overview.pdf used on input line 375.
+(pdftex.def)             Requested size: 318.1684pt x 212.5987pt.
 Missing character: There is no ‚ in font cmr10!
 Missing character: There is no Ä in font cmr10!
 Missing character: There is no ú in font cmr10!
@@ -329,35 +344,80 @@ Missing character: There is no ú in font cmr10!
 Missing character: There is no ‚ in font cmr10!
 Missing character: There is no Ä in font cmr10!
 Missing character: There is no ù in font cmr10!
- <Nodes.pdf, id=61, 542.025pt x 406.51875pt>
-File: Nodes.pdf Graphic file (type pdf)
- <use Nodes.pdf>
-Package pdftex.def Info: Nodes.pdf used on input line 375.
-(pdftex.def)             Requested size: 318.1684pt x 238.6344pt.
 
-[13] [14 <./Nodes.pdf>] [15
+<social_navigation.pdf, id=62, 611.28375pt x 492.84125pt>
+File: social_navigation.pdf Graphic file (type pdf)
 
-] (./Roslyn.aux) ) 
+<use social_navigation.pdf>
+Package pdftex.def Info: social_navigation.pdf used on input line 383.
+(pdftex.def)             Requested size: 318.1684pt x 256.51956pt.
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ô in font cmr10!
+File: social_navigation.pdf Graphic file (type pdf)
+ <use social_navigation.pdf>
+Package pdftex.def Info: social_navigation.pdf used on input line 391.
+(pdftex.def)             Requested size: 318.1684pt x 256.51956pt.
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ô in font cmr10!
+
+
+LaTeX Warning: Reference `figure:user_interface' on page 13 undefined on input 
+line 395.
+
+<user_interface.pdf, id=63, 614.295pt x 466.74374pt>
+File: user_interface.pdf Graphic file (type pdf)
+ <use user_interface.pdf>
+Package pdftex.def Info: user_interface.pdf used on input line 399.
+(pdftex.def)             Requested size: 318.1684pt x 241.74667pt.
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ô in font cmr10!
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ô in font cmr10!
+
+[13] [14 <./system_class_overview.pdf> <./social_navigation.pdf
+
+pdfTeX warning: /usr/bin/pdflatex (file ./social_navigation.pdf): PDF inclusion
+: multiple pdfs with page group included in a single page
+>] [15] [16 <./user_interface.pdf>] [17
+
+] (./Roslyn.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
 Here is how much of TeX's memory you used:
- 1722 strings out of 495028
- 24084 string characters out of 6181498
- 116179 words of memory out of 5000000
- 4923 multiletter control sequences out of 15000+600000
+ 1734 strings out of 495028
+ 24462 string characters out of 6181498
+ 116229 words of memory out of 5000000
+ 4933 multiletter control sequences out of 15000+600000
  8960 words of font info for 32 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 37i,6n,23p,1133b,224s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx1
-2.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on Roslyn.pdf (20 pages, 184959 bytes).
+ 37i,6n,23p,1133b,222s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmtt10.pfb>
+Output written on Roslyn.pdf (22 pages, 304846 bytes).
 PDF statistics:
- 127 PDF objects out of 1000 (max. 8388607)
- 89 compressed objects within 1 object stream
+ 186 PDF objects out of 1000 (max. 8388607)
+ 130 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 
