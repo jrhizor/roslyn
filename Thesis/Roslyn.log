@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.5.6)  7 MAY 2014 00:57
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.5.6)  7 MAY 2014 01:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -419,33 +419,50 @@ File: activity_diagram.pdf Graphic file (type pdf)
 <use activity_diagram.pdf>
 Package pdftex.def Info: activity_diagram.pdf used on input line 430.
 (pdftex.def)             Requested size: 318.1684pt x 334.24655pt.
- [15] [16] [17 <./system_class_overview.pdf> <./social_navigation.pdf
+ [15]
+<Low_level_message_passing_diagram.pdf, id=78, 585.18625pt x 607.26875pt>
+File: Low_level_message_passing_diagram.pdf Graphic file (type pdf)
+
+<use Low_level_message_passing_diagram.pdf>
+Package pdftex.def Info: Low_level_message_passing_diagram.pdf used on input li
+ne 441.
+(pdftex.def)             Requested size: 318.1684pt x 330.19046pt.
+
+<processing_nav_statechart.pdf, id=79, 419.5675pt x 412.54124pt>
+File: processing_nav_statechart.pdf Graphic file (type pdf)
+
+<use processing_nav_statechart.pdf>
+Package pdftex.def Info: processing_nav_statechart.pdf used on input line 449.
+(pdftex.def)             Requested size: 318.1684pt x 312.84216pt.
+ [16] [17 <./system_class_overview.pdf> <./social_navigation.pdf
 
 pdfTeX warning: /usr/bin/pdflatex (file ./social_navigation.pdf): PDF inclusion
 : multiple pdfs with page group included in a single page
->] [18 <./user_interface.pdf>] [19 <./activity_diagram.pdf>] [20
+>] [18 <./user_interface.pdf>] [19 <./activity_diagram.pdf>] [20 <./Low_level_m
+essage_passing_diagram.pdf>] [21 <./processing_nav_statechart.pdf>] [22
 
-] (./Roslyn.aux) ) 
+]
+(./Roslyn.aux) ) 
 Here is how much of TeX's memory you used:
- 1745 strings out of 495028
- 24641 string characters out of 6181498
- 116274 words of memory out of 5000000
- 4940 multiletter control sequences out of 15000+600000
+ 1757 strings out of 495028
+ 25079 string characters out of 6181498
+ 115296 words of memory out of 5000000
+ 4950 multiletter control sequences out of 15000+600000
  8960 words of font info for 32 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  37i,6n,23p,1133b,222s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx1
-2.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on Roslyn.pdf (26 pages, 335328 bytes).
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on Roslyn.pdf (28 pages, 395374 bytes).
 PDF statistics:
- 210 PDF objects out of 1000 (max. 8388607)
- 148 compressed objects within 2 object streams
+ 241 PDF objects out of 1000 (max. 8388607)
+ 170 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 21 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 31 words of extra memory for PDF output out of 10000 (max. 10000000)
 
