@@ -12,4 +12,6 @@
 \contentsline {subsection}{\numberline {I.3.1}System Classes}{15}
 \contentsline {subsection}{\numberline {I.3.2}Top Level Activity Diagram}{16}
 \contentsline {subsection}{\numberline {I.3.3}Detailed Design}{16}
-\contentsline {chapter}{BIBLIOGRAPHY}{22}
+\contentsline {section}{\numberline {I.4}User Interface}{16}
+\contentsline {section}{\numberline {I.5}Glossary}{17}
+\contentsline {chapter}{BIBLIOGRAPHY}{32}
