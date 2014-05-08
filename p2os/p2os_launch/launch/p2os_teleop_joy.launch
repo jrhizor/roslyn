@@ -1,6 +1,0 @@
-<launch>
-	<include file="$(find p2os_launch)/launch/p2os_driver.launch" />
-	
-	<!-- run corequisites -->
-	<include file="$(find p2os_launch)/launch/teleop_joy.launch" />
-</launch>

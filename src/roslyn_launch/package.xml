@@ -1,12 +1,9 @@
 <package>
   <name>roslyn_launch</name>
   <version>1.0.0</version>
-  <description>This package contains launch files designed for the roslyn tour  guide</description>
+  <description>This package contains launch files designed for the roslyn tour guide</description>
 
   <license>BSD</license>
-
-  <!--<url type="website"></url>-->
-  <!-- <url type="bugtracker"></url> -->
 
   <maintainer email="timothy.l.sweet@gmail.com">Tim Sweet</maintainer>
 
